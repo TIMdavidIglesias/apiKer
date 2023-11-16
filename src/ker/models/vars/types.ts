@@ -1,6 +1,6 @@
 export interface IVarsTracing {
   database?: string,
-  traces:{
+  traces: {
     tracePublicRequest: boolean,
     trace404Request: boolean,
     traceErrorRequest: boolean,
@@ -13,21 +13,21 @@ export interface IVarsRequestHeaders {
 }
 
 export interface IVarsSecurity {
-  discardCrossedRequests:boolean,
+  discardCrossedRequests: boolean,
   saltGenerationRoundsNumber: number,
   authProtocol: 'kerLocker' | 'standard' | 'OAuth2'
   kerLockerSecretAuthHeaderName: string,
   kerLockerPublicAuthHeaderName: string,
   kerLockerSessionHeaderName: string,
   kerLockerCSRFHeaderName: string,
-  proxy:IVarsSecurityProxy
+  proxy: IVarsSecurityProxy
 }
 
 export interface IVarsSecurityProxy {
   usingProxy: boolean
   clientIPHeaderName: string,
   proxyFlagIdentifier: string,
-  allowInternalNetworkCollections:boolean
+  allowInternalNetworkCollections: boolean
 }
 
 export interface IVarsDocumentation {
@@ -35,8 +35,14 @@ export interface IVarsDocumentation {
   swaggerDocsRoute?: string
 }
 
+export interface IVarsSession {
+  defaultControllerPermissionLevel: number,
+  defaultAccountPermissionLevel: number
+}
+
 export interface IVarsCache {
   tracing: IVarsTracing,
   documentation: IVarsDocumentation
-  security: IVarsSecurity
+  security: IVarsSecurity,
+  session: IVarsSession
 }

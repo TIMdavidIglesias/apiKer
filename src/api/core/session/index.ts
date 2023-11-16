@@ -47,7 +47,7 @@ export class ApiSession {
 
         try {
             const secret = app.applicationSecretToken
-            this.tokenInfo = await verifyToken(this.rawJWT, secret) as IApiSession
+            this.tokenInfo = await verifyToken(this.rawJWT, secret as string) as IApiSession
 
             const targetCSRF = this.tokenInfo.CSRF
 
@@ -115,11 +115,11 @@ export class ApiSession {
         }
 
         if (app.config.session.policy.requireFingerPrint && res.locals.ApiResponse.param.header.fingerprint) {
-            tk.fingerPrint = encrypt(res.locals.ApiResponse.param.header.fingerprint, app.encryptionKey)
+            tk.fingerPrint = encrypt(res.locals.ApiResponse.param.header.fingerprint, app.encryptionKey as string)
         }
 
         // const sT = await this.args.UTILS.TOKENIZER.signToken(tk, app.applicationSecretToken)
-        const sT = await signToken(tk, app.applicationSecretToken)
+        const sT = await signToken(tk, app.applicationSecretToken as string)
 
         // if (app.config.session.sessionTokenByCookie === true) {
         //     this.args.RESPONSE.setCookie('sT', sT)
@@ -163,7 +163,7 @@ export class ApiSession {
             appID: app.metadata?.appID
         }
 
-        const sT = await signToken(tk, app.applicationSecretToken)
+        const sT = await signToken(tk, app.applicationSecretToken as string)
 
         const sessionTokenName = app.config.session.sessionTokenName
         setCookie(this.res,sessionTokenName, sT, options)

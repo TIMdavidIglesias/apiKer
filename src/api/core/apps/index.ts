@@ -27,7 +27,7 @@ export const appGetByRequest = (req: Request | undefined = undefined) => {
 
 
 export const appGetBySecretToken = (secretToken: string) => {
-    return Cache._apps.find((app: IAppsCache) => app.authorization.secretToken === secretToken);
+    return Cache._apps.find((app: IAppsCache) => app.authorization?.secretToken === secretToken);
 }
 
 export const appGetByID= (ID: string) => {

@@ -48,7 +48,7 @@ export const runSwaggerDocs = (app: Express, docRoute: string): void => {
   }
 
   try {
-    swaggerDocComposer(swaggerDocument)
+    const swaggerServerInfo = swaggerDocComposer(swaggerDocument)
 
     const callableFiles = [
       { file: '/assets/uiSwagger.js', partialURL: '/uiSwagger.js' },
@@ -71,6 +71,12 @@ export const runSwaggerDocs = (app: Express, docRoute: string): void => {
           spFile = spFile.replace('/** $$gSSchemas */', 'var gSSchemas = ' +
             JSON.stringify(Cache._gSixDocumentation?.schemaHeaders))
 
+          res.send(spFile)
+        } else if (req.baseUrl.split('/')[docRoute.split('/').length] === 'uiSwagger.js') {
+          let spFile = fs.readFileSync(__dirname + filePath).toString()
+          spFile = spFile.replace('/** $$serverInfo */', `var serverInfo =  ${JSON.stringify(swaggerServerInfo)};`)
+
+          res.type('application/javascript');
           res.send(spFile)
         } else {
           // current files

@@ -26,22 +26,9 @@ export const _apps: IAppsCache[] = [
         //     livesessionExpirySecs: 600
         // },
 
-        authorization:{
-            secretToken: '7Nk2hDwR8sUvF1jXqO3lYpZ3AqN4jF5kT1iJrM7lC6zS4dA8kGhU6lC4kV3aL9x',
-        },
-
         // app admin email
         adminEmail: 'applicationEmail@test.com',
-        
-        // token meant to sign the sessionToken and security refs
-        applicationSecretToken: '1b7c3b5f7c2d9e5a6f8c7b9e4d8c3a2f1b7c3b5f7c2d9e5a6f8c7b9e4d8c3a2f1b7c3b5f7c2d9e5a6f8c7b9e4d8c3a2f',
 
-        // encryption key for encryption of sensible data
-        encryptionKey: '4F1A8B7C3D6E5F0A',
-
-        // refresh token meant to sign the sessionToken and security refs
-        applicationSecretTokenRefresh: '1b7c3b5f7c2d9e5a6f8c7b9e4d8c3a2f1b7c3b5f7c2d9e5a6f8c7b9e4d8c3a2f1b7c3b5f7c2d9e5a6f8c7b9e4d8c3a2f',
-        
         config: {
             session: {
                 // custom name for the session header/cookie

@@ -7,6 +7,10 @@ import { IApps, IAppsCache } from "../../models/apps/types";
 export const setNewApp = async (app: IApps) => {
     let appsObject: IAppsCache = {
         ...app,
+        authorization:{secretToken:Randomizer.RandomString(64)},
+        applicationSecretToken:Randomizer.RandomString(64),
+        applicationSecretTokenRefresh:Randomizer.RandomString(64),
+        encryptionKey:Randomizer.RandomString(64),
         metadata: {
             ...app.metadata,
             isDeleted: false,

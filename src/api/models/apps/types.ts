@@ -61,11 +61,11 @@ export interface IApps {
     allowedOrigin?: string,
     // virtualServer: IAppsVirtualServer,
     adminEmail: string,
-    encryptionKey: string,
-    applicationSecretToken: string,
-    applicationSecretTokenRefresh: string,
+    encryptionKey?: string,
+    applicationSecretToken?: string,
+    applicationSecretTokenRefresh?: string,
     config: IAppsConfig,
-    authorization:IAppsAppAuthorization,
+    authorization?:IAppsAppAuthorization,
     metadata?: IAppsMetadata
 }
 

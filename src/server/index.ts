@@ -16,10 +16,8 @@ import { middlewareProxyRequestStatus } from "./middleware/middlewareProxyReques
 import { middlewareNewResponse } from "./middleware/middlewareNewResponse";
 import { middlewareCORS } from "./middleware/middlewareCORS";
 import { middlewareFilterList } from "./middleware/middlewareFilterList";
-import { middlewareDefaults } from "./middleware/middlewareDefaults";
 import { middlewareParams } from "./middleware/middlewareParams";
 import { middlewareControllers } from "./middleware/middlewareControllers";
-// import { middlewareAuth } from "./middleware/middlewareAuth";
 import { middlewareReleaseResponse } from "./middleware/middlewareReleaseResponse";
 
 // - error handler

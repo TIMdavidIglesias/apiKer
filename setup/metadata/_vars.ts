@@ -9,6 +9,10 @@ export const _vars: IVarsCache = {
     // route required for the index page in SwaggerConnector
     swaggerDocsRoute: '/docs/index',
   },
+  session:{
+    defaultControllerPermissionLevel:3,
+    defaultAccountPermissionLevel:3
+  },
   security: {
     /** Auth protocol to validate and authenticate requests. kerLocker is the default system designed mainly
     to get embedded on apiKer. NOT SOCIAL/oAuth2 available yet */

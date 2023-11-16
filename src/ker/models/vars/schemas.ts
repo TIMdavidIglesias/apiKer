@@ -6,6 +6,7 @@ import {
   IVarsRequestHeaders,
   IVarsSecurity,
   IVarsSecurityProxy,
+  IVarsSession,
   IVarsTracing,
 } from "./types";
 
@@ -39,14 +40,19 @@ const apiVarsTracingSchema = new Schema<IVarsTracing>({
   traces: { type: apiVarsTracesSchema, required: true }
 }, { _id: false });
 
-
 const apiVarsDocumentationSchema = new Schema<IVarsDocumentation>({
   isActive: { type: Boolean, required: true },
   swaggerDocsRoute: { type: String, required: false },
+}, { _id: false });
+
+const apiVarsSessionSchema = new Schema<IVarsSession>({
+  defaultControllerPermissionLevel: { type: Number, required: true },
+  defaultAccountPermissionLevel: { type: Number, required: true },
 }, { _id: false });
 
 export const VarsSc: Schema = new Schema<IVarsCache>({
   tracing: { type: apiVarsTracingSchema, required: true },
   documentation: { type: apiVarsDocumentationSchema, required: true },
   security: { type: apiVarsSecuritySchema, required: true },
+  session:{ type: apiVarsSessionSchema, required: true },
 });

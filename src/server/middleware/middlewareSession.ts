@@ -48,7 +48,7 @@ export const middlewareSession = (async (req: Request, res: Response, next: Next
             newResponse.params.cookie[sessionTokenName], ''
         )
 
-        const sTInfo = verifyToken(newResponse.params.cookie[sessionTokenName], app.applicationSecretToken)
+        const sTInfo = verifyToken(newResponse.params.cookie[sessionTokenName], app.applicationSecretToken as string)
 
         // const sID = sTInfo.sessionID
         // const __time = r.auth.tokenInfo.__time

@@ -12,16 +12,12 @@ import {
 import { ErrorGlossary } from "../../ker/core/error/glossary"
 
 export const swaggerDocComposer = (swaggerDocument: any) => {
-
-    const defaultApp = appGetDefault()
-
     let requestSchemaB: any = { properties: {} }
     let requestSchemaR: any = { properties: {} }
     let validationErrors: any = {}
 
     let path: any = {}
-    let serverInfo: any = { headers: [], auth: [] }
-
+    let serverInfo: { minPermission: number, lockType: string }[] = []
 
     swaggerDocument['components'] = {}
     swaggerDocument['components']['schemas'] = {}
@@ -35,6 +31,8 @@ export const swaggerDocComposer = (swaggerDocument: any) => {
                 if (!path[r.route]) {
                     path[r.route] = {};
                 }
+
+                serverInfo.push({minPermission: controller.minPermission || Cache._vars.session.defaultControllerPermissionLevel, lockType: (r.requireAuth || controller.requireAuth) ? '1' : (r.requireSession || controller.requireSession) ? '2' : r.metadata.label === 'AuthServer' ? '3' :'0'})
 
                 const pathParams = getPathParamList(r.route)
 
@@ -194,4 +192,6 @@ export const swaggerDocComposer = (swaggerDocument: any) => {
         'serverAuth': { type: 'apiKey', name: 'api-secret', in: 'header' },
         'kerLocker': { type: 'apiKey', name: 'api-token', in: 'header' }
     }
+    
+    return serverInfo
 }
