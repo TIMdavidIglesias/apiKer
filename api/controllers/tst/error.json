@@ -1,0 +1,76 @@
+[
+  {
+    "name": "ERR_TST1_1",
+    "publicMessage": "ERR_TST1_1",
+    "errorCode": 401,
+    "message": "ERR_TST1_1",
+    "additionalInfo": "ERR_TST1_1"
+  },
+  {
+    "name": "ERR_TST1_2",
+    "publicMessage": "ERR_TST1_2",
+    "errorCode": 400,
+    "message": "ERR_TST1_2",
+    "additionalInfo": "ERR_TST1_2"
+  },
+  {
+    "name": "ERR_TST1_3",
+    "publicMessage": "ERR_TST1_3",
+    "errorCode": 400,
+    "message": "ERR_TST1_3",
+    "additionalInfo": "ERR_TST1_3"
+  },
+  {
+    "name": "ERR_TST1_4",
+    "publicMessage": "ERR_TST1_4",
+    "errorCode": 400,
+    "message": "ERR_TST1_4",
+    "additionalInfo": "ERR_TST1_4"
+  },
+  {
+    "name": "ERR_TST1_5",
+    "publicMessage": "ERR_TST1_5",
+    "errorCode": 400,
+    "message": "ERR_TST1_5",
+    "additionalInfo": "ERR_TST1_5"
+  },
+  {
+    "name": "ERR_TST1_6",
+    "publicMessage": "ERR_TST1_6",
+    "errorCode": 400,
+    "message": "ERR_TST1_6",
+    "additionalInfo": "ERR_TST1_6"
+  },
+  {
+    "name": "ERR_TST1_7",
+    "publicMessage": "ERR_TST1_7",
+    "errorCode": 400,
+    "message": "ERR_TST1_7",
+    "additionalInfo": "ERR_TST1_7"
+  },
+  {
+    "name": "ERR_TST1_8",
+    "publicMessage": "ERR_TST1_8",
+    "errorCode": 400,
+    "message": "ERR_TST1_8",
+    "additionalInfo": "ERR_TST1_8"
+  },
+  {
+    "name": "ERR_TST1_9",
+    "publicMessage": "ERR_TST1_9",
+    "errorCode": 400,
+    "message": "ERR_TST1_9",
+    "additionalInfo": "ERR_TST1_9"
+  },
+  {
+    "name": "ERR_TST1_10",
+    "publicMessage": "ERR_TST1_10",
+    "errorCode": 400,
+    "message": "ERR_TST1_10",
+    "additionalInfo": "ERR_TST1_10"
+  }
+
+
+
+
+]

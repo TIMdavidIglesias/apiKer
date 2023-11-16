@@ -1,0 +1,71 @@
+[
+  {
+    "name": "ERR_LOGIN_PASSWORD_FAILED",
+    "publicMessage": "Password failed",
+    "errorCode": 400,
+    "message": "Password failed",
+    "additionalInfo": "Password failed"
+  },
+  {
+    "name": "ERR_LOGIN_EMAIL_FAILED",
+    "publicMessage": "Email dues not exist",
+    "errorCode": 400,
+    "message": "Email dues not exist",
+    "additionalInfo": "Email dues not exist"
+  },
+  {
+    "name": "ERR_LOGIN_PASSWORD_PARAM_STRING_MISMATCH",
+    "publicMessage": "Password must be a string",
+    "errorCode": 401,
+    "message": "Password must be a string",
+    "additionalInfo": "Password must be a string"
+  },
+  {
+    "name": "ERR_LOGIN_MISSING_PASSWORD",
+    "publicMessage": "Password required",
+    "errorCode": 400,
+    "message": "Password required",
+    "additionalInfo": "Password required"
+  },
+  {
+    "name": "ERR_LOGIN_PASSWORD_LENGTH_LOW",
+    "publicMessage": "Password required min 8 chars",
+    "errorCode": 400,
+    "message": "Password required min 8 chars",
+    "additionalInfo": "Password required min 8 chars"
+  },
+  {
+    "name": "ERR_LOGIN_PASSWORD_LENGTH_HIGH",
+    "publicMessage": "Password required max 50 chars",
+    "errorCode": 400,
+    "message": "Password required max 50 chars",
+    "additionalInfo": "Password required max 50 chars"
+  },
+  {
+    "name": "ERR_LOGIN_EMAIL_PARAM_STRING_MISMATCH",
+    "publicMessage": "Email must be a string",
+    "errorCode": 400,
+    "message": "Email must be a string",
+    "additionalInfo": "Email must be a string"
+  },
+  {
+    "name": "ERR_LOGIN_MISSING_EMAIL",
+    "publicMessage": "Email missing",
+    "errorCode": 400,
+    "message": "Email missing",
+    "additionalInfo": "Email missing"
+  },
+  {
+    "name": "ERR_LOGIN_EMAIL_UNKNOWN_FORMAT",
+    "publicMessage": "Wrong email input",
+    "errorCode": 400,
+    "message": "Wrong email input",
+    "additionalInfo": "Wrong email input"
+  },{
+    "name": "ERR_LOGIN_REMEMBER_PARAM_BOOLEAN_MISMATCH",
+    "publicMessage": "Remember param  must be boolean",
+    "errorCode": 400,
+    "message": "Remember param  must be boolean",
+    "additionalInfo": "Remember param  must be boolean"
+  }
+]

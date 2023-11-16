@@ -1,0 +1,44 @@
+# Ignore TypeScript configuration files
+tsconfig.json
+tsconfig.*.json
+
+# Ignore compiled JavaScript files
+*.js
+*.js.map
+
+# Ignore build output directories
+dist/
+build/
+
+# Ignore dependency folders
+node_modules/
+
+# Ignore runtime log and error files
+*.log
+*.error
+
+# Ignore text editor backup files
+*~
+
+# Ignore IDE-specific configuration files
+.vscode/
+
+# Ignore local environment files
+.env
+.env.local
+.env.*.local
+
+# Ignore cache files
+.cache/
+
+# Ignore package build files
+package-lock.json
+yarn.lock
+
+# Ignore build output directories
+dist/
+build/
+out/
+
+# Ignore any other files or directories you want to exclude
+.test/
