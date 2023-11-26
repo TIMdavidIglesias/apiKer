@@ -6,12 +6,6 @@ export const Signup = async (args: any) => {
     const res = args.RESPONSE.getResponse()
     const params = args.REQUEST.getParams() || {}
 
-    // CUSTOM ERROR DEFINER
-    // args.ERROR.defineNewError('ERR_SIGNUP_EMAIL_ALREADY_EXISTS', 401, 'new error defined', 'new error defined', 'additionalInfo')
-    // args.ERROR.throwError('ERR_CUSTOM_NEW_ERROR')
-
-    console.log(1)
-
     const app = res.app
     const now = args.UTILS.TIMER.newTimer()
     const hashPass = await args.UTILS.HASH.getHashedVal(10, params.body['password'])
@@ -28,16 +22,16 @@ export const Signup = async (args: any) => {
             publicName: params.body['email'] + '____',
             allowedAppGroup: app.group,
             registerAppID: app.metadata.appID,
-            maxPermission: app.config.signup.maxPermission,
+            maxPermission: 3,
         }
     }
 
-    // ERR_SIGNUP_EMAIL_ALREADY_EXISTS
     const createUser = await args.GDOCS.create(inputCreateUser)
     if (!createUser) {
         return args.RESULT.dispatch(args.ERROR.newError('ERR_LOGIN_EMAIL_FAILED'))
      }
 
+     // CREATE NEW ACCOUNT
     const inputCreateAccount = {
         alias: 'accounts',
         data: {
@@ -49,7 +43,7 @@ export const Signup = async (args: any) => {
             tt: 'g1ssssss',
             allowedAppGroup: app.group,
             registerAppID: app.metadata.appID,
-            maxPermission: app.config.signup.maxPermission,
+            maxPermission: 3,
         }
     }
 
@@ -58,34 +52,15 @@ export const Signup = async (args: any) => {
         return args.RESULT.dispatch(args.ERROR.newError('ERR_LOGIN_EMAIL_FAILED'))
      }
 
-    const inputSession = {
-        alias: 'session',
-        data: {
-            email: params.body['email'],
-            userID: createUser.id,
-            allowedAppGroup: app.group,
-            registerAppID: app.metadata.appID,
-            accountID: createAccount.id,
-            startTime: now.getDate('ISO'),
-            lastUpdatedTime: now.getDate('ISO'),
-            sessionAliveMins: app.config.session.policy.timeOutMinutes,
-        }
-    }
-
-    const createSession = await args.GDOCS.create(inputSession)
-    if (!createSession) {
-        return args.RESULT.dispatch(args.ERROR.newError('ERR_LOGIN_EMAIL_FAILED'))
-     }
-
     // Session tokenization
     const tk = {
-        sessionID: createSession.id,
         userID: createUser.id,
-        time: now.getDate(),
+        accountID: createAccount.id,
         email: params.body['email'],
     }
 
-    await ApiSession.startNewSession(tk, now, args.RES.res)
+    await args.SESSION.createNewSession(tk, now)
 
-    return args.RESULT.dispatch('')
+    // return session data as response
+    return args.RESULT.dispatch(args.SESSION.getSessionResponse())
 }

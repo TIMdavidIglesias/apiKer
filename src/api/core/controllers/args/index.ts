@@ -44,6 +44,9 @@ import { encrypt } from "../../../../ker/utils/cypher"
 import { gSix } from "../../../../modules/gSix"
 import { Cache } from "../../../../ker/core/cache"
 import { nextTick } from "process"
+import { updateRoute } from "../../router/manager"
+import { IRouterCache } from "../../../models/router/types"
+import { ApiSession } from "../../session"
 
 /**
  * DefaultArgs function provides the default arguments for the execution of dynamic controllers.
@@ -78,6 +81,15 @@ export class DefaultArgs {
             RES: {
                 // getLogDestination: () => { return Cache._env.getLogFilePath() }
                 res: res
+            },
+            SESSION: {
+                createNewSession: (tokenInfo: { [k: string]: any }, timer: ApiTimer | undefined) => { ((res.locals.ApiResponse as ApiResponse).session as ApiSession).createNewSession(tokenInfo, timer) },
+                startSession: (tokenInfo: { [k: string]: any }, timer: ApiTimer | undefined) => { ((res.locals.ApiResponse as ApiResponse).session as ApiSession).startSession(tokenInfo, timer) },
+                getSessionResponse: () => { return((res.locals.ApiResponse as ApiResponse).session as ApiSession).getSessionMetadata()},
+            },
+            REQ: {
+                // getLogDestination: () => { return Cache._env.getLogFilePath() }
+                req: req
             },
             RESULT: {
                 dispatch: (result: any) => { apiResult.dispatch(result) },
@@ -260,6 +272,9 @@ export class DefaultArgs {
                 }, ROUTER: {
                     getAllRoutes: () => {
                         return Cache._router
+                    },
+                    updateRoutesArray: (routerData: IRouterCache) => {
+                        return updateRoute(routerData)
                     }
                 }
             },

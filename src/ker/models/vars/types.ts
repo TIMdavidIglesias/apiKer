@@ -8,10 +8,6 @@ export interface IVarsTracing {
   }
 }
 
-export interface IVarsRequestHeaders {
-  requiredDefaultHeaders: string[]
-}
-
 export interface IVarsSecurity {
   discardCrossedRequests: boolean,
   saltGenerationRoundsNumber: number,
@@ -36,8 +32,10 @@ export interface IVarsDocumentation {
 }
 
 export interface IVarsSession {
-  defaultControllerPermissionLevel: number,
   defaultAccountPermissionLevel: number
+  sessionTimeoutMinutes: number
+  rememberSessionTimeoutDays: number
+  allowRememberSession: boolean
 }
 
 export interface IVarsCache {

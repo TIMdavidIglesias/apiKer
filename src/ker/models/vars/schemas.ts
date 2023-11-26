@@ -3,7 +3,6 @@ import { Schema } from "mongoose";
 import {
   IVarsCache,
   IVarsDocumentation,
-  IVarsRequestHeaders,
   IVarsSecurity,
   IVarsSecurityProxy,
   IVarsSession,
@@ -46,8 +45,10 @@ const apiVarsDocumentationSchema = new Schema<IVarsDocumentation>({
 }, { _id: false });
 
 const apiVarsSessionSchema = new Schema<IVarsSession>({
-  defaultControllerPermissionLevel: { type: Number, required: true },
   defaultAccountPermissionLevel: { type: Number, required: true },
+  sessionTimeoutMinutes: { type: Number, required: true },
+  rememberSessionTimeoutDays: { type: Number, required: false },
+  allowRememberSession: { type: Boolean, required: true },
 }, { _id: false });
 
 export const VarsSc: Schema = new Schema<IVarsCache>({

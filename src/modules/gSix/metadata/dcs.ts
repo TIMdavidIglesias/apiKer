@@ -493,13 +493,6 @@ export const _dcs: IGDoc[] = [{
                 }
             }
         },
-        fingerPrint: {
-            type: 'String', options: {
-                required: false, param: 'fingerPrint', apiDoc: {
-                    description: 'phoneType'
-                }
-            }
-        },
         startTime: {
             type: 'Date', options: {
                 required: true, param: 'startTime', apiDoc: {
@@ -532,6 +525,20 @@ export const _dcs: IGDoc[] = [{
             type: 'String', options: {
                 required: false, param: 'registerAppID', apiDoc: {
                     description: 'phoneType'
+                }
+            }
+        },
+        permissionLevel: {
+            type: 'Number', options: {
+                required: false, param: 'permissionLevel', apiDoc: {
+                    description: 'permission level for the session'
+                }
+            }
+        },
+        _requestHistory: {
+            type: 'String', options: {
+                required: false, param: 'requestHistory', apiDoc: {
+                    description: 'requestHistory'
                 }
             }
         },

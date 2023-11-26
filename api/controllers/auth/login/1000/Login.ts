@@ -35,45 +35,46 @@ export const Login = async (args: any) => {
     const app = args.CACHE.APPS.getAppByRequest()
 
     // reading session document
-    const inputReadSession = {
-        alias: 'session',
-        query: 'lookUpByUserID',
-        criteria: {
-            registerAppID: app.metadata.appID,
-            userID: registeredUser._id.toString('hex'),
-        }
-    }
+    // const inputReadSession = {
+    //     alias: 'session',
+    //     query: 'lookUpByUserID',
+    //     criteria: {
+    //         registerAppID: app.metadata.appID,
+    //         userID: registeredUser._id.toString('hex'),
+    //     }
+    // }
 
-    // ERR_SIGNUP_EMAIL_ALREADY_EXISTS
-    const userSession = await args.GDOCS.read(inputReadSession, 1, true)
+    // // ERR_SIGNUP_EMAIL_ALREADY_EXISTS
+    // const userSession = await args.GDOCS.read(inputReadSession, 1, true)
 
 
     const now = args.UTILS.TIMER.newTimer()
 
-    const inputUpdateSession = {
-        alias: 'session',
-        query: 'lookUpByUserID',
-        data: {
-            lastUpdatedTime: now.getDate('ISO'),
-        },
-        criteria: {
-            registerAppID: app.metadata.appID,
-            userID: registeredUser.id,
-        }
-    }
+    // const inputUpdateSession = {
+    //     alias: 'session',
+    //     query: 'lookUpByUserID',
+    //     data: {
+    //         lastUpdatedTime: now.getDate('ISO'),
+    //     },
+    //     criteria: {
+    //         registerAppID: app.metadata.appID,
+    //         userID: registeredUser.id,
+    //     }
+    // }
 
-    // ERR_SIGNUP_EMAIL_ALREADY_EXISTS
-    const updateSession = await args.GDOCS.update(inputUpdateSession)
+    // // ERR_SIGNUP_EMAIL_ALREADY_EXISTS
+    // const updateSession = await args.GDOCS.update(inputUpdateSession)
 
     const tk = {
-        sessionID: userSession.id,
         userID: registeredUser.id,
         time: now.getDate(),
         email: params.body['email'],
     }
 
-    await ApiSession.startNewSession(tk, now, args.RES.res)
+    // const session =  await new ApiSession(args.REQUEST.REQ,args.REQUEST.RES)
+    // controller starts new session
+    args.SESSION.startSession(tk, now)
 
-    return args.RESULT.dispatch('')
+    return args.RESULT.dispatch(args.SESSION.getSessionResponse())
 
 }

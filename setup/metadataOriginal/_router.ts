@@ -2,133 +2,6 @@ import { IRouterCache } from "../../src/api/models/router/types"
 
 export const _router: IRouterCache[] = [
     {
-        route: "/auth/AuthServerTst",
-        CORS: false,
-        metadata: {
-            label: 'AuthServerTst',
-            tag: 'AuthServerTst'
-        },
-        controllers: {
-            GET: {
-                controllerName: 'GET',
-                controllerPath: 'AuthServerTst_path',
-                controllerVersion: 'AuthServerTst_version',
-                apiDoc: {
-                    summary: 'AuthServerTst_summary',
-                    description: 'AuthServerTst_description',
-                    operationId: 'AuthServerTst_operationId',
-                    responses: [{
-                        defType: 'response',
-                        description: 'AuthServerTst_description',
-                        code: 200,
-                        content: ['application/json'],
-                        params: [
-                            {
-                                name: "token",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "date",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "appID",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "timeoutMins",
-                                paramType: { val: 'integer', format: 'int64' },
-                            }, {
-                                name: "origin",
-                                paramType: { val: 'string' },
-                            },
-                        ]
-                    },
-                    {
-                        defType: 'error',
-                        description: 'Input data error',
-                        errorList: ['ERR_LOGIN_EMAIL_FAILED', 'ERR_LOGIN_PASSWORD_FAILED'],
-                    }],
-                },
-            },
-            POST: {
-                controllerName: 'POST',
-                controllerPath: 'AuthServerTst_path',
-                controllerVersion: 'AuthServerTst_version',
-                apiDoc: {
-                    summary: 'AuthServerTst_summary',
-                    description: 'AuthServerTst_description',
-                    operationId: 'AuthServerTst_operationId',
-                    responses: [{
-                        defType: 'response',
-                        description: 'AuthServerTst_description',
-                        code: 200,
-                        content: ['application/json'],
-                        params: [
-                            {
-                                name: "token",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "date",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "appID",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "timeoutMins",
-                                paramType: { val: 'integer', format: 'int64' },
-                            }, {
-                                name: "origin",
-                                paramType: { val: 'string' },
-                            },
-                        ]
-                    },
-                    {
-                        defType: 'error',
-                        description: 'Input data error',
-                        errorList: ['ERR_LOGIN_EMAIL_FAILED', 'ERR_LOGIN_PASSWORD_FAILED'],
-                    }],
-                },
-            },
-            DELETE: {
-                controllerName: 'DELETE',
-                controllerPath: 'AuthServerTst_path',
-                controllerVersion: 'AuthServerTst_version',
-                apiDoc: {
-                    summary: 'AuthServerTst_summary',
-                    description: 'AuthServerTst_description',
-                    operationId: 'AuthServerTst_operationId',
-                    responses: [{
-                        defType: 'response',
-                        description: 'AuthServerTst_description',
-                        code: 200,
-                        content: ['application/json'],
-                        params: [
-                            {
-                                name: "token",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "date",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "appID",
-                                paramType: { val: 'string' },
-                            }, {
-                                name: "timeoutMins",
-                                paramType: { val: 'integer', format: 'int64' },
-                            }, {
-                                name: "origin",
-                                paramType: { val: 'string' },
-                            },
-                        ]
-                    },
-                    {
-                        defType: 'error',
-                        description: 'Input data error',
-                        errorList: ['ERR_LOGIN_EMAIL_FAILED', 'ERR_LOGIN_PASSWORD_FAILED'],
-                    }],
-                },
-            }
-        }
-    },
-    {
         route: "/auth/authorize",
         CORS: false,
         metadata: {
@@ -145,7 +18,6 @@ export const _router: IRouterCache[] = [
                     description: 'Get a new token to pass the auth checkpoint and open one session',
                     operationId: 'Auth',
                     responses: [{
-                        defType: 'response',
                         description: 'Success',
                         code: 200,
                         content: ['application/json'],
@@ -156,20 +28,19 @@ export const _router: IRouterCache[] = [
                             }, {
                                 name: "date",
                                 paramType: { val: 'string' },
-                            }, {
+                            },{
                                 name: "appID",
                                 paramType: { val: 'string' },
-                            }, {
+                            },{
                                 name: "timeoutMins",
-                                paramType: { val: 'integer', format: 'int64' },
-                            }, {
+                                paramType: { val: 'integer',format: 'int64' },
+                            },{
                                 name: "origin",
                                 paramType: { val: 'string' },
                             },
                         ]
                     },
                     {
-                        defType: 'error',
                         description: 'Input data error',
                         errorList: ['ERR_LOGIN_EMAIL_FAILED', 'ERR_LOGIN_PASSWORD_FAILED'],
                     }],
@@ -228,12 +99,10 @@ export const _router: IRouterCache[] = [
                         content: ['application/json'],
                     },
                     responses: [{
-                        defType: 'response',
                         description: 'Success',
                         code: 200,
                     },
                     {
-                        defType: 'error',
                         description: 'Input data error',
                         errorList: ['ERR_LOGIN_EMAIL_FAILED', 'ERR_LOGIN_PASSWORD_FAILED'],
                     }],
@@ -310,12 +179,10 @@ export const _router: IRouterCache[] = [
                     },
                     responses: [
                         {
-                            defType: 'response',
                             description: 'Success',
                             code: 200,
                         },
                         {
-                            defType: 'error',
                             errorList: ['ERR_SIGNUP_EMAIL_ALREADY_EXISTS', 'ERR_CREATING_NEW_USER',
                                 'ERR_CREATING_NEW_ACCOUNT', 'ERR_CREATING_NEW_SESSION'],
                         }
@@ -345,12 +212,10 @@ export const _router: IRouterCache[] = [
                     operationId: 'DbStatus',
                     responses: [
                         {
-                            defType: 'response',
                             description: 'Success',
                             code: 200,
                         },
                         {
-                            defType: 'error',
                             errorList: ['ERR_SIGNUP_EMAIL_ALREADY_EXISTS'],
                         }
                     ]
@@ -388,7 +253,6 @@ export const _router: IRouterCache[] = [
                     operationId: 'DbStatusID',
                     responses: [
                         {
-                            defType: 'response',
                             description: 'Success',
                             code: 200,
                             headers: {
@@ -400,7 +264,6 @@ export const _router: IRouterCache[] = [
                             }
                         },
                         {
-                            defType: 'error',
                             errorList: ['ERR_SIGNUP_EMAIL_ALREADY_EXISTS'],
                         }
                     ]
@@ -411,8 +274,7 @@ export const _router: IRouterCache[] = [
             tag: 'Databases'
         },
 
-    },
-    {
+    },    {
         route: "/cfg/createNewDatabase",
         requireSession: true,
         requireAuth: false,
@@ -438,7 +300,6 @@ export const _router: IRouterCache[] = [
                     operationId: 'DbStatusID',
                     responses: [
                         {
-                            defType: 'response',
                             description: 'Success',
                             code: 200,
                             headers: {
@@ -450,95 +311,6 @@ export const _router: IRouterCache[] = [
                             }
                         },
                         {
-                            defType: 'error',
-                            errorList: ['ERR_SIGNUP_EMAIL_ALREADY_EXISTS'],
-                        }
-                    ]
-                },
-            }
-        }, metadata: {
-            label: 'Databases',
-            tag: 'Databases'
-        },
-
-    },
-    {
-        route: "/cfg/getRouteList",
-        requireSession: true,
-        requireAuth: false,
-        CORS: true,
-        minPermissionLevel: 3,
-        controllers: {
-            GET: {
-                controllerName: 'GetRouteList',
-                controllerPath: 'cfg/routes',
-                controllerVersion: '1000',
-                // usingNativeCORS: true,
-                apiDoc: {
-                    summary: 'Get the available routes metadata',
-                    description: 'Get the metadata for all the routes present',
-                    operationId: 'RoutesAll',
-                    responses: [
-                        {
-                            defType: 'response',
-                            description: 'Success',
-                            code: 200,
-                            headers: {
-                                AuthToken: {
-                                    description: 'Auth token session',
-                                    schema:
-                                        { type: 'string' }
-                                }
-                            }
-                        },
-                        {
-                            defType: 'error',
-                            errorList: ['ERR_SIGNUP_EMAIL_ALREADY_EXISTS'],
-                        }
-                    ]
-                },
-            }
-        }, metadata: {
-            label: 'Databases',
-            tag: 'Databases'
-        },
-
-    },
-    {
-        route: "/cfg/saveRouterChanges",
-        requireSession: true,
-        requireAuth: false,
-        CORS: true,
-        CSRF: true,
-        minPermissionLevel: 4,
-        controllers: {
-            POST: {
-                controllerName: 'UpdateRouterList',
-                controllerPath: 'cfg/routes',
-                controllerVersion: '1000',
-                requiredParams: [
-                    {
-                        name: "routers",
-                        location: 'body',
-                        example: '',
-                        validation: {
-                            paramType: { val: 'array', error: 'ERR_LOGIN_PARAM_ARRAY_MISMATCH' },
-                            isRequired: { val: true, error: 'ERR_LOGIN_MISSING_PASSWORD' },
-                        },
-                    }],
-                apiDoc: {
-                    summary: 'Update the full list from a Router array',
-                    description: 'Set a new router list updated from a Router array',
-                    operationId: 'UpdateRouterArray',
-                    responses: [
-                        {
-                            defType: 'response',
-                            description: 'Success',
-                            code: 200,
-
-                        },
-                        {
-                            defType: 'error',
                             errorList: ['ERR_SIGNUP_EMAIL_ALREADY_EXISTS'],
                         }
                     ]

@@ -3,7 +3,6 @@ import { Schema } from "mongoose";
 import {
   IAppsAppAuthorization,
   IAppsCache,
-  IAppsConfig,
   IAppsConfigCPController,
   IAppsConfigSession,
   IAppsConfigSessionPolicy,
@@ -13,17 +12,7 @@ import {
 } from "./types";
 
 const apiSessionPolicySchema: Schema = new Schema<IAppsConfigSessionPolicy>({
-  onExpiredToken: { type: String, required: true },
-  requireFingerPrint: { type: Boolean, required: false },
   timeOutMinutes: { type: Number, required: true },
-  rememberSession: {
-    type: {
-      allow: { type: Boolean, required: true },
-      hoursTimeOut: { type: Number, required: true },
-      param: { name: { type: String, required: true }, location: { type: String, required: true } }
-    }, required: false
-  }
-  ,
 }, { _id: false });
 
 const apiAccountTypeSchema: Schema = new Schema<IAppsConfigSignupAccountTypes>({
@@ -38,22 +27,14 @@ const apiSessionControllerSchema: Schema = new Schema<IAppsConfigCPController>({
 }, { _id: false });
 
 const apiSessionSchema: Schema = new Schema<IAppsConfigSession>({
-  usingServerCheckpoint: { type: Boolean, required: false },
-  fingerPrintHeaderName: { type: String, required: false },
   sessionTokenName: { type: String, required: false },
   CSRFTokenHeaderName: { type: String, required: true },
   policy: { type: apiSessionPolicySchema, required: true },
-  checkPointController: { type: apiSessionControllerSchema, required: true }
 }, { _id: false });
 
 const apiSignupSchema: Schema = new Schema<IAppsConfigSignup>({
   accountTypeDefaultID: { type: Number, required: true },
   accountTypes: { type: [apiAccountTypeSchema], required: true },
-}, { _id: false });
-
-const apiConfigSchema: Schema = new Schema<IAppsConfig>({
-  session: { type: apiSessionSchema, required: true }, // Utiliza el esquema sessionSchema que definimos anteriormente
-  signup: { type: apiSignupSchema, required: true },
 }, { _id: false });
 
 const apiMetadataSchema: Schema = new Schema<IAppsMetadata>({
@@ -78,11 +59,9 @@ export const appsSC: Schema = new Schema<IAppsCache>({
   blackListedHosts: { type: [String], required: false },
   hostListPriority: { type: String, required: false },
   useHostListFilter: { type: Boolean, required: false },
-  // virtualServer: { type: apiVirtualServerSchema, required: true },
   adminEmail: { type: String, required: true },
   applicationSecretToken: { type: String, required: true },
   encryptionKey: { type: String, required: true },
   applicationSecretTokenRefresh: { type: String, required: true },
-  config: { type: apiConfigSchema, required: true },
   authorization: { type: apiAppAuth, required: true },
 });

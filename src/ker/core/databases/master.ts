@@ -59,6 +59,14 @@ export class MasterDatabase {
         }
     }
 
+    public static async updateDocument(model: typeof Model, limit: number = 0, criteria: any = {}, dataUpdated: any = {}) {
+        try {
+            await MasterDatabase.masterAPIConnection.updateDocument(model, limit, criteria, dataUpdated);
+        } catch (exception) {
+            throw exception
+        }
+    }
+
     public static async deleteDocument(model: typeof Model) {
         try {
             await MasterDatabase.masterAPIConnection.deleteDocument(model);

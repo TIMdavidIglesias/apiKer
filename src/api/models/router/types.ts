@@ -41,16 +41,15 @@ export interface IRouterController {
     controllerVersion: string,
     CORS?: boolean,
     CSRF?: boolean,
-    requiredHeaders?: string[],
     requiredParams?: IRouterRequiredParams[],
     apiDoc?: IRouterApiDocs
 }
 
 export interface IRouterRequiredParams {
     name: string
-    items?: any
+    enum?:any[],
     location: 'query' | 'body' | 'header' | 'cookie' | 'path'
-    example?: string,
+    example?: string | boolean | number | object | Array<any>,
     validation: IRouterParamValidationProps,
 }
 
@@ -65,6 +64,7 @@ export interface IRouterApiDocs {
     },
     responses:
     ({
+        defType:'response',
         description?: string,
         code: number,
         headers?: any,
@@ -72,6 +72,8 @@ export interface IRouterApiDocs {
         params?: any,
     } |
     {
+        defType:'error',
+        description?: string,
         errorList: string[],
     })[]
 }

@@ -6,6 +6,7 @@ export interface IEnv {
     portAlternative?: number,
     hostName?: string,
     serverDomain?: string,
+    usingSSL?: boolean,
     ssl?: {
       privateKey: string,
       certificate: string,

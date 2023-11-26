@@ -1,10 +1,25 @@
 export const klkServer = {
-    port:6000,
+    // Port on which the Express app will listen
+    port: 6000,
+
+    // Hostname for the Express app
     hostName: 'localhost',
+
+    // URL of the kerLocker server for authentication
     kerLockerURL: 'https://api.heptacore.org',
+
+    // Route for the authentication endpoint
     authRoute: '/auth/authorize',
+
+    // Header name for the secret token used in authentication requests
     secretTokenHeaderName: 'api-secret',
-    secretToken: '7Nk2hDwR8sUvF1jXqO3lYpZ3AqN4jF5kT1iJrM7lC6zS4dA8kGhU6lC4kV3aL9x',
+
+    // Secret token used for authentication with kerLocker
+    secretToken: 'DEPCzZEDEpCt6gAs6wQaWgrxkBBKg0WKg9xsfEEz3Qn9eFgyvMdqQOUJQrnwjftj',
+
+    // Refresh interval for obtaining a new authentication token (in minutes)
     refreshMins: 10,
-    allowedOrigin:'https://timdevelopers.com'
+
+    // Allowed origin for CORS (Cross-Origin Resource Sharing)
+    allowedOrigin: 'https://timdevelopers.com'
 }

@@ -1,12 +1,6 @@
-/**
- * ApiErrorGlossary
- * -------------------------
- * This class manages the API error glossary, which contains error definitions for various API errors.
- * It provides methods to load default error definitions and to retrieve error definitions based on error names.
- */
-
-const fs = require('fs');
-const path = require('path');
+// modules
+import fs from 'fs'
+import path from 'path'
 
 // ERROR & GLOSSARY
 import { IApiErrorDefinition } from '../../../models/error/glossary/types';
@@ -14,6 +8,7 @@ import { IApiErrorDefinition } from '../../../models/error/glossary/types';
 // GLOSSARY DEFINITIONS
 // - core
 import defaultErrorGlossary from './error';
+import envErrorGlossary from '../../env/error';
 import logErrorGlossary from '../../log/error'
 import mongoDatabasesErrorGlossary from '../../databases/mongo/error';
 // - ignition
@@ -57,6 +52,7 @@ export class ErrorGlossary {
         ErrorGlossary.errorGlossary = [
             // default
             ...defaultErrorGlossary,
+            ...envErrorGlossary,
 
             // ignition
             ...apiIgnitionErrorGlossary,
@@ -135,7 +131,7 @@ export class ErrorGlossary {
                 }
             }
         } catch (error) {
-             const errorDetails: IApiError = {
+            const errorDetails: IApiError = {
                 name: 'ERR_DYNAMICALLY_LOADING_CONTROLLER_ERROR_GLOSSARY',
                 exception: error,
                 additionalInfo: ``

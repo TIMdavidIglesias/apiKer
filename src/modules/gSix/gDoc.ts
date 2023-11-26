@@ -66,7 +66,7 @@ export class GDoc {
         const db = new MongoDatabase(this.targetDatabase, this.customDB)
         await db.connect()
         const model = await db.createModelFromSchema(new mongoose.Schema(sch), this.data.database.dbCollection)
-        const readDocumentRes = await db.findDocument(model, limit, cParsed.query, raw);
+        const readDocumentRes = await db.findDocument(model, limit, cParsed.query[0], raw);
         await db.close()
 
         return readDocumentRes
@@ -79,13 +79,13 @@ export class GDoc {
 
         const cParsed = criteriaConverter(this.data.queries.find(q => q.name === queryName) || {}, criteria)
 
-        const r: any = {}
-        valStructure(objSchema, values, r)
+        const r: any = {$set:{},$push:{}}
+        valStructure(objSchema, values, r, '',true)
 
         const db = new MongoDatabase(this.targetDatabase, this.customDB)
         await db.connect()
         const model = await db.createModelFromSchema(new mongoose.Schema(sch), this.data.database.dbCollection)
-        const readDocumentRes = await db.updateDocument(model, 1, cParsed.query, r);
+        const readDocumentRes = await db.updateDocument(model, 1, cParsed.query[0], r);
         await db.close()
     
         return readDocumentRes

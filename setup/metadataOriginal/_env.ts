@@ -25,7 +25,6 @@ export const _env: IEnv = {
         // hostName: 'localhost',
 
         // SSL secure certFiles for non-proxy secure connections
-        // usingSSL: false,
         // ssl:{
         //     privateKey:'',
         //     certificate:'',

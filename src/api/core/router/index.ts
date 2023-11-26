@@ -90,23 +90,6 @@ export const getPathParamList = (path: string) => {
 }
 
 /**
-* Removes leading and trailing slashes from a route string.
-* 
-* @param r The route string to clean.
-* @returns The cleaned route string.
-*/
-const routeCleaning = (r: string) => {
-    if (r.charAt(0) === '/') {
-        r = r.slice(1);
-    }
-
-    if (r.charAt(r.length - 1) === '/') {
-        r = r.slice(0, -1);
-    }
-    return r;
-}
-
-/**
  * Parses a URL by splitting it into segments using slashes and removing query parameters.
  * 
  * @param fullURL The full URL to parse.
@@ -114,16 +97,4 @@ const routeCleaning = (r: string) => {
  */
 export const parseURL = (fullURL: string) => {
     return fullURL.split('?')[0].split('/')
-}
-
-/**
- * Creates an object containing routerIgnoring property based on the provided routerIgnoring array.
- * 
- * @param routerIgnoring The array of routerIgnoring routes.
- * @returns An object with a routerIgnoring property.
- */
-export const routerIgnoringRoutesObject = (routerIgnoring: string[]) => {
-    return {
-        routerIgnoring: routerIgnoring
-    }
 }

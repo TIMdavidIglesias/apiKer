@@ -32,7 +32,7 @@ export const swaggerDocComposer = (swaggerDocument: any) => {
                     path[r.route] = {};
                 }
 
-                serverInfo.push({minPermission: controller.minPermission || Cache._vars.session.defaultControllerPermissionLevel, lockType: (r.requireAuth || controller.requireAuth) ? '1' : (r.requireSession || controller.requireSession) ? '2' : r.metadata.label === 'AuthServer' ? '3' :'0'})
+                serverInfo.push({ minPermission: controller.minPermission || Cache._vars.session.defaultAccountPermissionLevel, lockType: (r.requireAuth || controller.requireAuth) ? '1' : (r.requireSession || controller.requireSession) ? '2' : r.metadata.label === 'AuthServer' ? '3' : '0' })
 
                 const pathParams = getPathParamList(r.route)
 
@@ -49,7 +49,7 @@ export const swaggerDocComposer = (swaggerDocument: any) => {
                             required: true,
                             schema: {
                                 type: rP.validation?.paramType.val || 'string',
-                                format: rP.validation?.paramType.format || ''
+                                format: rP.validation?.paramType.format || '',
                             },
                         })),
                         ...controller.requiredParams
@@ -60,7 +60,9 @@ export const swaggerDocComposer = (swaggerDocument: any) => {
                                 required: true,
                                 schema: {
                                     type: p.validation?.paramType.val || 'string',
-                                    format: p.validation?.paramType.format || ''
+                                    format: p.validation?.paramType.format || '',
+                                    enum: p.enum.length > 0 ? p.enum : undefined,
+                                    default:  p.enum.length > 0 ? p.enum[0] : undefined
                                 },
                             })),
                         // ...(r.requireAuth || controller.requireAuth
@@ -192,6 +194,6 @@ export const swaggerDocComposer = (swaggerDocument: any) => {
         'serverAuth': { type: 'apiKey', name: 'api-secret', in: 'header' },
         'kerLocker': { type: 'apiKey', name: 'api-token', in: 'header' }
     }
-    
+
     return serverInfo
 }

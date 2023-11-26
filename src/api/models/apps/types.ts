@@ -9,11 +9,8 @@ export type IAppsVirtualServer = IAppsHostListFiltering
 
 export interface IAppsConfigSession {
     sessionTokenName: string,
-    usingServerCheckpoint?: boolean,
-    fingerPrintHeaderName: string,
     CSRFTokenHeaderName: string,
     policy: IAppsConfigSessionPolicy,
-    checkPointController: IAppsConfigCPController,
 }
 
 export interface IAppsConfigCPController {
@@ -23,14 +20,7 @@ export interface IAppsConfigCPController {
 }
 
 export interface IAppsConfigSessionPolicy {
-    onExpiredToken: string,
-    requireFingerPrint?: boolean,
     timeOutMinutes: number,
-    rememberSession?: {
-        allow: boolean,
-        hoursTimeOut: number,
-        param: { name: string, location: string }
-    },
 }
 
 export interface IAppsConfigSignupAccountTypes {
@@ -44,11 +34,6 @@ export interface IAppsConfigSignup {
     accountTypes: IAppsConfigSignupAccountTypes[]
 }
 
-export interface IAppsConfig {
-    session: IAppsConfigSession,
-    signup: IAppsConfigSignup
-}
-
 export interface IAppsAppAuthorization {
     secretToken: string,
 }
@@ -59,22 +44,18 @@ export interface IApps {
     appName: string,
     group: string,
     allowedOrigin?: string,
-    // virtualServer: IAppsVirtualServer,
     adminEmail: string,
     encryptionKey?: string,
     applicationSecretToken?: string,
     applicationSecretTokenRefresh?: string,
-    config: IAppsConfig,
     authorization?:IAppsAppAuthorization,
     metadata?: IAppsMetadata
 }
 
 export interface IAppsMetadata {
     isActive?: boolean,
-    isDeleted: boolean,
     creationDate: Date,
     updatedDate: Date | undefined,
-    deletionDate: Date | undefined,
     appID?: string
 }
 

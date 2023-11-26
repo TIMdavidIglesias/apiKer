@@ -14,28 +14,48 @@ import { IAppsCache } from "../../models/apps/types";
  */
 export const appGetByRequest = (req: Request | undefined = undefined) => {
     if (req) {
-        const origin = req.headers['origin'] as string
-        return Cache._apps.filter((app: IAppsCache) =>
+        // Extract the origin from the request headers
+        const origin = req.headers['origin'] as string;
+
+        // Find the app that matches the origin
+        return Cache._apps.find((app: IAppsCache) =>
             app.allowedOrigin === origin ||
             app.allowedOrigin + '/' === origin
-        )[0];
+        ) || null;
     } else {
-        return Cache._apps.find((app: IAppsCache) => app.isDefault) as IAppsCache
+        // If no request is provided, return the default app
+        return Cache._apps.find((app: IAppsCache) => app.isDefault) || null;
     }
-
 }
 
-
+/**
+ * Retrieves an app from the cache based on the provided secret token.
+ * 
+ * @param secretToken The secret token associated with the app.
+ * @returns The app that matches the secret token or null if not found.
+ */
 export const appGetBySecretToken = (secretToken: string) => {
-    return Cache._apps.find((app: IAppsCache) => app.authorization?.secretToken === secretToken);
+    return Cache._apps.find((app: IAppsCache) => app.authorization?.secretToken === secretToken) || null;
 }
 
-export const appGetByID= (ID: string) => {
-    return Cache._apps.find((app: IAppsCache) => app.metadata?.appID === ID);
+/**
+ * Retrieves an app from the cache based on the provided app ID.
+ * 
+ * @param ID The app ID.
+ * @returns The app that matches the app ID or null if not found.
+ */
+export const appGetByID = (ID: string) => {
+    return Cache._apps.find((app: IAppsCache) => app.metadata?.appID === ID) || undefined;
 }
 
-export const appGetByOrigin= (origin: string) => {
-    return Cache._apps.find((app: IAppsCache) => app.allowedOrigin === origin);
+/**
+ * Retrieves an app from the cache based on the provided origin.
+ * 
+ * @param origin The allowed origin of the app.
+ * @returns The app that matches the origin or null if not found.
+ */
+export const appGetByOrigin = (origin: string) => {
+    return Cache._apps.find((app: IAppsCache) => app.allowedOrigin === origin) || undefined;
 }
 
 /**
@@ -44,7 +64,7 @@ export const appGetByOrigin= (origin: string) => {
  * @returns The default app or null if not found.
  */
 export const appGetDefault = () => {
-    return Cache._apps.find((app: IAppsCache) => app.isDefault) as IAppsCache;
+    return Cache._apps.find((app: IAppsCache) => app.isDefault) || undefined;
 }
 
 /**
@@ -53,7 +73,7 @@ export const appGetDefault = () => {
  * @returns An array of allowed origins as strings.
  */
 export const appGetAppsAllowedOrigins = () => {
-    return Cache._apps.map((app: IAppsCache) => app.allowedOrigin) as string[];
+    return Cache._apps.map((app: IAppsCache) => app.allowedOrigin) || [];
 }
 
 /**
@@ -62,5 +82,7 @@ export const appGetAppsAllowedOrigins = () => {
  * @returns An array of allowed origins for target doc servers as strings.
  */
 export const appGetDocTargetServers = () => {
-    return Cache._apps.filter((app: IAppsCache) => app.isDefault || app.targetDocServer === true).map((app: IAppsCache) => app.allowedOrigin) as string[];
+    return Cache._apps
+        .filter((app: IAppsCache) => app.isDefault || app.targetDocServer === true)
+        .map((app: IAppsCache) => app.allowedOrigin) || [];
 }

@@ -5,7 +5,7 @@ import { ApiError } from "../../../ker/core/error"
 import { IApiError } from "../../../ker/models/error/types"
 
 // API
-import { IApps } from "../../models/apps/types"
+import { IApps, IAppsMetadata } from "../../models/apps/types"
 // - utils
 import { decrypt, encrypt } from "../../../ker/utils/cypher"
 import { ApiTimer } from "../../../ker/utils/timer"
@@ -18,50 +18,118 @@ import { ApiResponse } from "../response"
 import { swaggerDocComposer } from "../../../modules/swaggerDocs/composer"
 import { IApiSession } from "../../models/session/types"
 import { setCookie } from "../headers"
+import { IRouterCache } from "../../models/router/types"
+import { Cache } from "../../../ker/core/cache"
+import { GDoc } from "../../../modules/gSix/gDoc"
+import { gSix } from "../../../modules/gSix"
 
 export class ApiSession {
-    private rawJWT: string
-    private CSRF: string | undefined
-
-    public tokenInfo: IApiSession | undefined
-
-    private res: Response
     private req: Request
+    private res: Response
+    private rawJWT: string
+    private CSRF: string
+
+    private sessionPermissionLevel: number
+    private responseTokenInfo: { [k: string]: any }
+
+    private tokenInfo: { [k: string]: any }
+    private cookieOptions: { [k: string]: any }
+
+    private now: ApiTimer
 
     constructor(
-        req: Request,
-        res: Response,
-        rawJWT: string,
-        CSRF: string | undefined,
+        req: Request, res: Response
     ) {
+        this.now = new ApiTimer()
         this.req = req
         this.res = res
-        this.rawJWT = rawJWT
-        this.tokenInfo = undefined
-        this.CSRF = CSRF
+        this.responseTokenInfo = {}
+
+        this.tokenInfo = {}
+
+        const apiResponse = (res.locals.ApiResponse as ApiResponse)
+
+        this.sessionPermissionLevel = apiResponse.router.controller?.minPermissionLevel ? apiResponse.router.controller?.minPermissionLevel : apiResponse.router.route?.minPermissionLevel || 3
+
+        const sessionTokenName = Cache._vars.security.kerLockerSessionHeaderName
+        const CSRFTokenName = Cache._vars.security.kerLockerCSRFHeaderName
+
+        this.rawJWT = apiResponse.params.cookie[sessionTokenName] || apiResponse.params.header[sessionTokenName]
+        this.CSRF = apiResponse.params.header[CSRFTokenName]
+
+        this.cookieOptions = {
+            maxAge: Cache._vars.session.sessionTimeoutMinutes * 60 * 1000,
+            path: '/',
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none'
+        }
+    }
+
+    public async createNewSession(tokenInfo: { [k: string]: any }, timer: ApiTimer | undefined = undefined) {
+        const apiResponse = (this.res.locals.ApiResponse as ApiResponse)
+        const app = (apiResponse.app as IApps)
+        this.now = timer || this.now
+        this.tokenInfo = tokenInfo
+
+        const inputSession = {
+            alias: 'session',
+            data: {
+                ...tokenInfo,
+                allowedAppGroup: app.group,
+                registerAppID: (app.metadata as IAppsMetadata).appID,
+                startTime: this.now?.getDateObject(),
+                lastUpdatedTime: this.now?.getDateObject(),
+                sessionAliveMins: Cache._vars.session.sessionTimeoutMinutes,
+                permissionLevel: 3,
+                requestHistory:apiResponse.requestID
+            }
+        }
+
+        const createSession = await new gSix().createRecord(inputSession.alias, inputSession.data)
+        if (!createSession) {
+            const myError: IApiError = {
+                name: 'ERR_ERROR_CREATING_NEW_SESSION',
+            }
+
+            throw new ApiError(myError)
+        }
     }
 
     public async authorizeSessionToken() {
-        const res = (this.res.locals.ApiResponse as ApiResponse)
-        const app = res.app as IApps
+        const apiResponse = (this.res.locals.ApiResponse as ApiResponse)
+        const app = apiResponse.app as IApps
 
         try {
             const secret = app.applicationSecretToken
             this.tokenInfo = await verifyToken(this.rawJWT, secret as string) as IApiSession
 
-            const targetCSRF = this.tokenInfo.CSRF
+            if (apiResponse.router.route?.CSRF || apiResponse.router.controller?.CSRF) {
+                const targetCSRF = this.tokenInfo.CSRF
 
-            if (targetCSRF !== this.CSRF) {
+                if (targetCSRF !== this.CSRF) {
+                    const myError: IApiError = {
+                        name: 'ERR_CSRF_DOES_NOT_MATCH',
+                    }
+
+                    throw new ApiError(myError)
+                }
+            }
+
+            // checks session times
+            this.sessionPermissionLevel = this.tokenInfo.permissionLevel
+            const targetPermision = apiResponse.router.controller?.minPermissionLevel ? apiResponse.router.controller?.minPermissionLevel : apiResponse.router.route?.minPermissionLevel || 3
+            if (targetPermision > this.sessionPermissionLevel) {
+
                 const myError: IApiError = {
-                    name: 'ERR_CSRF_DOES_NOT_MATCH',
+                    name: 'ERR_LOW_PERMISSION_LEVEL',
                 }
 
                 throw new ApiError(myError)
+
             }
 
 
-
-            // checks session times
             const targetSessionTime = this.tokenInfo.time
             const sessionTimeout = this.tokenInfo.timeout
             const timeCheck = targetSessionTime + sessionTimeout * 60 * 1000 //ms
@@ -92,89 +160,106 @@ export class ApiSession {
 
     }
 
-    public static async startNewSession(tokenInfo: any, timer: ApiTimer | undefined = undefined, res: Response) {
-        const app = res.locals.ApiResponse.app as IApps
+    public async startSession(tokenInfo: any, timer: ApiTimer | undefined = undefined) {
+        this.tokenInfo = tokenInfo
 
+        const apiResponse = (this.res.locals.ApiResponse as ApiResponse)
+        const app = (apiResponse.app as IApps)
+
+        this.now = timer || this.now
         const newCSRFToken = Randomizer.RandomString(32)
-        const now = timer ? timer : new ApiTimer()
-        const options = {
-            maxAge: app.config.session.policy.timeOutMinutes * 60 * 1000,
-            path: '/',
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none'
-        }
 
-        const tk = {
+        this.tokenInfo = {
             ...tokenInfo,
             CSRF: newCSRFToken,
-            __time: now.getDate('YYYYMMDDHHmmss'),
-            sessionTime: now.getDateObject(),
-            timeout: app.config.session.policy.timeOutMinutes,
+            __time: this.now.getDate('YYYYMMDDHHmmss'),
+            sessionTime: this.now.getDateObject(),
+            timeout: Cache._vars.session.sessionTimeoutMinutes,
             appID: app.metadata?.appID
         }
 
-        if (app.config.session.policy.requireFingerPrint && res.locals.ApiResponse.param.header.fingerprint) {
-            tk.fingerPrint = encrypt(res.locals.ApiResponse.param.header.fingerprint, app.encryptionKey as string)
-        }
+        this.res.set('CSRF', newCSRFToken);
 
-        // const sT = await this.args.UTILS.TOKENIZER.signToken(tk, app.applicationSecretToken)
-        const sT = await signToken(tk, app.applicationSecretToken as string)
 
-        // if (app.config.session.sessionTokenByCookie === true) {
-        //     this.args.RESPONSE.setCookie('sT', sT)
-        // } else {
+        // const sT = await signToken(tk, app.applicationSecretToken as string)
 
-        const sessionTokenName = app.config.session.sessionTokenName
-        setCookie(res,sessionTokenName, sT, options)
-        setCookie(res,sessionTokenName+'_data', {
-            __time: now.getDate('YYYYMMDDHHmmss'),
-            sessionTime: now.getDateObject(),
-            timeout: app.config.session.policy.timeOutMinutes,
-            appID: app.metadata?.appID
-        }, { ...options, httpOnly: false })
+        // // session cfg
+        // const sessionTokenName = Cache._vars.security.kerLockerSessionHeaderName
+        // const CSRFTokenName = Cache._vars.security.kerLockerCSRFHeaderName
 
-        res.set('CSRF', newCSRFToken);
+        // setCookie(this.res, sessionTokenName, sT, options)
+        // setCookie(this.res, sessionTokenName + '_data', {
+        //     __time: now.getDate('YYYYMMDDHHmmss'),
+        //     sessionTime: now.getDateObject(),
+        //     timeout: Cache._vars.session.sessionTimeoutMinutes,
+        //     appID: app.metadata?.appID
+        // }, { ...options, httpOnly: false })
+
+
     }
 
 
     public async refreshSession(timer: ApiTimer | undefined = undefined) {
-        const res = (this.res.locals.ApiResponse as ApiResponse)
-        const app = res.app as IApps
+        const apiResponse = (this.res.locals.ApiResponse as ApiResponse)
+        const app = apiResponse.app as IApps
 
-        const t = timer || new ApiTimer()
         const newCSRFToken = Randomizer.RandomString(32)
 
-        const now = timer ? timer : new ApiTimer()
-        const options = {
-            maxAge: app.config.session.policy.timeOutMinutes * 60 * 1000,
-            path: '/',
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none'
-        }
-        
-        const tk = {
+        this.now = timer || this.now
+
+        this.tokenInfo = {
             ...(this.tokenInfo || {}),
             CSRF: newCSRFToken,
-            __time: now.getDate('YYYYMMDDHHmmss'),
-            sessionTime: now.getDateObject(),
-            timeout: app.config.session.policy.timeOutMinutes,
+            __time: this.now.getDate('YYYYMMDDHHmmss'),
+            sessionTime: this.now.getDateObject(),
+            timeout: Cache._vars.session.sessionTimeoutMinutes,
             appID: app.metadata?.appID
         }
 
-        const sT = await signToken(tk, app.applicationSecretToken as string)
+        const inputUpdateSession = {
+            alias: 'session',
+            query: 'lookUpByUserID',
+            criteria: {
+                userID: this.tokenInfo.userID
+            },
+            data: {
+                lastUpdatedTime: this.now.getDateObject(),
+                requestHistory:apiResponse.requestID
+            }
+        }
 
-        const sessionTokenName = app.config.session.sessionTokenName
-        setCookie(this.res,sessionTokenName, sT, options)
-        setCookie(this.res,sessionTokenName+'_data', {
-            __time: now.getDate('YYYYMMDDHHmmss'),
-            sessionTime: now.getDateObject(),
-            timeout: app.config.session.policy.timeOutMinutes,
-            appID: app.metadata?.appID
-        }, { ...options, httpOnly: false })
+        // ERR_SIGNUP_EMAIL_ALREADY_EXISTS
+        await new gSix().updateRecord(inputUpdateSession.alias, inputUpdateSession.query, inputUpdateSession.criteria, inputUpdateSession.data)
 
         this.res.set('CSRF', newCSRFToken);
-        return
+    }
+
+    public setSessionResponse = async () => {
+        const apiResponse = (this.res.locals.ApiResponse as ApiResponse)
+        const app = (apiResponse.app as IApps)
+        const applicationSessionToken = app.applicationSecretToken as string
+
+        const sT = await signToken(this.tokenInfo, applicationSessionToken as string)
+
+        // session cfg
+        const sessionTokenName = Cache._vars.security.kerLockerSessionHeaderName
+        const CSRFTokenName = Cache._vars.security.kerLockerCSRFHeaderName
+
+        setCookie(this.res, sessionTokenName, sT, this.cookieOptions)
+        setCookie(this.res, sessionTokenName + '_data', {
+            __time: this.now.getDate('YYYYMMDDHHmmss'),
+            sessionTime: this.now.getDateObject(),
+            timeout: Cache._vars.session.sessionTimeoutMinutes,
+            appID: app.metadata?.appID
+        }, { ...this.cookieOptions, httpOnly: false })
+
+
+    }
+
+    public getSessionMetadata = () => {
+        return {
+            CSRF: this.CSRF,
+            permissionLevel: this.sessionPermissionLevel,
+        }
     }
 }

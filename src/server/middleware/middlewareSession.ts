@@ -1,24 +1,19 @@
 // MODULES
 import { NextFunction, Request, Response } from "express";
-import cors from 'cors'
+
 // API
 import { ApiResponse } from "../../api/core/response";
-import { appGetAppsAllowedOrigins, appGetByID, appGetByOrigin, appGetByRequest } from "../../api/core/apps";
+import { appGetByOrigin } from "../../api/core/apps";
+import { ApiSession } from "../../api/core/session";
 // - types
-import { IRouterCache, IRouterController, IRouterControllersAllowed } from "../../api/models/router/types";
+import { IRouterCache } from "../../api/models/router/types";
 
 // CORE
-import { Cache } from "../../ker/core/cache";
 import { throwMiddlewareErr } from "../error/connectors/middlewareError";
-import { IAppsCache } from "../../api/models/apps/types";
-import { MasterDatabase } from "../../ker/core/databases/master";
-import { KerLockerAuthModel } from "../../api/models/auth/model";
-import { IApiError } from "../../ker/models/error/types";
-import { ApiCommandConsole } from "../../ker/utils/console";
-import { ApiError } from "../../ker/core/error";
-import { IKerLockerTempAuth } from "../../api/models/auth/types";
-import { ApiSession } from "../../api/core/session";
+
+// UTILS
 import { verifyToken } from "../../ker/utils/tokenizer";
+import { Cache } from "../../ker/core/cache";
 
 export const middlewareSession = (async (req: Request, res: Response, next: NextFunction) => {
     // Extract variables from res.locals.ApiResponse
@@ -29,28 +24,35 @@ export const middlewareSession = (async (req: Request, res: Response, next: Next
 
     // CORS managed by ker
     if (newResponse.router.requireSession) {
-        const app = appGetByOrigin(newResponse.router.origin)
+        newResponse.app = appGetByOrigin(newResponse.router.origin)
 
-        if (!app) {
-            return ''
+        if (!newResponse.app) {
+            return throwMiddlewareErr('ERR_EXPIRED_PUBLIC_API_AUTH_TOKEN', ``, res, next)
             // error
         }
 
-        const sessionTokenName = app.config.session.sessionTokenName
+        const sessionTokenName = Cache._vars.security.kerLockerSessionHeaderName
 
-        if (!newResponse.params.cookie[sessionTokenName]) {
+        if (!newResponse.params.cookie[sessionTokenName] && !newResponse.params.header[sessionTokenName]) {
             // error.
-            return ''
+            return 'ERR_NO_SESSION_TOKEN_FOUND'
         }
 
-        const session = new ApiSession(req,
-            res,
-            newResponse.params.cookie[sessionTokenName], ''
+        newResponse.session = new ApiSession(
+            req, res
         )
 
-        const sTInfo = verifyToken(newResponse.params.cookie[sessionTokenName], app.applicationSecretToken as string)
+        // the session gets auth at this point
+       await  newResponse.session.authorizeSessionToken()
 
-        // const sID = sTInfo.sessionID
+
+
+
+
+        // newResponse.session.refreshSession()
+        // const sTInfo = await verifyToken(newResponse.params.cookie[sessionTokenName], app.applicationSecretToken as string)
+
+        // const sID = 1//sTInfo.sessionID
         // const __time = r.auth.tokenInfo.__time
         // // return res.dispatch(sTInfo)
         // const inputReadSession = {

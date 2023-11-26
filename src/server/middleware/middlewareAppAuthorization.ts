@@ -1,68 +1,89 @@
 // MODULES
 import { NextFunction, Request, Response } from "express";
-import cors from 'cors'
-import ipRangeCheck from 'ip-range-check'
+
 // API
 import { ApiResponse } from "../../api/core/response";
-import { appGetAppsAllowedOrigins, appGetByID, appGetByOrigin, appGetByRequest } from "../../api/core/apps";
+import { appGetByID } from "../../api/core/apps";
 // - types
-import { IRouterCache, IRouterController, IRouterControllersAllowed } from "../../api/models/router/types";
+import { IRouterCache } from "../../api/models/router/types";
 
 // CORE
 import { Cache } from "../../ker/core/cache";
-import { throwMiddlewareErr } from "../error/connectors/middlewareError";
-import { IAppsCache } from "../../api/models/apps/types";
 import { MasterDatabase } from "../../ker/core/databases/master";
-import { KerLockerAuthModel } from "../../api/models/auth/model";
-import { IApiError } from "../../ker/models/error/types";
-import { ApiCommandConsole } from "../../ker/utils/console";
-import { ApiError } from "../../ker/core/error";
-import { IKerLockerTempAuth } from "../../api/models/auth/types";
+// - types
 
+// ERROR
+import { throwMiddlewareErr } from "../error/connectors/middlewareError";
+import { IApiError } from "../../ker/models/error/types";
+import { ApiError } from "../../ker/core/error";
+
+// UTILS
+import { ApiCommandConsole } from "../../ker/utils/console";
+
+// AUTH
+import { IKerLockerTempAuth } from "../../api/models/auth/types";
+import { KerLockerAuthModel } from "../../api/models/auth/model";
+import { ApiSession } from "../../api/core/session";
+import { ApiTimer } from "../../ker/utils/timer";
+
+/**
+ * Middleware to manage application authorization.
+ * Verifies public authentication (public API auth token) and handles application authorization.
+ * @param req The Express Request object.
+ * @param res The Express Response object.
+ * @param next The function that calls the next middleware in the chain.
+ */
 export const middlewareAppAuthorization = (async (req: Request, res: Response, next: NextFunction) => {
     // Extract variables from res.locals.ApiResponse
     let newResponse = res.locals.ApiResponse as ApiResponse;
-    let router = newResponse.router
+    let router = newResponse.router;
 
     let route = router.route as IRouterCache;
-    let CORS = route.CORS
+    let CORS = route.CORS;
 
-    // CORS managed by ker
+    // Check if CORS-managed authentication is required by ker
     if (newResponse.router.requireAuth) {
 
-        const apiTokenName = Cache._vars.security.kerLockerPublicAuthHeaderName as string
+        const apiTokenName = Cache._vars.security.kerLockerPublicAuthHeaderName as string;
 
+        // Check if the public API auth header is present in the request
         if (!newResponse.params.header[apiTokenName]) {
-            return throwMiddlewareErr('ERR_NO_API_TOKEN_FOUND', ``, res, next)
+            return throwMiddlewareErr('ERR_PUBLIC_API_AUTH_TOKEN_HEADER_MISSING', ``, res, next);
         }
 
-        let AuthToken: IKerLockerTempAuth | undefined
-        let origin = newResponse.params.header['origin']
+        let AuthToken: IKerLockerTempAuth | undefined;
+        let origin = newResponse.params.header['origin'];
+
         try {
-            AuthToken =   await MasterDatabase.findDocument(KerLockerAuthModel, 1, { token: newResponse.params.header[apiTokenName] })
+            // Find the authentication token in the database
+            AuthToken = await MasterDatabase.findDocument(KerLockerAuthModel, 1, { token: newResponse.params.header[apiTokenName] });
         } catch (exception) {
             const myError: IApiError = {
-                name: 'ERR_RETRIEVING_AUTH',
+                name: 'ERR_LOCATING_AUTH_TOKEN',
                 exception: exception,
             };
 
-            ApiCommandConsole.showConsoleMessage(new ApiError(myError).getErrorSummary(), 3)
+            ApiCommandConsole.showConsoleMessage(new ApiError(myError).getErrorSummary(), 3);
         }
 
+        // Check if the authentication token exists and if the origin matches
         if (!AuthToken || (origin && AuthToken && origin !== Cache._env.connection.serverDomain && origin !== AuthToken.origin)) {
-            return throwMiddlewareErr('ERR_BAD_API_TOKEN', ``, res, next)
+            return throwMiddlewareErr('ERR_BAD_PUBLIC_API_AUTH_TOKEN', ``, res, next);
         }
 
-        newResponse.app = appGetByID(AuthToken.appID)
+        newResponse.app = appGetByID(AuthToken.appID);
 
-        //checking token expiration
-        const limitDate = new Date(AuthToken.date.getTime() + AuthToken.timeoutMins * 60000)
-        const now = new Date();
+        // Check if the token has expired
+        const limitDate = new Date(AuthToken.date.getTime() + AuthToken.timeoutMins * 60000);
+        const now = new ApiTimer()
 
-        if(now > limitDate ){
-            return throwMiddlewareErr('ERR_EXPIRED_API_TOKEN', ``, res, next)
+        if (now.getDateObject() > limitDate) {
+            return throwMiddlewareErr('ERR_EXPIRED_PUBLIC_API_AUTH_TOKEN', ``, res, next);
         }
+
+        newResponse.session = new ApiSession(req ,res);
+        // newResponse.session.refreshSession(now)
     }
 
     return next();
-})
+});

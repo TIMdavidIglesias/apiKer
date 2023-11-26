@@ -14,7 +14,7 @@ import { ApiCommandConsole } from "../../../ker/utils/console";
 import { ApiResult } from "../result";
 
 // - types
-import { IApps } from "../../models/apps/types";
+import { IApps, IAppsCache } from "../../models/apps/types";
 import { IRouterCache, IRouterController } from "../../models/router/types";
 
 
@@ -67,7 +67,7 @@ export class ApiResponse {
 
     // APP
     public appID: string | undefined
-    public app: IApps | undefined
+    public app: IAppsCache | undefined
 
     // IP & CLIENT
     public IP: string
@@ -105,11 +105,12 @@ export class ApiResponse {
     public securityCheckAllowedAppPassed: boolean
     public securityCheckNativeCORSPassed: boolean
 
-
+public requestID: string
 
     constructor(res: Response, route: IRouterCache | undefined) {
         this.res = res
 
+        this.requestID = res.locals.requestID
         this.nowApiTimer = new ApiTimer()
 
         this.requestType = 'api'
@@ -226,50 +227,6 @@ export class ApiResponse {
             requestType: this.requestType,
             inputs: this.params,
             router: this.router,
-            // auth: {
-            //     requireAuthHeader: this.requiredAuthHeader,
-            //     header: this.auth,
-            // },
-            // security: {
-            //     usingProxy: this.usingProxy,
-            //     usingNativeCORS: this.usingNativeCORS,
-            //     usingHostListFiltering: this.requireHostListFiltering,
-            //     checks: {
-            //         allowedMethodPassed: this.allowedMethodPassed,
-            //         securityCheckNativeCORSPassed: this.securityCheckNativeCORSPassed,
-
-            //         securityCheckAllowedAppPassed: this.securityCheckAllowedAppPassed,
-            //         securityCheckHostListFilteringPassed: this.securityCheckHostListFilteringPassed,
-
-            //         securityCheckRequiredDefaultHeadersPased: this.securityCheckRequiredDefaultHeadersPased,
-            //         securityCheckRequiredRouterParamsPased: this.securityCheckRequiredRouterParamsPased,
-            //         securityCheckRequiredRouterHeadersPased: this.securityCheckRequiredRouterHeadersPased,
-            //         securityCheckProxyPassed: this.securityCheckProxyPassed,
-            //         securityCheckRequiredAuthHeadersPased: this.securityCheckRequiredAuthHeadersPased,
-            //     }
-            // },
-            // request: {
-            //     isTerminated: this.isTerminated,
-            //     requestID: `${this.nowApiTimer.getDate()}_${Randomizer.RandomString(10)}`,
-            //     is404: this.is404,
-            //     startTime: this.nowApiTimer.getDate() as number,
-            //     endTime: new ApiTimer().getDate() as number,
-            //     url: this.url,
-            //     headers: this.requestHeaders,
-            //     method: this.method,
-            //     params: { ...this.queryParams, ...this.bodyParams },
-            //     isPublicAccess: !this.requiredAuthHeader,
-            //     IP: this.requestIP,
-            //     origin: this.origin
-            // },
-            // app: {
-            //     appID: this.appID
-            // },
-            // controller: {
-            //     controllerName: this.controller?.controllerName as string,
-            //     controllerPath: this.controller?.controllerName as string,
-            //     controllerVersion: this.controller?.controllerName as string,
-            // },
             response: {
                 code: 200
             }

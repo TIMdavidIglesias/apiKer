@@ -1,29 +1,19 @@
 // modules
-import express, { Request, Response, NextFunction } from "express";
-import compression from "compression";
-import cookieParser from "cookie-parser";
-import cors from 'cors'
-
-// // DOCS
-// import { runDocs } from "../rest/docs";
-
-// CORE
-import { Cache } from "../../ker/core/cache";
+import  { Request, Response, NextFunction } from "express";
 
 // API
 import { ApiResponse } from "../../api/core/response";
-import { appGetAppsAllowedOrigins } from "../../api/core/apps";
 
 // ERROR
 import { ApiError } from "../../ker/core/error";
 
 /**
- * Middleware para manejar errores en las solicitudes.
- * Este middleware toma un error de tipo ApiError y lo convierte en una respuesta de error.
- * @param err El error que se va a manejar.
- * @param req El objeto Request de Express.
- * @param res El objeto Response de Express.
- * @param next La función que llama al siguiente middleware en la cadena.
+ * Middleware for handling errors in requests.
+ * This middleware takes an error of type ApiError and converts it into an error response.
+ * @param err The error to be handled.
+ * @param req The Express Request object.
+ * @param res The Express Response object.
+ * @param next The function that calls the next middleware in the chain.
  */
 export const errorHandler = (err: ApiError, req: Request, res: Response, next: NextFunction) => {
     const newResponse = res.locals.ApiResponse as ApiResponse;

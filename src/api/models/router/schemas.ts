@@ -18,6 +18,7 @@ const mixedArrValSch: Schema = new Schema({ val: [mongoose.Schema.Types.Mixed], 
 
 const apiRouterApiDocResponse: Schema = new Schema({
   description: { type: String, required: false },
+  defType: { type: String, required: true },
   code: { type: Number, required: false },
   headers: { type: Schema.Types.Mixed, required: false },
   content: { type: Schema.Types.Mixed, required: false },
@@ -51,7 +52,7 @@ const apiRouterDocs: Schema = new Schema<IRouterApiDocs>({
 
 const apiRouterRequiredParams: Schema = new Schema<IRouterRequiredParams>({
   name: { type: String, required: true },
-  items: { type: Schema.Types.Mixed, required: false },
+  enum: { type: [Schema.Types.Mixed], required: false },
   location: { type: String, required: true },
   validation: { type: apiRouterRequiredParamsValidationProps, required: true },
   example: { type: String, required: false },
@@ -64,7 +65,6 @@ const apiRouterControllerSchema: Schema = new Schema<IRouterController>({
   CORS: { type: Boolean, required: false },
   CSRF: { type: Boolean, required: false },
   requiredParams: { type: [apiRouterRequiredParams], required: false },
-  requiredHeaders: { type: [String], required: false },
   requireAuth: { type: Boolean, required: false },
   requireSession: { type: Boolean, required: false },
   apiDoc: { type:apiRouterDocs, required: false },

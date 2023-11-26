@@ -10,10 +10,8 @@ export const _vars: IVarsCache = {
     swaggerDocsRoute: '/docs/index',
   },
   session:{
-    defaultAccountPermissionLevel:3,
-    sessionTimeoutMinutes:10,
-    allowRememberSession:true,
-    rememberSessionTimeoutDays:30
+    defaultControllerPermissionLevel:3,
+    defaultAccountPermissionLevel:3
   },
   security: {
     /** Auth protocol to validate and authenticate requests. kerLocker is the default system designed mainly
