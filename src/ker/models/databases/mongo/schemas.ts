@@ -2,7 +2,7 @@
 import { Schema } from "mongoose";
 
 // TYPES
-import { IMongoDatabaseAuth, IMongoDatabaseCache, IMongoDatabaseConnectionOptions, IMongoDatabaseHost, IMongoDatabaseMetadataCache } from "./types";
+import { IMongoDatabaseAuth, IMongoDatabase, IMongoDatabaseConnectionOptions, IMongoDatabaseHost, IMongoDatabaseMetadata } from "./types";
 
 const authSchema = new Schema<IMongoDatabaseAuth>({
   username: { type: String, required: true },
@@ -20,7 +20,7 @@ const host = new Schema<IMongoDatabaseHost>({
   port: { type: Number, required: true },
 }, { _id: false });
 
-const metadata = new Schema<IMongoDatabaseMetadataCache>({
+const metadata = new Schema<IMongoDatabaseMetadata>({
   dbRole: { type: String, required: false },
   defaultDB: { type: String, required: true },
   dbID: { type: String, required: true },
@@ -29,7 +29,7 @@ const metadata = new Schema<IMongoDatabaseMetadataCache>({
   isActive: { type: Boolean, required: true },
 }, { _id: false });
 
-export const mongoDatabaseSc: Schema = new Schema<IMongoDatabaseCache>({
+export const mongoDatabaseSc: Schema = new Schema<IMongoDatabase>({
   coreDBName: { type: String, required: true },
   host: { type: host, required: true },
   metadata: { type: metadata, required: true },

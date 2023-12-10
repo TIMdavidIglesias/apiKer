@@ -11,7 +11,7 @@ import { MasterDatabase } from "../core/databases/master";
 import { ISetupCache } from "../models/setup/types";
 // - models
 import { VarsModel } from "../models/vars/model";
-import { IMongoDatabaseCache } from "../models/databases/mongo/types";
+import { IMongoDatabase } from "../models/databases/mongo/types";
 import { SetupModel } from "../models/setup/model";
 
 // UTILS
@@ -69,7 +69,7 @@ export const installApiMetadata = async () => {
 
     Log.logAddEntry(LOG_MESSAGES.DATABASES_METADATA_CHECKING, 1);
     // creates the database metadata ready to get ingested
-    let setupDatabaseObject: IMongoDatabaseCache[] = [];
+    let setupDatabaseObject: IMongoDatabase[] = [];
     for (const mongoDatabase of _databases) {
       const newDatabase = await setNewDtabase(mongoDatabase)
       setupDatabaseObject.push(newDatabase);

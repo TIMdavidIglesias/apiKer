@@ -2,7 +2,8 @@ import { IAppsCache } from "../../src/api/models/apps/types";
 
 export const _apps: IAppsCache[] = [
     {
-        blackListedHosts:['185.100.87.192'],
+        blackListedHosts:['0.0.0.0'],
+        whiteListedHosts:['0.0.0.0'],
         useHostListFilter: true,
         hostListPriority : 'blackList',
 

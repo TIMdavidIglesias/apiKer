@@ -17,16 +17,15 @@ export default [
         errorCode: 400,
     }, {
         name: 'ERR_LOCATING_AUTH_TOKEN',
-        message: 'Internal error retrieving the auth token',
-        errorCode: 500,
-    }
-    , {
+        message: 'Bad secret token',
+        errorCode: 400,
+    }, {
         name: 'ERR_BAD_PUBLIC_API_AUTH_TOKEN',
-        message: 'Internal error retrieving the auth token',
+        message: 'Bad secret token',
         errorCode: 400,
     }, {
         name: 'ERR_EXPIRED_PUBLIC_API_AUTH_TOKEN',
-        message: 'Internal error retrieving the auth token',
+        message: 'Bad secret token',
         errorCode: 400,
     }
 ];

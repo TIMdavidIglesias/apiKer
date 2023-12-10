@@ -12,8 +12,10 @@ import { IRouterCache } from "../../api/models/router/types";
 import { throwMiddlewareErr } from "../error/connectors/middlewareError";
 
 // UTILS
-import { verifyToken } from "../../ker/utils/tokenizer";
 import { Cache } from "../../ker/core/cache";
+import { IApps } from "../../api/models/apps/types";
+import { gSix } from "../../modules/gSix";
+import { ApiError } from "../../ker/core/error";
 
 export const middlewareSession = (async (req: Request, res: Response, next: NextFunction) => {
     // Extract variables from res.locals.ApiResponse
@@ -24,45 +26,73 @@ export const middlewareSession = (async (req: Request, res: Response, next: Next
 
     // CORS managed by ker
     if (newResponse.router.requireSession) {
-        newResponse.app = appGetByOrigin(newResponse.router.origin)
-
-        if (!newResponse.app) {
-            return throwMiddlewareErr('ERR_EXPIRED_PUBLIC_API_AUTH_TOKEN', ``, res, next)
-            // error
-        }
 
         const sessionTokenName = Cache._vars.security.kerLockerSessionHeaderName
 
         if (!newResponse.params.cookie[sessionTokenName] && !newResponse.params.header[sessionTokenName]) {
-            // error.
-            return 'ERR_NO_SESSION_TOKEN_FOUND'
+            return throwMiddlewareErr('ERR_SESSION_TOKEN_NOT_FOUND', ``, res, next)
         }
 
-        newResponse.session = new ApiSession(
-            req, res
-        )
+        // new session creation
+        if(!newResponse.session){
+            newResponse.session = new ApiSession(
+                req, res
+            )
+        }
 
         // the session gets auth at this point
-       await  newResponse.session.authorizeSessionToken()
+        newResponse.app = appGetByOrigin(newResponse.router.origin) as IApps
 
+        try {
+            // Retrieving sessionData by inspecting the sessionToken
+            await newResponse.session?.authorizeSessionToken()
+            newResponse.sessionAlive = true
+        } catch (ex) {
+            const exError = (ex as ApiError).getErrorSummary()
+            return throwMiddlewareErr(exError.name, ``, res, next, exError.exception)
+        }
 
+        const sessionTokenData = newResponse.session.tokenInfo
 
+        const inputReadSession = {
+            alias: 'session',
+            query: 'lookUpByUserID',
+            criteria: {
+                userID: sessionTokenData.userID
+            },
+        }
 
+        let session: any
+        try {
+            // Checking the status session and metadata
+            session = await new gSix().readRecord(inputReadSession.alias, inputReadSession.query, inputReadSession.criteria, 1)
+        } catch (ex) {
+            const exError = (ex as ApiError).getErrorSummary()
+            return throwMiddlewareErr(exError.name, ``, res, next, exError.exception)
+        }
 
-        // newResponse.session.refreshSession()
-        // const sTInfo = await verifyToken(newResponse.params.cookie[sessionTokenName], app.applicationSecretToken as string)
+        // checks session times
+        const sessionPermissionLevel = session.permissionLevel
+        const targetPermision = newResponse.router.controller?.minPermissionLevel ?
+            newResponse.router.controller?.minPermissionLevel : newResponse.router.route?.minPermissionLevel || 3
 
-        // const sID = 1//sTInfo.sessionID
-        // const __time = r.auth.tokenInfo.__time
-        // // return res.dispatch(sTInfo)
-        // const inputReadSession = {
-        //     alias: 'session',
-        //     query: 'lookUpByID',
-        //     criteria: {
-        //         sID: sID
-        //     }
-        // }
+         if (targetPermision > sessionPermissionLevel) {
+            return throwMiddlewareErr('ERR_LOW_PERMISSION_LEVEL', ``, res, next)
+        }
+
+        if (newResponse.router.route?.CSRF || newResponse.router.controller?.CSRF) {
+            const targetCSRF = sessionTokenData.CSRF
+
+            const CSRFHeaderName = Cache._vars.security.kerLockerCSRFHeaderName
+            if (targetCSRF !== newResponse.params.header[CSRFHeaderName]) {
+
+                // CSRF Failure
+                return throwMiddlewareErr('ERR_CSRF_DOES_NOT_MATCH', ``, res, next)
+            }
+        }
     }
+
+    newResponse.securityCheckAuthToken = true
 
     return next();
 })

@@ -18,6 +18,7 @@ import { ApiError } from "../../ker/core/error";
 export const errorHandler = (err: ApiError, req: Request, res: Response, next: NextFunction) => {
     const newResponse = res.locals.ApiResponse as ApiResponse;
     newResponse.isError = true;
+    newResponse.success = false;
     newResponse.error = err;
 
     // Tracks error response

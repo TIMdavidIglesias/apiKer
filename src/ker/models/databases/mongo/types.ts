@@ -1,14 +1,6 @@
-export interface IMongoDatabaseCache {
-    coreDBName: string,
-    metadata: IMongoDatabaseMetadataCache,
-    host: IMongoDatabaseHost,
-    auth: IMongoDatabaseAuth,
-    connectionOptions?: IMongoDatabaseConnectionOptions
-}
-
 export interface IMongoDatabase {
     coreDBName: string,
-    metadata: IMongoDatabaseMetadata,
+    metadata?: IMongoDatabaseMetadata,
     host: IMongoDatabaseHost,
     auth: IMongoDatabaseAuth,
     connectionOptions?: IMongoDatabaseConnectionOptions
@@ -24,20 +16,13 @@ export interface IMongoDatabaseHost {
     port: number,
 }
 
-export interface IMongoDatabaseMetadataCache {
-    dbRole?: string,
-    defaultDB: string,
-    dbID: string,
-    creationDate: Date,
-    updatedDate: Date | undefined,
-    isActive?: boolean
-}
-
 export interface IMongoDatabaseMetadata {
     dbRole?: string,
     defaultDB: string,
-    isActive?: boolean,
-    isDeleted?: boolean,
+    dbID?: string,
+    creationDate?: Date,
+    updatedDate?: Date | undefined,
+    isActive?: boolean
 }
 
 export interface IMongoDatabaseConnectionOptions {

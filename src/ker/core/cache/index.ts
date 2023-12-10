@@ -3,7 +3,7 @@
 import { ISetupCache } from "../../models/setup/types";
 import { IVarsCache } from "../../models/vars/types";
 import { IEnvCache } from "../../models/env/types";
-import { IMongoDatabaseCache } from "../../models/databases/mongo/types";
+import { IMongoDatabase } from "../../models/databases/mongo/types";
 import { IAppsCache } from "../../../api/models/apps/types";
 import { IRouterCache } from "../../../api/models/router/types";
 import { gSixDocs } from "../../../modules/gSix/doc";
@@ -17,7 +17,7 @@ export class Cache {
     public static _setup: ISetupCache;
 
     // Stores information about MongoDB databases
-    public static _databases: IMongoDatabaseCache[];
+    public static _databases: IMongoDatabase[];
 
     // Stores information about applications
     public static _apps: IAppsCache[];

@@ -1,28 +1,35 @@
+import { ApiError } from "../../ker/core/error";
+import { IApiError } from "../../ker/models/error/types";
+
 export function criteriaConverter(object: any, objParams: { [k: string]: any } = {}): any {
-   let o: any = {...object}
-   
-    if (typeof o !== 'object' || o === null) {
-        // Si el object no es un object o es nulo, no hacemos nada
-        return o;
-    }
-
-    for (const k in o) {
-        if (o.hasOwnProperty(k)) {
-            if (typeof o[k] === 'object' && o[k] !== null) {
-                o[k] = criteriaConverter(o[k], objParams);
-            } else if (k === 'operator' && o['param']) {
-                const operador = o['operator'];
-                const param = o['param'];
-
-                // Removemos las propiedades 'operator' y 'param' y agregamos la nueva propiedad
-                delete o['operator'];
-                delete o['param'];
-                o['$' + operador] = objParams[param];
-            }
+    function processObject(obj: any): any {
+      if (typeof obj !== 'object') {
+        return obj; 
+      }
+  
+      if (obj.hasOwnProperty('param') && objParams.hasOwnProperty(obj.param)) {
+        if(!objParams[obj.param]) {
+            const errorDetails: IApiError = {
+                name: 'ERR_GSIX_MISSING_QUERY_PARAM',
+                additionalInfo: `${[obj.param]} param missing`,
+            };
+            throw new ApiError(errorDetails);
         }
+        return {[`$${obj.operator}`]:objParams[obj.param]}
+      }
+  
+      const newObj:any = Array.isArray(obj) ? [] : {};
+  
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          newObj[key] = processObject(obj[key]);
+        }
+      }
+  
+      return newObj;
     }
-
-    return o;
+  
+    return processObject(object);
 }
 
 export function typeDefiner(obj: any, o: any) {
@@ -67,7 +74,7 @@ export function valStructure(obj: any, objParams: any, o: any = {}, p: string = 
                             // o['$push'][`${obj[_kk]['tVal']}`] = Array.isArray(a)
                             //     ? { $each: a }
                             //     : a;
-                            o['$push'][p+k] = oo2
+                            o['$push'][p + k] = oo2
                         } else {
                             // if (objParams[obj[_kk]['tVal']]) o[_kk] = objParams[obj[_kk]['tVal']]
                             o[k] = oo2
@@ -78,7 +85,7 @@ export function valStructure(obj: any, objParams: any, o: any = {}, p: string = 
                             // o[_kk] = Array.isArray(a) ? objParams[obj[_kk]['tVal']] : [objParams[obj[_kk]['tVal']]]
 
                             if (isUpdate) {
-                                o['$push'][p+`${_kk}`] = Array.isArray(a)
+                                o['$push'][p + `${_kk}`] = Array.isArray(a)
                                     ? { $each: a }
                                     : a;
                             } else {
@@ -99,14 +106,14 @@ export function valStructure(obj: any, objParams: any, o: any = {}, p: string = 
             } else {
                 const a: any = {}
                 const d: any = {}
-                valStructure(obj[_kk], objParams, a,p+p===''?'':'.'+_kk, isUpdate)
+                valStructure(obj[_kk], objParams, a, p + p === '' ? '' : '.' + _kk, isUpdate)
 
                 if (_kk.startsWith('_')) {
                     if (isUpdate) {
                         // if (Object.keys(a).length > 0) o['$push'][_kk] = a
-                        o['$push'][p+`${_kk}`] = Array.isArray(a)
-                        ? { $each: a }
-                        : a;
+                        o['$push'][p + `${_kk}`] = Array.isArray(a)
+                            ? { $each: a }
+                            : a;
                     } else {
                         if (Object.keys(a).length > 0) o[_kk] = a
 

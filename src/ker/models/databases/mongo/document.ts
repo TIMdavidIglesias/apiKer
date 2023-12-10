@@ -2,6 +2,6 @@
 import { Document } from "mongoose";
 
 // TYPES
-import { IMongoDatabaseCache } from "./types";
+import { IMongoDatabase } from "./types";
 
-export interface databaseDoc extends Document, IMongoDatabaseCache { }
+export interface databaseDoc extends Document, IMongoDatabase { }

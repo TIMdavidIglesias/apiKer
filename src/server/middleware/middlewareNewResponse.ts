@@ -24,9 +24,14 @@ export const middlewareNewResponse = (async (req: Request, res: Response, next: 
     // New request identificatino gets generated
     const newRequestID = new ApiTimer().getDate() + Randomizer.RandomString(16)
     res.locals.requestID = newRequestID
-    
+
     // Instantiate a new response object
     const newResponse = new ApiResponse(res, routeRequest?.route);
+
+    // Set Proxy metadata
+    const proxyFlag = Cache._vars.security.proxy.proxyFlagIdentifier;
+    newResponse.proxyFlag = req.headers[proxyFlag] as string || 'standard';
+    if(proxyFlag) newResponse.securityCheckProxyPassed = true;
 
     // Set parameters in the new response object
     newResponse.params.query = req.query;
@@ -47,11 +52,8 @@ export const middlewareNewResponse = (async (req: Request, res: Response, next: 
         const IPHeaderName = proxyCFG.clientIPHeaderName;
         newResponse.IP = req.headers[IPHeaderName] as string;
     } else {
-        newResponse.IP = req.ip || '0';
+        newResponse.IP = req.ip || '0.0.0.0';
     }
-
-    // Set a flag in the ApiResponse to indicate that the proxy check has passed
-    newResponse.securityCheckProxyPassed = true;
 
     // Continue to the next middleware in the chain
     return next();

@@ -1,7 +1,7 @@
 // CORE
 import { Cache } from "../cache"
 // - types
-import { IMongoDatabaseCache } from "../../models/databases/mongo/types"
+import { IMongoDatabase } from "../../models/databases/mongo/types"
 import { Db } from "mongodb"
 
 /**
@@ -10,8 +10,8 @@ import { Db } from "mongodb"
  * @param dbName The name of the database to retrieve.
  * @returns The database configuration if found, otherwise undefined.
  */
-export const getDatabaseByName = (dbName: string): IMongoDatabaseCache | undefined => {
-    return Cache._databases.find((db: IMongoDatabaseCache) => db.coreDBName === dbName)
+export const getDatabaseByName = (dbName: string): IMongoDatabase | undefined => {
+    return Cache._databases.find((db: IMongoDatabase) => db.coreDBName === dbName)
 }
 
 /**
@@ -19,7 +19,7 @@ export const getDatabaseByName = (dbName: string): IMongoDatabaseCache | undefin
  *
  * @returns An array of all database configurations.
  */
-export const getAllDatabases = (): IMongoDatabaseCache[] => {
+export const getAllDatabases = (): IMongoDatabase[] => {
     return Cache._databases
 }
 

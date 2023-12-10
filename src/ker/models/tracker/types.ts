@@ -23,6 +23,7 @@ export interface ITracker {
 
 export interface ITrackerMetadata {
   requestType: string,
+  proxyFlag: string,
   inputs: {
     query: { [k: string]: any },
     body: { [k: string]: any },
@@ -36,7 +37,6 @@ export interface ITrackerMetadata {
     url: string,
 
     CORS: boolean,
-    discardCrossedRequests: boolean,
 
     requireAuth: boolean
     requireSession: boolean
@@ -46,7 +46,8 @@ export interface ITrackerMetadata {
   error?: ITrackerMetadataError,
   response: {
     code: number
-  }
+  },
+  securityChecks?: ITrackerMetadataSecurityChecks,
 }
 
 export interface ITrackerMetadataResult {
@@ -65,15 +66,12 @@ export interface ITrackerMetadataRequestParams {
 
 export interface ITrackerMetadataSecurityChecks {
   allowedMethodPassed: boolean,
-  securityCheckNativeCORSPassed: boolean,
-  securityCheckAllowedAppPassed: boolean,
-  securityCheckHostListFilteringPassed: boolean,
-
-  securityCheckRequiredDefaultHeadersPased: boolean,
-  securityCheckRequiredRouterParamsPased: boolean
-  securityCheckRequiredRouterHeadersPased: boolean,
   securityCheckProxyPassed: boolean,
-  securityCheckRequiredAuthHeadersPased: boolean,
+  securityCheckRouterIsActive: boolean,
+  securityCheckAuthToken: boolean,
+  securityCheckRequiredRouterParamsPassed: boolean,
+  controllerExecutionSuccess: boolean
+  sessionAlive: boolean,
 }
 
 export interface ITrackerSession {

@@ -4,21 +4,21 @@ import { Model } from "mongoose";
 // CORE
 import { MongoDatabase } from "./mongo";
 // - types
-import { IMongoDatabaseCache } from "../../models/databases/mongo/types";
+import { IMongoDatabase } from "../../models/databases/mongo/types";
 
 export class MasterDatabase {
     // object containing the master database connection object
     public static masterAPIConnection: MongoDatabase
 
     // master database metadata object
-    public static masterDatabase: IMongoDatabaseCache
+    public static masterDatabase: IMongoDatabase
 
     /**
      * Connects to the master database.
      *
      * @param masterDB The configuration for the master database.
      */
-    public static async connect(masterDB: IMongoDatabaseCache): Promise<void> {
+    public static async connect(masterDB: IMongoDatabase): Promise<void> {
         // Store the master database
         MasterDatabase.masterDatabase = masterDB;
 

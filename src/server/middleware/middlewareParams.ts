@@ -41,7 +41,7 @@ export const middlewareParams = (async (req: Request, res: Response, next: NextF
     }
 
     // Set a flag in the ApiResponse to indicate that required router parameters have been successfully passed
-    newResponse.securityCheckRequiredRouterParamsPased = true;
+    newResponse.securityCheckRequiredRouterParamsPassed = true;
 
     // Continue to the next middleware in the chain
     return next();

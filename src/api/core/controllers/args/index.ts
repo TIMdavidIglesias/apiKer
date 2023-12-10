@@ -16,7 +16,7 @@ import { Request, Response, NextFunction } from "express"
 import { getAllDatabases } from "../../../../ker/core/databases"
 import { MongoDatabase } from "../../../../ker/core/databases/mongo"
 // - types
-import { IMongoDatabaseCache } from "../../../../ker/models/databases/mongo/types"
+import { IMongoDatabase } from "../../../../ker/models/databases/mongo/types"
 
 // API
 import { ApiResult } from "../../result"
@@ -95,7 +95,7 @@ export class DefaultArgs {
                 dispatch: (result: any) => { apiResult.dispatch(result) },
             },
             DATABASES: {
-                newDBConnection: (db: IMongoDatabaseCache) => {
+                newDBConnection: (db: IMongoDatabase|undefined = undefined) => {
                     return new MongoDatabase(db)
                 },
             }, ERROR: {
@@ -267,7 +267,7 @@ export class DefaultArgs {
                     }
                 }, DATABASES: {
                     getAllDatabases: () => {
-                        return getAllDatabases() as IMongoDatabaseCache[]
+                        return getAllDatabases() as IMongoDatabase[]
                     }
                 }, ROUTER: {
                     getAllRoutes: () => {

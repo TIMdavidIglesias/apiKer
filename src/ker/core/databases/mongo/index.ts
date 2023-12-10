@@ -7,16 +7,17 @@ import { IApiError } from "../../../models/error/types";
 
 // CORE
 import {
-    IMongoDatabaseCache,
+    IMongoDatabase,
     IMongoDatabaseConnectionOptions
 } from "../../../models/databases/mongo/types";
+import { Cache } from "../../cache";
 
 export class MongoDatabase {
     public static isMasterAlreadydefined: boolean = false
     public connectionString: string;
     private connectionOptions: IMongoDatabaseConnectionOptions | undefined;
     private connection: Connection | undefined;
-    private database: IMongoDatabaseCache;
+    private database: IMongoDatabase;
     private customDB: string;
     private isMaster: boolean = false;
 
@@ -26,13 +27,18 @@ export class MongoDatabase {
      * @param database The database configuration for MongoDB.
      * @param customDB Optional custom database name (default is undefined).
      */
-    constructor(database: IMongoDatabaseCache, customDB: string | undefined = undefined) {
+    constructor(database: IMongoDatabase | undefined = undefined, customDB: string | undefined = undefined) {
         // database in use
-        this.database = database;
+        if (!database) {
+            this.database = Cache._databases.find((db: IMongoDatabase) => db.metadata?.dbRole === 'master') as IMongoDatabase;
+        } else {
+            this.database = database;
+        }
+
         // connections options to connect the database instance
-        this.connectionOptions = database.connectionOptions;
+        this.connectionOptions = this.database.connectionOptions;
         // connection string for mongo connection
-        this.connectionString = MongoDatabase.getConnectionString(database, customDB || database.metadata.defaultDB);
+        this.connectionString = MongoDatabase.getConnectionString(this.database, customDB || this.database.metadata?.defaultDB);
 
         // flags the instance as master connection. Wil use mongoose features
         // this.isMaster = (!MongoDatabase.isMasterAlreadydefined && database.dbRole === 'master') || false;
@@ -40,7 +46,7 @@ export class MongoDatabase {
         // flaggin masterDatabase as active. Will prevent future connections to emulate a master database connection.
         if (!MongoDatabase.isMasterAlreadydefined) {
             // metadata reading for database role
-            if (database.metadata.dbRole === 'master') {
+            if (this.database.metadata?.dbRole === 'master') {
                 this.isMaster = true
                 // will prevent multiple master connections. Master connection must be unique.
                 MongoDatabase.isMasterAlreadydefined = true
@@ -48,7 +54,7 @@ export class MongoDatabase {
         }
 
         //mongo collection for connection instance
-        this.customDB = customDB || database.metadata.defaultDB;
+        this.customDB = customDB || this.database.metadata?.defaultDB || '';
     }
 
     /**
@@ -59,8 +65,8 @@ export class MongoDatabase {
      * @param includeCollectionName Optional flag to include the collection name in the connection string (default is true).
      * @returns The MongoDB connection string.
      */
-    public static getConnectionString(database: IMongoDatabaseCache, collectionName: string | undefined = undefined, includeCollectionName: boolean = true): string {
-        return `mongodb://${database.auth.username}:${database.auth.password}@${database.host.host}:${database.host.port}/${includeCollectionName ? collectionName || database.metadata.defaultDB : ''}`;
+    public static getConnectionString(database: IMongoDatabase, collectionName: string | undefined = undefined, includeCollectionName: boolean = true): string {
+        return `mongodb://${database.auth.username}:${database.auth.password}@${database.host.host}:${database.host.port}/${includeCollectionName ? collectionName || database.metadata?.defaultDB || 'default' : ''}`;
     }
 
     /**
@@ -77,15 +83,15 @@ export class MongoDatabase {
                 const mongooseSlave = require('mongoose')
                 this.connection = await new Promise(async (resolve, reject) => {
                     try {
-                      const connection = await mongooseSlave.createConnection(this.connectionString, connectionOptions || this.database.connectionOptions);
-                      console.log('Conexión exitosa a la base de datos');
-                      resolve(connection);
+                        const connection = await mongooseSlave.createConnection(this.connectionString, connectionOptions || this.database.connectionOptions);
+                        console.log('Conexión exitosa a la base de datos');
+                        resolve(connection);
                     } catch (error) {
-                      console.error('Error al conectar a la base de datos:', error);
-                      reject(error);
+                        console.error('Error al conectar a la base de datos:', error);
+                        reject(error);
                     }
-                  });
-                
+                });
+
             }
         } catch (exception) {
             const errorDetails: IApiError = {
@@ -153,13 +159,7 @@ export class MongoDatabase {
             if (Array.isArray(data)) {
                 return await model.collection.insertMany(data).catch((exception) => { throw exception });
             } else {
-                try {
-                    return await model.create(data);
-                } catch (exception) {
-                    // Tratar la excepción según sea necesario
-                    console.error('Error en insertMany:', exception);
-                    throw exception; // Lanzar la excepción nuevamente para que sea capturada en el catch general
-                }
+                return await model.create(data);
             }
         } catch (exception) {
             const errorDetails: IApiError = {
@@ -211,9 +211,18 @@ export class MongoDatabase {
      */
     public async updateDocument(model: typeof Model, limit: number = 1, criteria: any = {}, dataUpdated: any = {}): Promise<any> {
         try {
+            // Eliminar campos _id y __v de dataUpdated
+            delete dataUpdated._id;
+            delete dataUpdated.__v;
+
             let res;
             res = await model.updateMany(criteria, dataUpdated).limit(limit);
-            if (limit === 1 && Array.isArray(res)) return res[0];
+
+            if (limit === 1 && Array.isArray(res)) {
+                // Si limit es 1 y el resultado es un array, devolver el primer elemento
+                return res[0];
+            }
+
             return res;
         } catch (exception) {
             const errorDetails: IApiError = {
@@ -224,6 +233,7 @@ export class MongoDatabase {
             throw new ApiError(errorDetails);
         }
     }
+
 
     public async deleteDocument(model: typeof Model, criteria: any = {}): Promise<any> {
         try {

@@ -45,7 +45,6 @@ export const middlewareCheckRouteController = (async (req: Request, res: Respons
 
     // Determine if CORS is required based on route and controller settings
     newResponse.router.CORS = newResponse.router.route?.CORS === true || controller?.CORS === true;
-    newResponse.router.discardCrossedRequests = newResponse.router.CORS && Cache._vars.security.discardCrossedRequests === true;
 
     // Set CORS headers if CORS is required
     if (newResponse.router.CORS) {
@@ -59,6 +58,8 @@ export const middlewareCheckRouteController = (async (req: Request, res: Respons
             return throwMiddlewareErr('ERR_ROUTE_IS_NOT_ACTIVE', '', res, next);
         }
     }
+
+    newResponse.securityCheckRouterIsActive = true
 
     return next();
 });

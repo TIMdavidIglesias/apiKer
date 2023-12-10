@@ -21,7 +21,6 @@ import { IRouterCache } from "../api/models/router/types";
 import { middlewareProxyRequestStatus } from "./middleware/middlewareProxyRequestStatus";
 import { middlewareNewResponse } from "./middleware/middlewareNewResponse";
 import { middlewareCORS } from "./middleware/middlewareCORS";
-import { middlewareFilterList } from "./middleware/middlewareFilterList";
 import { middlewareParams } from "./middleware/middlewareParams";
 import { middlewareControllers } from "./middleware/middlewareControllers";
 import { middlewareReleaseResponse } from "./middleware/middlewareReleaseResponse";

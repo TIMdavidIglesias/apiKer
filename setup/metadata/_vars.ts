@@ -27,9 +27,6 @@ export const _vars: IVarsCache = {
     // static number of rounds for sal generation through hashing passwords
     saltGenerationRoundsNumber: 10,
 
-    // in case of native cors active the request can be stopped to avoid processing the request through the controller
-    discardCrossedRequests: true,
-
     // apiKer can be set up behind a proxy to enroute the requests.  */
     proxy: {
       // in case of having a proxy server pointing to apiKer

@@ -1,5 +1,10 @@
+import { Response } from "express"
+
 export const Login = async (args: any) => {
-    const params = args.REQUEST.getParams()
+    const res = args.RES as Response
+    const apiResponse = res.locals.ApiResponse
+
+    const params = apiResponse.params
 
     // Retrieving params from the request
     const email = params.body['email']
@@ -41,5 +46,5 @@ export const Login = async (args: any) => {
     const response = args.SESSION.getSessionResponse()
 
     // response dispatch
-    return args.RESULT.dispatch(response)
+    return apiResult.dispatch(result) 
 }

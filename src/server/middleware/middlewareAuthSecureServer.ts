@@ -37,6 +37,7 @@ export const middlewareAuthSecureServer = (async (req: Request, res: Response, n
     // Set flags and request type in the ApiResponse
     newResponse.isKLKAuthRequest = true;
     newResponse.requestType = 'auth';
+    newResponse.success = true;
 
     // Retrieve the secret API token from the request headers
     const secretAppToken = req.headers[Cache._vars.security.kerLockerSecretAuthHeaderName as string];
@@ -76,7 +77,7 @@ export const middlewareAuthSecureServer = (async (req: Request, res: Response, n
             name: 'ERR_GENERATING_NEW_AUTH',
             exception: exception,
         };
-
+        newResponse.success = false;
         // Log the error to the console
         ApiCommandConsole.showConsoleMessage(new ApiError(myError).getErrorSummary(), 3);
     }

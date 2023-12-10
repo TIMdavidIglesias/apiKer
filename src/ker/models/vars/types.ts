@@ -9,9 +9,8 @@ export interface IVarsTracing {
 }
 
 export interface IVarsSecurity {
-  discardCrossedRequests: boolean,
   saltGenerationRoundsNumber: number,
-  authProtocol: 'kerLocker' | 'standard' | 'OAuth2'
+  authProtocol: 'kerLocker' | 'standard'
   kerLockerSecretAuthHeaderName: string,
   kerLockerPublicAuthHeaderName: string,
   kerLockerSessionHeaderName: string,

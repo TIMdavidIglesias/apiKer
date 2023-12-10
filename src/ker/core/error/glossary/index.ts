@@ -31,8 +31,9 @@ import { ignitionExceptionHandler } from '../connectors/ignition';
 import { IApiError } from '../../../models/error/types';
 import { ApiError } from '..';
 
-// // AUTH
+// // AUTH & SESSION
 import kerLockerAuthErrorGlossary from '../../../../api/core/auth/error';
+import kerLockerSessionErrorGlossary from '../../../../api/core/session/error';
 
 // MODULES
 // G6
@@ -75,7 +76,8 @@ export class ErrorGlossary {
             // swaggerDocs
             ...swaggerDocsErrorGlossary,
 
-            ...kerLockerAuthErrorGlossary
+            ...kerLockerAuthErrorGlossary,
+            ...kerLockerSessionErrorGlossary
             // ...ApiFormsErrorGlossary,
             // ...kerLockerAuthErrorGlossary
             // ...G6ErrorGlossary

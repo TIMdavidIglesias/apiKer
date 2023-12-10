@@ -231,12 +231,7 @@ export const _dcs: IGDoc[] = [{
         query:
         {
             $and: [
-                { email: { operator: 'eq', param: 'email' } }, // Transacciones con un monto mayor a 1000
-                // {
-                //     $and: [
-                //         { isActive: { operator: 'eq', param: 'isActive' } },    // Transacciones de la categoría 'Compras'
-                //     ]
-                // }
+                { email: { operator: 'eq', param: 'email' } }, 
             ]
         },
 

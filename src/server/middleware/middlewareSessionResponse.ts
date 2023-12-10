@@ -12,8 +12,7 @@ import { IRouterCache } from "../../api/models/router/types";
 import { throwMiddlewareErr } from "../error/connectors/middlewareError";
 
 // UTILS
-import { verifyToken } from "../../ker/utils/tokenizer";
-import { Cache } from "../../ker/core/cache";
+import { ApiError } from "../../ker/core/error";
 
 export const middlewareSessionResponse = (async (req: Request, res: Response, next: NextFunction) => {
     // Extract variables from res.locals.ApiResponse
@@ -27,10 +26,19 @@ export const middlewareSessionResponse = (async (req: Request, res: Response, ne
         newResponse.router.requireSession ||
         newResponse.router.controller?.requireAuth ||
         newResponse.router.controller?.requireSession) {
+
         // at this point session gets renewed and inserted as response
-        (newResponse.router.requireSession ||
-            newResponse.router.controller?.requireSession) &&
-            await (newResponse.session as ApiSession).refreshSession()
+        if (newResponse.router.requireSession || newResponse.router.controller?.requireSession) {
+            try {
+                await (newResponse.session as ApiSession).refreshSession()
+                newResponse.sessionAlive = true
+            } catch (exception) {
+                // Handle exceptions by throwing a middleware error
+                // return throwMiddlewareErr((exception as ApiError).getErrorSummary().name, ``, res, next)
+                const exError = (exception as ApiError).getErrorSummary()
+                return throwMiddlewareErr(exError.name, ``, res, next, exError.exception)
+            }
+        }
 
         await (newResponse.session as ApiSession).setSessionResponse()
     }

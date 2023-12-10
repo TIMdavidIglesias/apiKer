@@ -142,7 +142,7 @@ export const _router: IRouterCache[] = [
                 controllerVersion: 'None',
                 apiDoc: {
                     summary: 'Auth new session',
-                    description: 'Get a new token to pass the auth checkpoint and open one session',
+                    description: 'Get a new token to pass the auth checkpoint and open a session',
                     operationId: 'Auth',
                     responses: [{
                         defType: 'response',
@@ -171,7 +171,8 @@ export const _router: IRouterCache[] = [
                     {
                         defType: 'error',
                         description: 'Input data error',
-                        errorList: ['ERR_LOGIN_EMAIL_FAILED', 'ERR_LOGIN_PASSWORD_FAILED'],
+                        errorList: ['ERR_PUBLIC_API_AUTH_TOKEN_HEADER_MISSING', 'ERR_LOCATING_AUTH_TOKEN'
+                        , 'ERR_BAD_PUBLIC_API_AUTH_TOKEN', 'ERR_EXPIRED_PUBLIC_API_AUTH_TOKEN'],
                     }],
                 },
             }
@@ -333,7 +334,7 @@ export const _router: IRouterCache[] = [
         requireSession: true,
         requireAuth: false,
         CORS: true,
-        minPermissionLevel: 4,
+        minPermissionLevel: 3,
         controllers: {
             GET: {
                 controllerName: 'GetDatabaseStatus',
@@ -367,7 +368,7 @@ export const _router: IRouterCache[] = [
         requireSession: true,
         requireAuth: false,
         CORS: true,
-        minPermissionLevel: 4,
+        minPermissionLevel: 3,
         controllers: {
             GET: {
                 controllerName: 'GetDatabaseStatus',

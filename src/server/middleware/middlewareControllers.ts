@@ -9,6 +9,7 @@ import { IApps } from "../../api/models/apps/types";
 
 // ERROR
 import { throwMiddlewareErr } from "../error/connectors/middlewareError";
+import { ApiError } from "../../ker/core/error";
 
 /**
  * Middleware function for handling API controllers.
@@ -34,7 +35,8 @@ export const middlewareControllers = (async (req: Request, res: Response, next: 
         newResponse.success = controller.result?.success || false;
     } catch (exception) {
         // Handle exceptions by throwing a middleware error
-        return throwMiddlewareErr(exception as string, ``, res, next);
+        newResponse.controllerExecutionSuccess = false
+        return throwMiddlewareErr((exception as ApiError).getErrorSummary().name, ``, res, next)
     }
 
     // Continue to the next middleware in the chain

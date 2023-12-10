@@ -51,12 +51,12 @@ export const middlewareAppAuthorization = (async (req: Request, res: Response, n
             return throwMiddlewareErr('ERR_PUBLIC_API_AUTH_TOKEN_HEADER_MISSING', ``, res, next);
         }
 
-        let AuthToken: IKerLockerTempAuth | undefined;
+        let authToken: IKerLockerTempAuth | undefined;
         let origin = newResponse.params.header['origin'];
 
         try {
             // Find the authentication token in the database
-            AuthToken = await MasterDatabase.findDocument(KerLockerAuthModel, 1, { token: newResponse.params.header[apiTokenName] });
+            authToken = await MasterDatabase.findDocument(KerLockerAuthModel, 1, { token: newResponse.params.header[apiTokenName] });
         } catch (exception) {
             const myError: IApiError = {
                 name: 'ERR_LOCATING_AUTH_TOKEN',
@@ -67,14 +67,14 @@ export const middlewareAppAuthorization = (async (req: Request, res: Response, n
         }
 
         // Check if the authentication token exists and if the origin matches
-        if (!AuthToken || (origin && AuthToken && origin !== Cache._env.connection.serverDomain && origin !== AuthToken.origin)) {
+        if (!authToken || (origin && authToken && origin !== Cache._env.connection.serverDomain && origin !== authToken.origin)) {
             return throwMiddlewareErr('ERR_BAD_PUBLIC_API_AUTH_TOKEN', ``, res, next);
         }
 
-        newResponse.app = appGetByID(AuthToken.appID);
+        newResponse.app = appGetByID(authToken.appID);
 
         // Check if the token has expired
-        const limitDate = new Date(AuthToken.date.getTime() + AuthToken.timeoutMins * 60000);
+        const limitDate = new Date(authToken.date.getTime() + authToken.timeoutMins * 60000);
         const now = new ApiTimer()
 
         if (now.getDateObject() > limitDate) {
@@ -82,7 +82,6 @@ export const middlewareAppAuthorization = (async (req: Request, res: Response, n
         }
 
         newResponse.session = new ApiSession(req ,res);
-        // newResponse.session.refreshSession(now)
     }
 
     return next();

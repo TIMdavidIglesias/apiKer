@@ -24,6 +24,6 @@ export const setCors = () => {
             Cache._vars.security.kerLockerSecretAuthHeaderName,
             Cache._vars.security.kerLockerPublicAuthHeaderName,
             Cache._vars.security.kerLockerCSRFHeaderName], // Specify allowed headers
-        // exposedHeaders: [...Cache._vars.security.exposedHeaders || []], // Specify exposed headers if needed
+        exposedHeaders: [Cache._vars.security.kerLockerCSRFHeaderName], // Specify exposed headers if needed
     });
 }

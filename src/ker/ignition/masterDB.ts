@@ -5,7 +5,7 @@ import { _databases } from "../../../setup/metadata/_databases";
 import { Log } from "../core/log";
 import { MasterDatabase } from "../core/databases/master";
 import { exit } from "process";
-import { IMongoDatabaseCache } from "../models/databases/mongo/types";
+import { IMongoDatabase } from "../models/databases/mongo/types";
 
 const LOG_MESSAGES = {
   DATABASES_FAIL_MASTER_ERROR: "[IGNITION] [DATABASE] -> No master database found",
@@ -22,7 +22,7 @@ const LOG_MESSAGES = {
  */
 export const initializeMasterEnvironmentDatabase = async () => {
   // Check setupData databases file
-  let masterDBObject = _databases.find(db=>db.metadata.dbRole === 'master') as IMongoDatabaseCache
+  let masterDBObject = _databases.find(db=>db.metadata?.dbRole === 'master') as IMongoDatabase
 
   if(!masterDBObject){
     Log.logAddEntry(LOG_MESSAGES.DATABASES_FAIL_MASTER_ERROR, 3);

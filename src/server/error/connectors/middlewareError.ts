@@ -16,13 +16,14 @@ import { IApiError } from "../../../ker/models/error/types";
  * @param res The Express response object.
  * @param next The next function in the Express middleware chain.
  */
-export const throwMiddlewareErr = (err: string, addInfo: string, res: Response, next: NextFunction) => {
+export const throwMiddlewareErr = (err: string, addInfo: string, res: Response, next: NextFunction, exception: any|undefined=undefined) => {
     // Get the ApiResponse from the response locals
     let newResponse = res.locals.ApiResponse as ApiResponse;
 
     // Create an API error object with the provided name and additional information
     const myError: IApiError = {
         name: err,
+        exception: exception,
         additionalInfo: addInfo
     }
 

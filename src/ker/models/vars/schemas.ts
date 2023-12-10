@@ -17,7 +17,6 @@ const apiVarsSecurityProxySchema = new Schema<IVarsSecurityProxy>({
 }, { _id: false });
 
 const apiVarsSecuritySchema = new Schema<IVarsSecurity>({
-  discardCrossedRequests: { type: Boolean, required: true },
   saltGenerationRoundsNumber: { type: Number, required: true },
   authProtocol: { type: String, required: true },
   kerLockerSecretAuthHeaderName: { type: String, required: true },

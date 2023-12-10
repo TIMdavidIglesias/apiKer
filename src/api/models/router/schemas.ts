@@ -68,6 +68,7 @@ const apiRouterControllerSchema: Schema = new Schema<IRouterController>({
   requireAuth: { type: Boolean, required: false },
   requireSession: { type: Boolean, required: false },
   apiDoc: { type:apiRouterDocs, required: false },
+  minPermissionLevel: { type: Number, required: false },
 }, { _id: false });
 
 const apiRouterControllersSchema: Schema = new Schema<IRouterControllersAllowed>({
@@ -101,4 +102,6 @@ export const RouterSC: Schema = new Schema<IRouterCache>({
   CSRF: { type: Boolean, required: false },
   controllers: { type: apiRouterControllersSchema, required: false },
   metadata: { type: apiRouterMetadataSchema, required: true },
+  minPermissionLevel: { type: Number, required: false },
+
 })

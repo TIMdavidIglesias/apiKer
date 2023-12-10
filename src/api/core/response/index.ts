@@ -2,19 +2,17 @@
 import { Response } from "express";
 
 // CORE
-import { Cache } from "../../../ker/core/cache";
 import { MasterDatabase } from "../../../ker/core/databases/master";
 
 // - utils
 import { ApiTimer } from "../../../ker/utils/timer";
-import { Randomizer } from "../../../ker/utils/randomizer";
 import { ApiCommandConsole } from "../../../ker/utils/console";
 
 // API
 import { ApiResult } from "../result";
 
 // - types
-import { IApps, IAppsCache } from "../../models/apps/types";
+import { IAppsCache } from "../../models/apps/types";
 import { IRouterCache, IRouterController } from "../../models/router/types";
 
 
@@ -22,23 +20,18 @@ import { IRouterCache, IRouterController } from "../../models/router/types";
 import { ApiError } from "../../../ker/core/error";
 import { IApiError } from "../../../ker/models/error/types";
 import { ApiSession } from "../session";
-import { boolean } from "yup";
 import { IKerLockerTempAuth } from "../../models/auth/types";
 import { ITracker, ITrackerMetadata } from "../../../ker/models/tracker/types";
 import { TrackerModel } from "../../../ker/models/tracker/model";
 
-
-// import { ITracker, ITrackerMetadata } from "../../models/tracker/types";
-
-// import { KerLocker } from "../../auth/kerLocker";
-// import { TrackerModel } from "../../models/tracker/model";
-
 export class ApiResponse {
+    // proxy
+    public proxyFlag: string
+
     // static
     private nowApiTimer: ApiTimer
 
     public res: Response
-
     public requestType: string
 
     // main request params
@@ -58,7 +51,6 @@ export class ApiResponse {
         controller: IRouterController | undefined,
 
         CORS: boolean,
-        discardCrossedRequests: boolean,
 
         requireAuth: boolean
         requireSession: boolean
@@ -85,30 +77,23 @@ export class ApiResponse {
     public isError: boolean
     public error: ApiError | undefined
 
-
-
-
     public requireHostListFiltering: boolean
-
-    // public fingerPrint: string
 
     // securityChecks
     public allowedMethodPassed: boolean
     public securityCheckProxyPassed: boolean
+    public securityCheckRouterIsActive: boolean
+    public securityCheckAuthToken: boolean
+    public securityCheckRequiredRouterParamsPassed: boolean
 
+    public controllerExecutionSuccess: boolean
+    public sessionAlive: boolean
 
-    public securityCheckRequiredAuthHeadersPased: boolean
-    public securityCheckRequiredDefaultHeadersPased: boolean
-    public securityCheckRequiredRouterHeadersPased: boolean
-    public securityCheckRequiredRouterParamsPased: boolean
-    public securityCheckHostListFilteringPassed: boolean
-    public securityCheckAllowedAppPassed: boolean
-    public securityCheckNativeCORSPassed: boolean
-
-public requestID: string
+    public requestID: string
 
     constructor(res: Response, route: IRouterCache | undefined) {
         this.res = res
+        this.proxyFlag = 'default'
 
         this.requestID = res.locals.requestID
         this.nowApiTimer = new ApiTimer()
@@ -126,7 +111,6 @@ public requestID: string
 
         this.router = {
             CORS: true,
-            discardCrossedRequests: true,
             route: undefined,
             origin: '',
             method: '',
@@ -152,41 +136,21 @@ public requestID: string
         this.auth = undefined
         this.session = undefined
 
-        // auth
-        // this.requireAuth = false
-        // this.CSRF = ''
-        // this.fingerPrint = ''
-        // this.auth = undefined
-
-        // this.origin = ''
-
-        // this.CSRFCheckPassed = false
-        // this.CSRFCheckPassed = false
+        this.securityCheckProxyPassed = false
 
         this.requireHostListFiltering = false
-
-
         this.allowedMethodPassed = true
+        this.securityCheckRouterIsActive = false
+        this.securityCheckAuthToken = false
+        this.securityCheckRequiredRouterParamsPassed = false
+        this.controllerExecutionSuccess = true
 
-        this.securityCheckProxyPassed = false
-        this.securityCheckRequiredAuthHeadersPased = false
-        this.securityCheckNativeCORSPassed = false
-        this.securityCheckRequiredDefaultHeadersPased = false
-        this.securityCheckRequiredRouterHeadersPased = false
-        this.securityCheckRequiredRouterParamsPased = false
-        this.securityCheckHostListFilteringPassed = false
-        this.securityCheckAllowedAppPassed = false
+        this.sessionAlive = false
 
-        this.nowApiTimer = new ApiTimer()
         res.locals.ApiResponse = this
 
         this.result = undefined
     }
-
-    // public is404error() {
-    //     if (!this.router.route) return true
-    //     return false
-    // }
 
     public sendResponse() {
         if (this.isError) {
@@ -222,9 +186,10 @@ public requestID: string
         })
     }
 
-    public async track() {
+    public async track(success: boolean | undefined = undefined) {
         const traceMetaData: ITrackerMetadata = {
             requestType: this.requestType,
+            proxyFlag: this.proxyFlag,
             inputs: this.params,
             router: this.router,
             response: {
@@ -232,9 +197,21 @@ public requestID: string
             }
         }
 
+        if(this.requestType==='api'){
+            traceMetaData.securityChecks= {
+                securityCheckProxyPassed: this.securityCheckProxyPassed,
+                sessionAlive: this.securityCheckProxyPassed,
+                allowedMethodPassed: this.allowedMethodPassed,
+                securityCheckRouterIsActive: this.securityCheckRouterIsActive,
+                securityCheckAuthToken: this.securityCheckAuthToken,
+                securityCheckRequiredRouterParamsPassed: this.securityCheckRequiredRouterParamsPassed,
+                controllerExecutionSuccess: this.controllerExecutionSuccess
+            }
+        }
+
         // new trace
         const trace: ITracker = {
-            success: this.success,
+            success: success || this.success,
             metadata: traceMetaData
         }
 

@@ -1,8 +1,6 @@
 export interface IEnv {
   connection: {
-    // production port for server listening
     portDefault: number,
-    // UAT/test por for non-production purposes
     portAlternative?: number,
     hostName?: string,
     serverDomain?: string,

@@ -3,12 +3,12 @@ import { _dcs } from "./metadata/dcs"
 
 import { IGDoc } from "./models"
 import { criteriaConverter, schemaParser, typeDefiner, valStructure } from "./core"
-import { IMongoDatabaseCache } from "../../ker/models/databases/mongo/types"
+import { IMongoDatabase } from "../../ker/models/databases/mongo/types"
 import { getDatabaseByName } from "../../ker/core/databases"
 import { MongoDatabase } from "../../ker/core/databases/mongo"
 
 export class GDoc {
-    private targetDatabase: IMongoDatabaseCache
+    private targetDatabase: IMongoDatabase
     private alias: string
     private data: IGDoc
     private customDB: string | undefined
@@ -27,14 +27,14 @@ export class GDoc {
         this.data = d
 
         // if (!this.storage.schemas[this.alias]) {
-            // transforms the fields object into useful structure
-            const o:any = {}
-            typeDefiner(this.data.fields, o);
+        // transforms the fields object into useful structure
+        const o: any = {}
+        typeDefiner(this.data.fields, o);
 
-            this.storage.schemas[this.alias] = o
+        this.storage.schemas[this.alias] = o
         // }
 
-        this.targetDatabase = getDatabaseByName(d.database.db) as IMongoDatabaseCache
+        this.targetDatabase = getDatabaseByName(d.database.db) as IMongoDatabase
         this.customDB = d.database.customDB
         // this.db = new MongoDatabase(targetDatabase)
     }
@@ -47,29 +47,38 @@ export class GDoc {
         const sch = { ...objSchema }
         schemaParser(sch)
 
-        const db = new MongoDatabase(this.targetDatabase, this.customDB)
-        await db.connect()
-        const model = await db.createModelFromSchema(new mongoose.Schema(sch), this.data.database.dbCollection)
-        const createDocumentRes = await db.createDocument(model, r);
-        await db.close()
+        try {
+            const db = new MongoDatabase(this.targetDatabase, this.customDB)
+            await db.connect()
+            const model = await db.createModelFromSchema(new mongoose.Schema(sch), this.data.database.dbCollection)
+            const createDocumentRes = await db.createDocument(model, r);
+            await db.close()
 
-        return createDocumentRes
+            return createDocumentRes
+        } catch (ex) {
+            throw ex
+        }
     }
 
-    public async executeReadDocument(queryName: string, criteria: Object = {}, limit: number = 0, raw: boolean=true) {
-        const objSchema = this.storage.schemas[this.alias] 
-        const sch = objSchema 
+    public async executeReadDocument(queryName: string, criteria: Object = {}, limit: number = 0, raw: boolean = true) {
+        const objSchema = this.storage.schemas[this.alias]
+        const sch = objSchema
         schemaParser(sch)
 
-        const cParsed = criteriaConverter(this.data.queries.find(q => q.name === queryName) || {}, criteria)
+        let cParsed: any = {}
+        try {
+            cParsed = criteriaConverter(this.data.queries.find(q => q.name === queryName)?.query || {}, criteria)
 
-        const db = new MongoDatabase(this.targetDatabase, this.customDB)
-        await db.connect()
-        const model = await db.createModelFromSchema(new mongoose.Schema(sch), this.data.database.dbCollection)
-        const readDocumentRes = await db.findDocument(model, limit, cParsed.query[0], raw);
-        await db.close()
+            const db = new MongoDatabase(this.targetDatabase, this.customDB)
+            await db.connect()
+            const model = await db.createModelFromSchema(new mongoose.Schema(sch), this.data.database.dbCollection)
+            const readDocumentRes = await db.findDocument(model, limit, cParsed, raw);
+            await db.close()
 
-        return readDocumentRes
+            return readDocumentRes
+        } catch (ex) {
+            throw ex
+        }
     }
 
     public async executeUpdateDocument(queryName: string, criteria: any = {}, values: Object = {}) {
@@ -77,17 +86,22 @@ export class GDoc {
         const sch = { ...objSchema }
         schemaParser(sch)
 
-        const cParsed = criteriaConverter(this.data.queries.find(q => q.name === queryName) || {}, criteria)
+        let cParsed: any = {}
+        try {
+            cParsed = criteriaConverter(this.data.queries.find(q => q.name === queryName)?.query || {}, criteria)
 
-        const r: any = {$set:{},$push:{}}
-        valStructure(objSchema, values, r, '',true)
+            const r: any = { $set: {}, $push: {} }
+            valStructure(objSchema, values, r, '', true)
 
-        const db = new MongoDatabase(this.targetDatabase, this.customDB)
-        await db.connect()
-        const model = await db.createModelFromSchema(new mongoose.Schema(sch), this.data.database.dbCollection)
-        const readDocumentRes = await db.updateDocument(model, 1, cParsed.query[0], r);
-        await db.close()
-    
-        return readDocumentRes
+            const db = new MongoDatabase(this.targetDatabase, this.customDB)
+            await db.connect()
+            const model = await db.createModelFromSchema(new mongoose.Schema(sch), this.data.database.dbCollection)
+            const readDocumentRes = await db.updateDocument(model, 1, cParsed, r);
+            await db.close()
+
+            return readDocumentRes
+        } catch (ex) {
+            throw ex
+        }
     }
 }

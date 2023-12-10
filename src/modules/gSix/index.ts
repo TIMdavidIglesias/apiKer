@@ -17,7 +17,7 @@ export class gSix {
             const r= new GDoc(alias, this.storage)
             return await r.executeCreateDocument(values)
         } catch (e) {
-            return {
+            throw {
                 name: 'ERR_G6_CREATERECORD',
                 exception: e,
             };
@@ -29,7 +29,7 @@ export class gSix {
             const r= new GDoc(alias, this.storage)
             return await r.executeReadDocument(queryName, values, limit, raw)
         } catch (e) {
-            return {
+            throw {
                 name: 'ERR_G6_READRECORD',
                 exception: e,
             };
@@ -41,7 +41,7 @@ export class gSix {
             const r= new GDoc(alias, this.storage)
             return await r.executeUpdateDocument(queryName, criteria, values)
         } catch (e) {
-            return {
+            throw {
                 name: 'ERR_G6_UPDATERECORD',
                 exception: e,
             };

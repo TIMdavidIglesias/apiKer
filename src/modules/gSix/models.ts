@@ -24,10 +24,8 @@ export interface IGDatabase {
 export interface IGMetadata {
     alias: string,
     isActive: boolean,
-    isDeleted?: boolean,
     creationTime?: number,
     lastUpdateTime?: number,
-    deletionTime?: number,
     GDocName?: string,
     GDocID?: string
 }
