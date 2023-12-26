@@ -1,0 +1,176 @@
+[
+  {
+    "name": "ERR_SIGNUP_EMAIL_ALREADY_EXISTS",
+    "publicMessage": "Email already exists",
+    "errorCode": 401,
+    "message": "Email already exists",
+    "additionalInfo": "Email already exists"
+  },
+  {
+    "name": "ERR_CREATING_NEW_USER",
+    "publicMessage": "Error creating new user",
+    "errorCode": 400,
+    "message": "Error creating new user",
+    "additionalInfo": "Error creating new user"
+  },
+  {
+    "name": "ERR_CREATING_NEW_ACCOUNT",
+    "publicMessage": "Error creating new account",
+    "errorCode": 400,
+    "message": "Error creating new account",
+    "additionalInfo": "Error creating new account"
+  },
+  {
+    "name": "ERR_CREATING_NEW_SESSION",
+    "publicMessage": "Error creating new session",
+    "errorCode": 400,
+    "message": "Error creating new session",
+    "additionalInfo": "Error creating new session"
+  },
+  {
+    "name": "ERR_SIGNUP_PASSWORD_FAILED",
+    "publicMessage": "Password creation failed",
+    "errorCode": 400,
+    "message": "Password creation failed",
+    "additionalInfo": "Password creation failed"
+  },
+  {
+    "name": "ERR_SIGNUP_EMAIL_FAILED",
+    "publicMessage": "Email creation failed",
+    "errorCode": 400,
+    "message": "Email creation failed",
+    "additionalInfo": "Email creation failed"
+  },
+  {
+    "name": "ERR_SIGNUP_FIRST_NAME_FAILED",
+    "publicMessage": "First name creation failed",
+    "errorCode": 400,
+    "message": "First name creation failed",
+    "additionalInfo": "First name creation failed"
+  },
+  {
+    "name": "ERR_SIGNUP_LAST_NAME_FAILED_",
+    "publicMessage": "Last name creation failed",
+    "errorCode": 400,
+    "message": "Last name creation failed",
+    "additionalInfo": "Last name creation failed"
+  },
+
+
+
+
+  {
+    "name": "ERR_SIGNUP_PASSWORD_PARAM_STRING_MISMATCH",
+    "publicMessage": "Password must be a string",
+    "errorCode": 401,
+    "message": "Password must be a string",
+    "additionalInfo": "Password must be a string"
+  },
+  {
+    "name": "ERR_SIGNUP_MISSING_PASSWORD",
+    "publicMessage": "Password required",
+    "errorCode": 400,
+    "message": "Password required",
+    "additionalInfo": "Password required"
+  },
+  {
+    "name": "ERR_SIGNUP_PASSWORD_LENGTH_LOW",
+    "publicMessage": "Password required min 8 chars",
+    "errorCode": 400,
+    "message": "Password required min 8 chars",
+    "additionalInfo": "Password required min 8 chars"
+  },
+  {
+    "name": "ERR_SIGNUP_PASSWORD_LENGTH_HIGH",
+    "publicMessage": "Password required max 50 chars",
+    "errorCode": 400,
+    "message": "Password required max 50 chars",
+    "additionalInfo": "Password required max 50 chars"
+  },
+  {
+    "name": "ERR_SIGNUP_EMAIL_PARAM_STRING_MISMATCH",
+    "publicMessage": "Email must be a string",
+    "errorCode": 400,
+    "message": "Email must be a string",
+    "additionalInfo": "Email must be a string"
+  },
+  {
+    "name": "ERR_SIGNUP_MISSING_EMAIL",
+    "publicMessage": "Email missing",
+    "errorCode": 400,
+    "message": "Email missing",
+    "additionalInfo": "Email missing"
+  },
+  {
+    "name": "ERR_SIGNUP_EMAIL_UNKNOWN_FORMAT",
+    "publicMessage": "Wrong email input",
+    "errorCode": 400,
+    "message": "Wrong email input",
+    "additionalInfo": "Wrong email input"
+  },
+  {
+    "name": "ERR_SIGNUP_LAST_NAME_FAILED_",
+    "publicMessage": "Last name creation failed",
+    "errorCode": 400,
+    "message": "Last name creation failed",
+    "additionalInfo": "Last name creation failed"
+  },
+
+  {
+    "name": "ERR_SIGNUP_FN_PARAM_STRING_MISMATCH",
+    "publicMessage": "First name must be a string",
+    "errorCode": 400,
+    "message": "First name must be a string",
+    "additionalInfo": "First name must be a string"
+  },
+  {
+    "name": "ERR_SIGNUP_MISSING_FIRST_NAME",
+    "publicMessage": "First name missing",
+    "errorCode": 400,
+    "message": "First name missing",
+    "additionalInfo": "First name missing"
+  },
+  {
+    "name": "ERR_SIGNUP_FIRST_NAME_LENTH_LOW",
+    "publicMessage": "First name required min 3 chars",
+    "errorCode": 400,
+    "message": "First name required min 3 chars",
+    "additionalInfo": "First name required min 3 chars"
+  },
+  {
+    "name": "ERR_SIGNUP_FIRST_NAME_LENGTH_HIGH",
+    "publicMessage": "First name required max 50 chars",
+    "errorCode": 400,
+    "message": "First name required max 50 chars",
+    "additionalInfo": "First name required max 50 chars"
+  },
+
+  {
+    "name": "ERR_SIGNUP_LN_PARAM_STRING_MISMATCH",
+    "publicMessage": "Last name must be a string",
+    "errorCode": 400,
+    "message": "Last name must be a string",
+    "additionalInfo": "Last name must be a string"
+  },
+  {
+    "name": "ERR_SIGNUP_MISSING_LAST_NAME",
+    "publicMessage": "Last name missing",
+    "errorCode": 400,
+    "message": "FirLastst name missing",
+    "additionalInfo": "Last name missing"
+  },
+  {
+    "name": "ERR_SIGNUP_LAST_NAME_LENTH_LOW",
+    "publicMessage": "Last name required min 3 chars",
+    "errorCode": 400,
+    "message": "Last name required min 3 chars",
+    "additionalInfo": "Last name required min 3 chars"
+  },
+  {
+    "name": "ERR_SIGNUP_LAST_NAME_LENGTH_HIGH",
+    "publicMessage": "Last name required max 50 chars",
+    "errorCode": 400,
+    "message": "Last name required max 50 chars",
+    "additionalInfo": "Last name required max 50 chars"
+  }
+]

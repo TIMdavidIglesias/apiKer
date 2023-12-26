@@ -1,0 +1,2682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>apiKer | Just ker and REST!</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link
+        href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+    <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css">
+    <link rel="stylesheet" href="assets/plugins/simplelightbox/simple-lightbox.min.css">
+
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+
+</head>
+
+<body class="body-green">
+    <style>
+        @font-face {
+          font-family: 'Neuropolitical';
+          src: url('./assets/neuropolitical\ rg.otf') format('truetype');
+          /* Reemplaza 'ruta/a/tu/fuente/Neuropolitical.ttf' con la ruta real de tu archivo de fuente */
+        }
+    
+        h1 {
+          font-family: 'Neuropolitical', sans-serif;
+          /* Usa 'Neuropolitical' como fuente principal y, si no está disponible, utiliza la fuente genérica 'sans-serif' */
+        }
+      </style>
+    <div class="page-wrapper">
+        <!-- ******Header****** -->
+        <header id="header" class="header">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo" style="font-family: Neuropolitical;">
+                        <a href="index.html">
+                            <img class="img-fluid" width='100' src="assets/images/apiKer/aklogo.png"
+                                        alt="Instance Theme" />
+                                        
+                        </a> apiKer
+                    </h1>
+
+                </div><!--//branding-->
+
+            </div><!--//container-->
+        </header><!--//header-->
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Quick Start</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 10th</div>
+                </div><!--//doc-header-->
+                <div class="doc-body row">
+                    <div class="doc-content col-md-9 col-12 order-1">
+                        <div class="content-inner">
+                            <section id="intro-section" class="doc-section">
+                                <h2 class="section-title">Introduction</h2>
+                                <div class="section-block">
+                                    <p>apiKer is an innovative framework that harnesses the power of Express.js, aiming
+                                        to streamline the creation of secure endpoints while maintaining a lean and
+                                        efficient codebase.</p>
+
+                                    <p>What distinguishes apiKer is its complete and flexible parametric configuration.
+                                        This feature empowers you to fine-tune and customize the behavior of the API
+                                        environment based on specific client requirements, providing unparalleled
+                                        control over the endpoints.</p>
+
+                                    <p>However, what truly sets apiKer apart as a game-changer is its inherent
+                                        simplicity. Creating new endpoints is a straightforward task, requiring nothing
+                                        more than a controller file and a route definition.</p>
+
+                                    <p>apiKer goes beyond simplicity—it offers a diverse array of controllers, including
+                                        the exclusive 'gSix' extension, and seamlessly integrates with Swagger-UI.</p>
+
+                                    <p>Further enhancing its capabilities, apiKer incorporates a built-in request
+                                        tracing system. This system allows you to monitor errors or unexpected behaviors
+                                        within the API environment, adding an extra layer of security for both users and
+                                        the overall system.</p>
+
+                                    <p>In summary, apiKer is a cutting-edge framework that combines simplicity with
+                                        flexibility, offering unparalleled control over your API development process.
+                                    </p>
+                                </div>
+                            </section>
+                            <!--//doc-section-->
+
+
+                            <section id="cfgFiles-section" class="doc-section">
+                                <h2 class="section-title">Setup Files</h2>
+                                <div class="section-block">
+                                    <p>apiKer requires an initial installation based on configuration files found in the
+                                        following sections.</p>
+
+                                    <p>Once the installation occurs successfully, these files (with the exception of
+                                        _env) become inactive. Editing or purging them will not modify the API's
+                                        behavior. Editing these parameters after installing a new instance of ApiKer
+                                        should be done using the tools indicated later on.</p>
+
+                                    <p>The installation files are essentially TypeScript (TS) files that serve as input
+                                        objects. No logic is required. It is sufficient to have a well-defined structure
+                                        for the behavior of the API.</p>
+
+
+                                </div><!--//section-block-->
+                                <div id="filesEnv" class="section-block">
+                                    <h3 class="block-title">_env File</h3>
+                                    <p>
+                                        The <code>_env</code> file serves as a centralized configuration module for the
+                                        application's environment. It defines important parameters and constants that
+                                        govern the system's behavior in various situations. This configuration is vital
+                                        for customizing the application to specific requirements and environments,
+                                        covering aspects such as server ports, log file names, directory paths, and
+                                        other key settings. In essence, <code>_env</code> plays a crucial role in
+                                        tailoring the application's behavior to suit different needs and deployment
+                                        scenarios.
+                                    </p>
+                                    <p>
+                                        The <code>_env</code> file must remain permanent and should only be edited in
+                                        case of any changes within the file system or the server connection settings.
+                                        Deleting this file will result in an exception, and the server will not run.
+                                    </p>
+
+                                    <p> The <code>_env</code> file modifies the behavior of:</p>
+                                    <ul>
+                                        <li>Server connection</li>
+                                        <li>Server environment mode</li>
+                                        <li>Log file system</li>
+                                        <li>Docs file system</li>
+                                        <li>Console silent level</li>
+                                        <li>Task scheduler activation</li>
+                                    </ul>
+
+                                    <div class="code-block">
+                                        <h6><code>_env</code> file type</h6>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/0be3ccafe91e689862e082c0bb1dec91.js"></script>
+                                        <div class="code-block">
+                                            <h6>Key props</h6>
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="theme-bg-light">Property</th>
+                                                        <th class="theme-bg-light">Type</th>
+                                                        <th class="theme-bg-light">Description</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>connection</code></td>
+                                                        <td><strong>-</strong></td>
+                                                        <td>
+                                                            <table class="table table-bordered">
+                                                                <tr>
+                                                                    <th>Param</th>
+                                                                    <th>Type</th>
+                                                                    <th>Description</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>portDefault</strong></td>
+                                                                    <td>number</td>
+                                                                    <td>Specifies the production port for server
+                                                                        listening.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>portAlternative</strong></td>
+                                                                    <td>number | undefined</td>
+                                                                    <td>Specifies the UAT/test port for non-production
+                                                                        purposes.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>hostName</strong></td>
+                                                                    <td>string | undefined</td>
+                                                                    <td>Specifies the host name for the server.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>serverDomain</strong></td>
+                                                                    <td>string | undefined</td>
+                                                                    <td>Specifies the server domain for external access.
+                                                                        Applies to the SwaggerDoc endpoint. Set as
+                                                                        localhost:port for area networks.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>usingSSL</strong></td>
+                                                                    <td>boolean | undefined</td>
+                                                                    <td>Specifies whether SSL is enabled for the server.
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>ssl</strong></td>
+                                                                    <td><strong>-</strong></td>
+                                                                    <td>
+                                                                        <table class="table table-bordered">
+                                                                            <tr>
+                                                                                <th>Param</th>
+                                                                                <th>Type</th>
+                                                                                <th>Description</th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>privateKey</strong></td>
+                                                                                <td>string</td>
+                                                                                <td>Private key for SSL.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>certificate</strong></td>
+                                                                                <td>string</td>
+                                                                                <td>Certificate for SSL.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>ca</strong></td>
+                                                                                <td>string | undefined</td>
+                                                                                <td>Certificate authority for SSL.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>dirName</code></td>
+                                                        <td>string</td>
+                                                        <td>Specifies the root directory name of the app.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>controllerDirectory</code></td>
+                                                        <td>string</td>
+                                                        <td>Specifies the directory for controllers.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>logFileName</code></td>
+                                                        <td>string</td>
+                                                        <td>Specifies the name for the log files.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>logDirectory</code></td>
+                                                        <td>string</td>
+                                                        <td>Specifies the directory for logs.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>isProduction</code></td>
+                                                        <td>boolean</td>
+                                                        <td>Specifies whether the app is in production.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>silentLevel</code></td>
+                                                        <td>number</td>
+                                                        <td>Specifies the level of message showing.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>startDefaultTasks</code></td>
+                                                        <td>boolean</td>
+                                                        <td>Specifies whether to start default tasks. If true, the Task
+                                                            Manager will start automatically.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
+
+                                        </div><!--//code-block-->
+                                    </div><!--//code-block-->
+
+                                    <h6>Run Console Log. Connection data from <code>_env</code> </h6>
+                                    <script src="https://gist.github.com/timdevelopersCEO/98c07051b19d26213bb9b98aa906fabe.js"></script>
+                                </div><!--//section-block-->
+
+                                <div id="filesVars" class="section-block">
+                                    <h3 class="block-title">_vars File</h3>
+                                    <p>The <code>_vars</code> file contains the primary variables that govern core
+                                        restrictions. Key security options shaping the overall behavior are stored
+                                        within this file. It is assimilated and becomes inactive after installation.</p>
+
+                                    <p>The <code>_vars</code> file modifies the behavior of:</p>
+                                    <ul>
+                                        <li>Security</li>
+                                        <li>Tracing</li>
+                                        <li>Documentation</li>
+                                        <li>Session</li>
+                                        <!-- Add more categories as needed -->
+                                    </ul>
+
+                                    <div class="code-block">
+                                        <h6><code>_vars</code> file type</h6>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/3f400f06a8b1a1f02489a96135288102.js"></script>
+                                        <h6>Key props</h6>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="theme-bg-light"><code>documentation</code></th>
+                                                    <!-- Para la segunda columna de Documentación -->
+                                                    <td>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th><strong>Param</strong></th>
+                                                                <th>Type</th>
+                                                                <th>Description</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>isActive</strong></td>
+                                                                <td>boolean</td>
+                                                                <td>Activates the SwaggerDoc connector. Required if you
+                                                                    want SwaggerUI docs and gSix documentation.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>swaggerDocsRoute</strong></td>
+                                                                <td>string | undefined</td>
+                                                                <td>Route required for the index page in
+                                                                    SwaggerConnector.</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="theme-bg-light"><code>session</code></th>
+                                                    <!-- Para la segunda columna de Sesión -->
+                                                    <td>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th><strong>Param</strong></th>
+                                                                <th>Type</th>
+                                                                <th>Description</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>defaultAccountPermissionLevel</strong></td>
+                                                                <td>number</td>
+                                                                <td>Default account permission level.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>sessionTimeoutMinutes</strong></td>
+                                                                <td>number</td>
+                                                                <td>Session timeout duration in minutes.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>allowRememberSession</strong></td>
+                                                                <td>boolean</td>
+                                                                <td>Allow remembering the session.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>rememberSessionTimeoutDays</strong></td>
+                                                                <td>number</td>
+                                                                <td>Remembered session timeout in days.</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="theme-bg-light"><code>security</code></th>
+                                                    <!-- Para la segunda columna de Seguridad -->
+                                                    <td>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th><strong>Param</strong></th>
+                                                                <th>Type</th>
+                                                                <th>Description</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>authProtocol</strong></td>
+                                                                <td>'kerLocker'</td>
+                                                                <td>Auth protocol to validate and authenticate requests.
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>kerLockerSecretAuthHeaderName</strong></td>
+                                                                <td>string</td>
+                                                                <td>Header name for the secret authentication token.
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>kerLockerPublicAuthHeaderName</strong></td>
+                                                                <td>string</td>
+                                                                <td>Header name for the public authentication token.
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>kerLockerSessionHeaderName</strong></td>
+                                                                <td>string</td>
+                                                                <td>Header name for the session token.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>kerLockerCSRFHeaderName</strong></td>
+                                                                <td>string</td>
+                                                                <td>Header name for CSRF token.</td>
+                                                            </tr>
+                                                            <!-- Agregar más filas según sea necesario -->
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="theme-bg-light"><code>tracing</code></th>
+                                                    <!-- Para la segunda columna de Tracing -->
+                                                    <td>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th><strong>Param</strong></th>
+                                                                <th>Type</th>
+                                                                <th>Description</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>database</strong></td>
+                                                                <td>string</td>
+                                                                <td>Defines the database where the log is stored.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>traces</strong></td>
+                                                                <td>-</td>
+                                                                <td>
+                                                                    <table class="table table-bordered">
+                                                                        <tr>
+                                                                            <th><strong>Param</strong></th>
+                                                                            <th>Type</th>
+                                                                            <th>Description</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>tracePublicRequest</strong></td>
+                                                                            <td>boolean</td>
+                                                                            <td>Trace public requests.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>trace404Request</strong></td>
+                                                                            <td>boolean</td>
+                                                                            <td>Trace 404 requests.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>traceErrorRequest</strong></td>
+                                                                            <td>boolean</td>
+                                                                            <td>Trace error requests.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>traceSuccessRequest</strong>
+                                                                            </td>
+                                                                            <td>boolean</td>
+                                                                            <td>Trace success requests.</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <div id="filesSetup" class="section-block">
+                                    <h3 class="block-title">_setup File</h3>
+                                    <p>The <code>_setup</code> file contains the necessary metadata to identify the
+                                        installation and
+                                        also provides
+                                        essential data for the SwaggerUI header. As a result, it influences how
+                                        SwaggerDocs models
+                                        the output data.</p>
+
+                                    <p>It includes information about the organization and the type of software license
+                                        under which
+                                        the project runs.</p>
+
+                                    <p>It is crucial to keep this information secure and up-to-date, as it directly
+                                        connects the
+                                        organization with the program and could impact its performance.</p>
+                                    <h6><code>_setup</code> file type</h6>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/de14a6903ebb0de6efb9b37a19982179.js"></script>
+                                    <h6>Key props</h6>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">Property</th>
+                                                <th class="theme-bg-light">Type</th>
+                                                <th class="theme-bg-light">Description</th>
+                                            </tr>
+                                            <tr>
+                                                <td><code>setupName</code></td>
+                                                <td>string</td>
+                                                <td>Internal name of the installation.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>apiName</code></td>
+                                                <td>string</td>
+                                                <td>Service name. Influences SwaggerDocs.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>title</code></td>
+                                                <td>string</td>
+                                                <td>Title. Influences SwaggerDocs.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>description</code></td>
+                                                <td>string</td>
+                                                <td>Short description. Influences SwaggerDocs.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>termsOfService</code></td>
+                                                <td>string</td>
+                                                <td>Terms of service. Influences SwaggerDocs.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>contact</code></td>
+                                                <td>-</td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>Param</th>
+                                                            <th>Type</th>
+                                                            <th>Description</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>name</strong></td>
+                                                            <td>string</td>
+                                                            <td>Webmaster contact name. Influences SwaggerDocs.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>email</strong></td>
+                                                            <td>string</td>
+                                                            <td>Webmaster contact email. Influences SwaggerDocs.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>url</strong></td>
+                                                            <td>string</td>
+                                                            <td>Webmaster contact URL. Influences SwaggerDocs.</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>license</code></td>
+                                                <td>-</td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>Param</th>
+                                                            <th>Type</th>
+                                                            <th>Description</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>name</strong></td>
+                                                            <td>string</td>
+                                                            <td>License name. Influences SwaggerDocs.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>url</strong></td>
+                                                            <td>string</td>
+                                                            <td>License URL. Influences SwaggerDocs.</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>version</code></td>
+                                                <td>string</td>
+                                                <td>API version. Influences SwaggerDocs.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div><!--//section-block-->
+                                <div id="filesDatabases" class="section-block">
+                                    <h3 class="block-title">_databases File</h3>
+                                    <p>apiKer manages a NoSQL database environment based on MongoDB. The system itself
+                                        can handle
+                                        multiple databases, and you can define them in the database configuration. This
+                                        provides the
+                                        flexibility to scale processes with data dispersed across multiple databases.
+                                        For example,
+                                        you might have a database for configuration data, another for metadata like
+                                        requestTracker,
+                                        and a database for customer or user data.</p>
+
+                                        <p>
+                                            A MASTER database must be defined, serving as the input/output environment for the core and containing configuration data used as internal cache.
+                                        </p>
+                                        <p>
+                                            To define a Master database, configure <code>metadata.dbRole='master'</code>.
+                                        </p>
+                                        
+
+                                    <p>As an illustrative example, databases can be created using tools like Docker,
+                                        allowing you to
+                                        access them from platforms external to the API.</p>
+
+                                    <h6><code>_databases</code> file type</h6>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/5797f83c347d89c0894b6a2977329dde.js"></script>
+
+                                    <h6>Dockerization</h6>
+                                    <p>In this example, 3 database servers have been created to keep different data
+                                        separated in
+                                        distinct environments.</p>
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/b7576fcb6eab9a19388443bb51aaa9c7.js"></script>
+                                </div><!--//section-block-->
+                                <div id="filesRoutes" class="section-block">
+                                    <h3 class="block-title">_router File</h3>
+                                    <p>
+                                        The <code>_router</code> file contains the necessary metadata to configure
+                                        individual
+                                        endpoints in a
+                                        system. It also provides documentation for the SwaggerDocs module, facilitating
+                                        the
+                                        generation of comprehensive documentation in the Swagger UI interface. This
+                                        documentation is
+                                        essential for developers and users to understand and interact with available
+                                        endpoints
+                                        effectively.
+
+                                    </p>
+
+                                    <p>Each route points to a single controller through the corresponding HTTP method,
+                                        which is
+                                        considered the 'master controller' for the route. Once the route is successfully
+                                        processed, the
+                                        controller is executed, and its results are evaluated and incorporated into the
+                                        response.
+                                    </p>
+
+                                    <h6><code>_router</code> file type</h6>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/2c4f67a8ce51676cac99054bf56a2cb7.js"></script>
+
+                                    <h6>Addition info:</h6>
+                                    <p>Refer to the Router section to learn more about routing.
+                                    </p>
+
+
+
+                                </div><!--//section-block-->
+                                <div id="filesApps" class="section-block">
+                                    <h3 class="block-title">_apps File</h3>
+                                    <p>The <code>_apps</code> file serves as a repository for metadata related to
+                                        supported data
+                                        sources within the system. Its primary purpose is to manage and validate
+                                        information
+                                        concerning these sources, specifically focusing on their origins. This involves
+                                        validating
+                                        and ensuring that the specified data sources comply with certain criteria and
+                                        standards.</p>
+
+                                    <p>In practical terms, the metadata within <code>_apps</code> includes details such
+                                        as the
+                                        application name, group affiliation, allowed origin for requests, admin email,
+                                        encryption
+                                        key, and various other properties related to the configuration of these data
+                                        sources. The
+                                        ability to designate a source as the default one, along with additional
+                                        security-related
+                                        parameters, adds granularity to the management of these sources.</p>
+
+                                    <p>Furthermore, the file allows for the configuration of authorization settings,
+                                        application
+                                        secret tokens, and metadata specific to each data source. This comprehensive
+                                        approach
+                                        ensures that the system can effectively process and interact with various data
+                                        sources while
+                                        maintaining a secure and well-organized environment.</p>
+
+                                    <p>In summary, <code>_apps</code> acts as a central hub for managing, configuring,
+                                        and
+                                        validating metadata associated with supported data sources, playing a crucial
+                                        role in the
+                                        overall functionality and security of the system.</p>
+
+                                    <h6><code>_apps</code> file type</h6>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/111a594990efbfdfc9a4572310469398.js"></script>
+
+                                    <h6>Key props</h6>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">Property</th>
+                                                <th class="theme-bg-light">Type</th>
+                                                <th class="theme-bg-light">Description</th>
+                                            </tr>
+                                            <tr>
+                                                <td><code>appName</code></td>
+                                                <td>string</td>
+                                                <td>Name of the app.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>group</code></td>
+                                                <td>string</td>
+                                                <td>If apps are meant to work as a team/group, it can be assigned.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>isDefault</code></td>
+                                                <td>boolean | undefined</td>
+                                                <td>Indicates whether the app is the default one. SwaggerDocs will
+                                                    access the default API, and no CORS requests will require a default
+                                                    app.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>allowedOrigin</code></td>
+                                                <td>string | undefined</td>
+                                                <td>Allowed origin for requests coming to the default app.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>adminEmail</code></td>
+                                                <td>string</td>
+                                                <td>App admin email.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>metadata</code></td>
+                                                <td>-</td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>Property</th>
+                                                            <th>Type</th>
+                                                            <th>Description</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>isActive</code></td>
+                                                            <td>boolean | undefined</td>
+                                                            <td>Indicates whether the app is active.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>creationDate</code></td>
+                                                            <td>Date</td>
+                                                            <td>Date of creation for the app.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>updatedDate</code></td>
+                                                            <td>Date | undefined</td>
+                                                            <td>Date of the last update for the app.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>appID</code></td>
+                                                            <td>string | undefined</td>
+                                                            <td>ID of the app.</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>whiteListedHosts</code></td>
+                                                <td>string[] | undefined</td>
+                                                <td>List of whitelisted hosts.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>blackListedHosts</code></td>
+                                                <td>string[] | undefined</td>
+                                                <td>List of blacklisted hosts.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>hostListPriority</code></td>
+                                                <td><code>'blackList' | 'whiteList'</code> | undefined</td>
+                                                <td>Priority of the host list (blackList or whiteList).</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>useHostListFilter</code></td>
+                                                <td>boolean | undefined</td>
+                                                <td>Indicates whether to use host list filtering.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
+
+                            <section id="installation-section" class="doc-section">
+                                <h2 class="section-title">Installation</h2>
+                                <div class="section-block">
+                                    <p>apiKer sets up a new HTTP server based on Express that orchestrates the data flow
+                                        within
+                                        the
+                                        API environment. While ApiKer is designed to work behind a proxy, it's also
+                                        possible to
+                                        create apiKer instances in 'standalone' mode.</p>
+
+                                </div><!--//section-block-->
+                                <div id="installProxy" class="section-block">
+                                    <h3 class="block-title">Proxy</h3>
+                                    <p>
+                                        The proxy server serves as the entry point for external connections. It's
+                                        responsible for
+                                        handling
+                                        the initial contact with the request, allowing for the management of certain
+                                        security
+                                        aspects such
+                                        as Cross-Origin Resource Sharing (CORS).</p>
+
+                                    <p>
+                                        Additionally, the proxy must be configured to enhance the request by including
+                                        specific
+                                        client metadata, such as the IP address, origin, or referring host.</p>
+
+                                    <h5>Proxy server example:</h5>
+                                    <p>
+                                        In this example the proxt is set up statically. Suitable for cases where the
+                                        origins are
+                                        limited
+                                        or undefined. This server config is suitable for</p>
+
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/ac03fa9e932b6b450b028602ee4e40d9.js"></script>
+                                </div><!--//section-block-->
+                                <div id="installSetup" class="section-block">
+                                    <h3 class="block-title">First run/Setup</h3>
+                                    <p>
+                                        apiKer installs itself, so the first execution is crucial for the smooth
+                                        development of the workflow.
+                                    </p>
+                                    <p>
+                                        Initially, installation data is sought, and if not found, it is considered a
+                                        'new installation'. In this case, the installation metadata is stored in the
+                                        database and, from this point forward, is accessible in each execution as it is
+                                        stored in the core of the application in a kind of internal cache.
+                                    </p>
+                                    <p>
+                                        Once apiKer is installed, it ceases to use the installation metadata files,
+                                        except for _env, which is necessary for the 'igniter' to function, as it
+                                        contains essential data for the execution and startup of apiKer.
+                                    </p>
+
+                                    <li><strong class="me-1">Clone the Repository:</strong>
+                                        <code>git clone https://github.com/timdevelopersCEO/apiKer</code>
+                                        <code>cd apiKer</code>
+                                    </li>
+                                    <li><strong class="me-1">Install Dependencies:</strong>
+                                        <code>npm install</code>
+                                    </li>
+                                    <li><strong class="me-1">Compile TypeScript (if applicable):</strong>
+                                        <code>npm run build</code>
+                                    </li>
+
+                                    <li><strong class="me-1">Run the Application:</strong>
+                                        <code>npm start</code>
+                                    </li>
+
+                                </div><!--//section-block-->
+
+                                <div id="kerLockerServerSetup" class="section-block">
+                                    <h3 class="block-title">kerLocker Auth Client</h3>
+                                    <p>
+                                        The KerLocker Auth Client is a tool designed to automatically handle the task of
+                                        secret token authentication outside the user request execution process. This
+                                        way, the secret token is managed in the background. This app should work in
+                                        theWeb App Environment.
+                                    </p>
+
+                                    <h5>kerLocker Args Type:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/c3b04ced355eb27c65c56a00aee462f4.js"></script>
+
+                                    <h5>kerLocker Args Data Example:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/a05e6b249ef7c6117125ff3782f03e25.js"></script>
+                                    <h5>Run kerLocker Auth Client:</h5>
+                                    <li><strong class="me-1">Change directory:</strong>
+                                        <code>cd kerLocker</code>
+                                    </li>
+                                    <li><strong class="me-1">Install Dependencies:</strong>
+                                        <code>npm install</code>
+                                    </li>
+                                    <li><strong class="me-1">Compile TypeScript (if applicable):</strong>
+                                        <code>npm run build</code>
+                                    </li>
+
+                                    <li><strong class="me-1">Run the Application:</strong>
+                                        <code>npm start</code>
+                                    </li>
+
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
+                            
+                            <section id="cache-section" class="doc-section">
+                                <h2 class="section-title">Cache</h2>
+                                <div class="section-block">
+                                    <p>The configuration data of the core and the API is contained in the Cache class,
+                                        which is public and accessible from any point in the API by simply importing the
+                                        Cache class.</p>
+
+                                        <p>The cache is located in <code>src/ker/core/cache</code> .</p>
+                                    <h5>Cache class params:</h5>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="theme-bg-light">Cache</th>
+                                                <th class="theme-bg-light">Path</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                              <td><strong>Apps</strong></td>
+                                              <td>Cache._apps</td>
+                                            </tr>
+                                            <tr>
+                                              <td><strong>Router</strong></td>
+                                              <td>Cache._router</td>
+                                            </tr>
+                                            <tr>
+                                              <td><strong>Mongo Database</strong></td>
+                                              <td>Cache._databases</td>
+                                            </tr>
+                                            <tr>
+                                              <td><strong>Setup</strong></td>
+                                              <td>Cache._setup</td>
+                                            </tr>
+                                            <tr>
+                                              <td><strong>Vars</strong></td>
+                                              <td>Cache._vars</td>
+                                            </tr>
+                                          </tbody>
+                                    </table>
+
+
+
+                                </div>
+                            </section>
+                            <section id="databases-section" class="doc-section">
+                                <h2 class="section-title">Databases</h2>
+                                <div class="section-block">
+                                    <p>apiKer can work with one or multiple databases. There must always be a database
+                                        marked as Master, which will contain the system cache information necessary for
+                                        the core and API to function correctly.</p>
+                                    <p>To locate a specific database, certain preprogrammed functions are available that
+                                        interact automatically with the Cache and retrieve the required data object.</p>
+                                        <p>The Databases are located in <code>src/ker/core/databases</code> .</p>
+                                    <h6><code>Databases</code> type</h6>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/cb4f94d7542351ee648a901f504c0774.js"></script>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">Function</th>
+                                                <th class="theme-bg-light">Parameters</th>
+                                                <th class="theme-bg-light">Description</th>
+                                            </tr>
+                                            <tr>
+                                                <td><code>getDatabaseByName</code></td>
+                                                <td><code>dbName: string</code></td>
+                                                <td>Gets the stored database by name. Returns the database configuration
+                                                    if found, otherwise undefined. Empty params to locate the 'Master'
+                                                    database</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>getAllDatabases</code></td>
+                                                <td>None</td>
+                                                <td>Gets all database data. Returns an array of all database
+                                                    configurations.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div id="addNewDatabase" class="section-block">
+                                        <h3 class="block-title">Add New Database</h3>
+                                        <p>In order to add a new database during post-installation, it must be directly
+                                            included using the MasterDatabase class.</p>
+                                        <p>To properly manage the installation metadata for a new element, there is a
+                                            pre-programmed function that streamlines this process to simply inputting
+                                            the desired data, as demonstrated below:</p>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td><code>setNewDatabase(mongoDatabase: IMongoDatabase): Promise&lt;IMongoDatabase&gt;</code>
+                                                    </td>
+                                                    <td>
+                                                        Constructor for the `setNewDatabase` function, preprogrammed to
+                                                        simplify the process of adding new databases to the system.
+                                                        <br><br>
+                                                        <strong>Parameters:</strong>
+                                                        <ul>
+                                                            <li><code>mongoDatabase</code>: The configuration for the
+                                                                new database.</li>
+                                                        </ul>
+                                                        <strong>Returns:</strong>
+                                                        <p>A promise that resolves to the configured
+                                                            <code>IMongoDatabase</code>.
+                                                        </p>
+                                                        <strong>Usage:</strong>
+                                                        <p>
+                                                            This function is designed to streamline the addition of new
+                                                            databases. Simply provide the configuration for the new
+                                                            database, and the function will handle the setup process.
+                                                            Example usage:
+                                                        </p>
+                                                        <pre>
+const newDBConfig = { /* configuration details */ };
+const newDB = await setNewDatabase(newDBConfig);
+                                            </pre>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <h5>Example of New Database</h5>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/ebbc9d1f227883bd1bee66fcf740ae12.js"></script>
+                                    </div><!--//section-block-->
+
+
+
+                                    <div id="databaseInteraction" class="section-block">
+                                        <h3 class="block-title">Database Interaction</h3>
+                                        <p>Interacting with the Master database is a process that can be done directly
+                                            through the MasterDatabase class.</p>
+                                        <h5>Example of MasterDatabase usage</h5>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/8f175c9e3e7b29208c75d745cde7ed8d.js"></script>
+
+                                        <p>In the case of having multiple databases and needing access to a specific
+                                            database, you could invoke the MongoDatabase class as shown below:</p>
+
+                                        <p>The <code>MongoDatabase</code> class consists of several functions to handle
+                                            databases. They will be divided into 2 blocks as follows:</p>
+                                        <h5>Example of MongoDatabase usage</h5>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/fda0ec5fe95128c7029222997ebf1ae3.js"></script>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td><code>constructor(database?: IMongoDatabase, customDB?: string)</code>
+                                                    </td>
+                                                    <td>
+                                                        Constructor for the `MongoDatabase` class. Configures the
+                                                        connection
+                                                        and database instance.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>const db = new MongoDatabase(); // Will use the master database configured in Cache._databases
+                                </pre>
+                                                        <pre>const customDb = new MongoDatabase(databaseConfig, 'customDatabase'); // Specify a custom database
+                                </pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>getConnectionString(database: IMongoDatabase, collectionName?: string, includeCollectionName: boolean = true): string</code>
+                                                    </td>
+                                                    <td>
+                                                        // Gets a MongoDB connection string for the specified database.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>const connectionString = MongoDatabase.getConnectionString(databaseConfig, 'myCollection');
+                                </pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>connect(connectionOptions?: IMongoDatabaseConnectionOptions): Promise&lt;void&gt;</code>
+                                                    </td>
+                                                    <td>
+                                                        // Establishes a connection to the MongoDB database.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>await db.connect();
+                                </pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>deleteModel(modelName: string): void</code></td>
+                                                    <td>
+                                                        // Deletes a model from the MongoDB database.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>db.deleteModel('MyModel');
+                                </pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>close(): Promise&lt;void&gt;</code></td>
+                                                    <td>
+                                                        // Closes the connection to the MongoDB database.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>
+// Close the MongoDB database connection
+await db.close();
+</pre>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//section-block-->
+
+
+                                    <div id="databaseDocs" class="section-block">
+                                        <h3 class="block-title">Document Interaction</h3>
+                                        <p>Interacting with documents from a specific database requires a Mongoose
+                                            model. Typically, excluding the gSix environment, the most common models are
+                                            those used to handle data caching.</p>
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="theme-bg-light">Cache</th>
+                                                    <th class="theme-bg-light">Path</th>
+                                                    <th class="theme-bg-light">Model</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                  <td><strong>Apps</strong></td>
+                                                  <td><strong>/api/models/apps</strong></td>
+                                                  <td><strong>AppsModel</strong></td>
+                                                </tr>
+                                                <tr>
+                                                  <td><strong>Router</strong></td>
+                                                  <td><strong>/api/models/router</strong></td>
+                                                  <td><strong>RouterModel</strong></td>
+                                                </tr>
+                                                <tr>
+                                                  <td><strong>Mongo Database</strong></td>
+                                                  <td><strong>/models/databases/mongo</strong></td>
+                                                  <td><strong>MongoDatabaseModel</strong></td>
+                                                </tr>
+                                                <tr>
+                                                  <td><strong>Setup</strong></td>
+                                                  <td><strong>/models/setup</strong></td>
+                                                  <td><strong>SetupModel</strong></td>
+                                                </tr>
+                                                <tr>
+                                                  <td><strong>Vars</strong></td>
+                                                  <td><strong>/models/vars</strong></td>
+                                                  <td><strong>VarsModel</strong></td>
+                                                </tr>
+                                              </tbody>
+                                        </table>
+
+
+
+
+
+                                        <p>Both MasterDatabase and MongoDatabase share the following functions to
+                                            interact with the database:</p>
+
+
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td><code>createDocument(model: typeof Model, data: any = {}): Promise<any></code>
+                                                    </td>
+                                                    <td>
+                                                        Creates a document in the MongoDB database using the specified
+                                                        model
+                                                        and data.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>
+    // Create a document with default data
+    const newDocument = await db.createDocument(MyModel);
+    
+    // Create a document with custom data
+    const customData = { key: 'value' };
+    const customDocument = await db.createDocument(MyModel, customData);
+    </pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>findDocument(model: typeof Model, limit: number = 0, criteria: any = {}, raw: boolean = true): Promise<any></code>
+                                                    </td>
+                                                    <td>
+                                                        Finds documents in the MongoDB database using the specified
+                                                        model,
+                                                        limit, criteria, and raw flag.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>
+    // Find all documents
+    const allDocuments = await db.findDocument(MyModel);
+    
+    // Find documents with criteria and limit
+    const filteredDocuments = await db.findDocument(MyModel, 5, { key: 'value' });
+    
+    // Find raw documents
+    const rawDocuments = await db.findDocument(MyModel, 0, {}, true);
+    </pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>updateDocument(model: typeof Model, limit: number = 1, criteria: any = {}, dataUpdated: any = {}): Promise<any></code>
+                                                    </td>
+                                                    <td>
+                                                        Updates documents in the MongoDB database using the specified
+                                                        model,
+                                                        limit, criteria, and data.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>
+    // Update a single document
+    const updatedDocument = await db.updateDocument(MyModel, 1, { key: 'oldValue' }, { key: 'newValue' });
+    
+    // Update multiple documents
+    const updatedDocuments = await db.updateDocument(MyModel, 5, { key: 'oldValue' }, { key: 'newValue' });
+    </pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>deleteDocument(model: typeof Model, criteria: any = {}): Promise<any></code>
+                                                    </td>
+                                                    <td>
+                                                        Deletes documents in the MongoDB database using the specified
+                                                        model
+                                                        and criteria.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>
+    // Delete documents with criteria
+    const deletedDocuments = await db.deleteDocument(MyModel, { key: 'value' });
+    </pre>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//section-block-->
+
+
+
+                                </div>
+                            </section>
+
+                            <section id="router-section" class="doc-section">
+                                <h2 class="section-title">Router</h2>
+                                <div class="section-block">
+                                    <p>
+                                        apiKer manages routes directly by identifying the HTTP method and directing traffic to the associated master controller. Once the controller is executed, a series of security checks are performed to ensure that the request conforms to the requirements for executing the controller.
+                                    </p>
+                                    <p>The router is located in <code>src/api/core/router</code> .</p>
+                                    
+                                    <h5>Router and controller types:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/1351dbe4b97ce9fca3d9b9fb3cf3514d.js"></script>
+
+                                        <p>
+                                            The same route supports a series of different methods that enable a route to execute different master controllers.
+                                        </p>
+                                    <h5>A single route with multiple 'master' controllers associated:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/4edf8656753e3261a4ab2fafbbdeedd7.js"></script>
+                                    <p>This example will excute the controllers <code>controllerGet</code>,
+                                        <code>controllerPost</code> and <code>controllerDele</code> from the path
+                                        <code>_controllersDir/mock/controller/1000</code>
+                                        following the requested HTTP Method.
+                                    </p>
+
+                                    <div id="routerNewRouter" class="section-block">
+                                        <h3 class="block-title">Add New Router</h3>
+                                        <p>In order to add a new router during post-installation, it must be directly
+                                            included using the MasterDatabase class.</p>
+                                        <p>To properly manage the installation metadata for a new element, there is a
+                                            pre-programmed function that streamlines this process to simply inputting
+                                            the desired data, as demonstrated below:</p>
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><code>setNewRoute(route: IRouterCache): Promise&lt;IRouterCache&gt;</code></td>
+                                                        <td>
+                                                            Constructor for the <code>setNewRoute</code> function, preprogrammed to simplify the process of adding new routes to the system.
+                                                            <br><br>
+                                                            <strong>Parameters:</strong>
+                                                            <ul>
+                                                                <li><code>route</code>: The metadata for the new route.</li>
+                                                            </ul>
+                                                            <strong>Returns:</strong>
+                                                            <p>A promise that resolves to the configured <code>IRouterCache</code>.</p>
+                                                            <strong>Usage:</strong>
+                                                            <p>
+                                                                This function is designed to streamline the addition of new routes. Simply provide the metadata for the new route, and the function will handle the setup process.
+                                                                Example usage:
+                                                            </p>
+                                                            <pre>
+const newRouteMetadata = { /* metadata details */ };
+const newRoute = await setNewRoute(newRouteMetadata);
+                                                            </pre>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><code>updateRoute(route: IRouterCache): Promise&lt;IRouterCache&gt;</code></td>
+                                                        <td>
+                                                            Constructor for the <code>updateRoute</code> function, preprogrammed to simplify the process of updating existing routes in the system.
+                                                            <br><br>
+                                                            <strong>Parameters:</strong>
+                                                            <ul>
+                                                                <li><code>route</code>: The metadata for the route to be updated.</li>
+                                                            </ul>
+                                                            <strong>Returns:</strong>
+                                                            <p>A promise that resolves to the updated <code>IRouterCache</code>.</p>
+                                                            <strong>Usage:</strong>
+                                                            <p>
+                                                                This function allows for the update of existing routes. Provide the metadata for the route to be updated, and the function will handle the process.
+                                                                Example usage:
+                                                            </p>
+                                                            <pre>
+const updatedRouteMetadata = { /* updated metadata details */ };
+const updatedRoute = await updateRoute(updatedRouteMetadata);
+                                                            </pre>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            
+
+
+                                        <h5>Example of New Router</h5>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/9ac95a8b1f92c28d4572eb744e2896a8.js"></script>
+                                    </div><!--//section-block-->
+
+                                    <div id="routerGeneralParams" class="section-block">
+                                        <h3 class="block-title">General Params</h3>
+                                    
+                                        <h6>Key props</h6>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="theme-bg-light">Property</th>
+                                                    <th class="theme-bg-light">Type</th>
+                                                    <th class="theme-bg-light">Description</th>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>route</code></td>
+                                                    <td>String</td>
+                                                    <td>Route mask: '/path/to/route/{param}'</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                        <p>
+                                            The following properties can be configured at both the route and controller levels, providing flexibility for multi-level controllers with varying requirements:
+                                        </p>
+                                    
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="theme-bg-light">Property</th>
+                                                    <th class="theme-bg-light">Type</th>
+                                                    <th class="theme-bg-light">Description</th>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>minPermissionLevel</code></td>
+                                                    <td>Number</td>
+                                                    <td>Minimum permission level required to execute the entire route (all controllers).</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>CORS</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Activates the detection of the ORIGIN through CORS strategy.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>CSRF</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Detects CSRF in the request and processes it to obtain origin validation.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>requireAuth</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Indicates that the entire route (all controllers) requires a public authentication token (api-token) to initiate the session. In fact, any route intending to initiate a session requires <code>requireAuth</code> to be true.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>requireSession</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Requires an active session and necessary permissions to execute the API as a sufficient permission level.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div><!--//section-block-->
+                                    
+
+
+                                    <div id="routerRequiredParams" class="section-block">
+                                        <h3 class="block-title">Required Params</h3>
+
+                                        <h6>Example from the Login system</h6>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/24f1616b91c367e1f462b75e777c415a.js"></script>
+
+
+                                        <p>
+                                            SwaggerDocs interprets the required parameters and automatically integrates
+                                            them into the interactive documentation. Validation errors are also
+                                            displayed in Swagger as possible responses to unexpected parameter outcomes.
+                                        </p>
+
+                                        <h6>Key required params props</h6>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="theme-bg-light">Property</th>
+                                                    <th class="theme-bg-light">Type</th>
+                                                    <th class="theme-bg-light">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><code>name</code></td>
+                                                    <td>String</td>
+                                                    <td>Name of the parameter.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>location</code></td>
+                                                    <td>String</td>
+                                                    <td>Where the information will be placed (e.g., body, query, path, cookie).</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>example</code></td>
+                                                    <td>String</td>
+                                                    <td>Field filled by SwaggerDocs for the designed parameter.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>validation</code></td>
+                                                    <td>Object</td>
+                                                    <td>Validation options for the router checking.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+
+                                        <h3>Param validation schema:</h3>
+
+                                        <p>The validation schema for a parameter defines the error message that the user
+                                            will receive in case the necessary validation conditions are not met.</p>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/6a1df5b0ec406ec25080a1eac99d962d.js"></script>
+
+                                        <h6>Key props</h6>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="theme-bg-light">Property</th>
+                                                    <th class="theme-bg-light">Type</th>
+                                                    <th class="theme-bg-light">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><code>isEmail</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Specifies whether the parameter value must be a valid email address. If set to true, an error message is provided if the condition is not met.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>isURL</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Indicates whether the parameter value must be a valid URL. If set to true, an error message is generated if the condition is not satisfied.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>isRequired</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Determines if the parameter is required. If set to true, an error message is given if the parameter is not provided.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>min</code></td>
+                                                    <td>Number</td>
+                                                    <td>For numerical, string length, or date parameters, specifies the minimum allowed value. If the parameter value is below this threshold, an error is triggered.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>max</code></td>
+                                                    <td>Number</td>
+                                                    <td>For numerical, string length, or date parameters, defines the maximum allowed value. If the parameter value exceeds this limit, an error is generated.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>isInteger</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Specifies whether the parameter value must be an integer. If set to true, an error message is provided if the condition is not met.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>isPositive</code></td>
+                                                    <td>Boolean</td>
+                                                    <td>Determines whether the parameter value must be a positive number. If set to true, an error is generated if the condition is not satisfied.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>of</code></td>
+                                                    <td>Any</td>
+                                                    <td>For array parameters, specifies the type of elements within the array. It defines the expected format and generates an error if the condition is not met.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>paramType</code></td>
+                                                    <td>String</td>
+                                                    <td>Specifies the type of parameter (e.g., 'query', 'body', 'header', 'cookie', 'path'). It defines the expected format and generates an error if the condition is not met.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div><!--//section-block-->
+
+                                    <div id="routerSDocsParams" class="section-block">
+                                        <h3 class="block-title">SwaggerDocs metadata</h3>
+
+                                        <p>Additionally, each controller has the ability to be included in Swagger-ui's
+                                            automatic
+                                            documentation through the SwaggerDocs module. To achieve this, it is
+                                            necessary
+                                            to populate
+                                            the <code>apiDoc</code> parameter in the controller's routing within the
+                                            HTTP
+                                            method.</p>
+
+                                        <p>This information not only provides descriptive metadata but also manages the
+                                            list
+                                            of response
+                                            codes delivered by the controller. The controller's metadata defines the
+                                            required parameters
+                                            in the request and their validation method. Paying attention to parameter
+                                            validation is
+                                            crucial because once this filter is successfully completed, the data is
+                                            ready to
+                                            be
+                                            integrated into the database.</p>
+                                        <h5>apiDoc metadata:</h5>
+
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/22f5139b6eaae429b9100bae0addfcb1.js"></script>
+
+                                        <h5>apiDoc key props:</h5>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="theme-bg-light">Property</th>
+                                                    <th class="theme-bg-light">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><code>Summary</code></td>
+                                                    <td>Summary of the route</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>Description</code></td>
+                                                    <td>Description of the route</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>Section Name (Swagger-UI)</code></td>
+                                                    <td>Name of the section contained within Swagger-UI</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+
+                                        <h5>Responses:</h5>
+                                        <p>In apiKer, responses can essentially fall into two categories: 'response' or
+                                            'error'. Each route is expected to define at least one 'error' response,
+                                            detailing potential error scenarios and associated error messages. These
+                                            error responses are crucial for informing clients about unexpected outcomes
+                                            or issues during API interactions.</p>
+                                        <ul>
+                                            <li><code>defType='response'</code></li>
+                                            <p>
+                                                <p>In SwaggerDocs, the <code>params</code> property defines how SwaggerDocs
+                                                    will interpret the parameters in the response.</p>
+                                                
+                                                <!-- Success Response -->
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="theme-bg-light">Property</th>
+                                                            <th class="theme-bg-light">Description</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>description</code></td>
+                                                            <td>Success response for a valid request.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>code</code></td>
+                                                            <td>HTTP Status Code of the response (e.g., 200, 404, 500).</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>content</code></td>
+                                                            <td>Type of content returned in the response (e.g., application/json).</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                                <!-- Error Response -->
+                                                <p><code>defType='error'</code></p>
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="theme-bg-light">Property</th>
+                                                            <th class="theme-bg-light">Description</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>description</code></td>
+                                                            <td>Error response for an invalid request.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>errorList</code></td>
+                                                            <td>List of possible error codes returned in the response.</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                            </p>
+                                            <h5>Swagger-UI result:</h5>
+                                            <p><img class="img-fluid" src="assets/images/apiKer/routeSDResponse.png"
+                                                    alt="elegant icons" /></p>
+                                        </ul>
+
+
+                                    </div><!--//section-block-->
+
+                                </div>
+                            </section>
+
+                            <section id="apps-section" class="doc-section">
+                                <h2 class="section-title">Apps</h2>
+                                <div class="section-block">
+                                    <p>The <code>_apps</code> file serves as a critical repository for metadata
+                                        associated with supported data sources in the system. Its main purpose is to
+                                        manage and validate information about these sources, with a specific focus on
+                                        their origins and adherence to predefined criteria. The metadata includes
+                                        essential details such as application names, group affiliations, allowed request
+                                        origins, admin email, and encryption keys, providing a comprehensive
+                                        configuration for these data sources.</p>
+
+                                    <p>Furthermore, the file allows for the designation of default sources and includes
+                                        security parameters, adding granularity to source management. In summary,
+                                        <code>_apps</code> acts as a central hub for configuring, managing, and
+                                        validating metadata for supported data sources, playing a crucial role in
+                                        ensuring effective processing, interaction, and maintaining system security and
+                                        organization.
+                                    </p>
+                                    <p>The apps is located in <code>src/api/core/apps</code> .</p>
+                                    <h5>App type:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/5286c69fd86745609cab8249b2b87e89.js"></script>
+                                    <p>To locate an app, predefined functions are provided as follows:</p>
+                                    <h5>Cache class params:</h5>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="theme-bg-light">Function</th>
+                                                <th class="theme-bg-light">Description</th>
+                                                <th class="theme-bg-light">Usage</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><code>appGetByRequest(req: Request | undefined): IAppsCache | null</code>
+                                                </td>
+                                                <td>
+                                                    Retrieves an app from the cache based on the provided request's
+                                                    origin header.
+                                                </td>
+                                                <td>
+                                                    <strong>Usage:</strong>
+                                                    <pre>
+// Get app using the request object
+const requestApp = appGetByRequest(req);
+// Get default app if no request is provided
+const defaultApp = appGetByRequest();
+                                                    </pre>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>appGetBySecretToken(secretToken: string): IAppsCache | null</code>
+                                                </td>
+                                                <td>
+                                                    Retrieves an app from the cache based on the provided secret token.
+                                                </td>
+                                                <td>
+                                                    <strong>Usage:</strong>
+                                                    <pre>
+// Get app using the secret token
+const secretTokenApp = appGetBySecretToken("your_secret_token");
+                                                    </pre>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>appGetByID(ID: string): IAppsCache | undefined</code></td>
+                                                <td>
+                                                    Retrieves an app from the cache based on the provided app ID.
+                                                </td>
+                                                <td>
+                                                    <strong>Usage:</strong>
+                                                    <pre>
+// Get app using the app ID
+const idApp = appGetByID("your_app_id");
+                                                    </pre>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>appGetByOrigin(origin: string): IAppsCache | undefined</code>
+                                                </td>
+                                                <td>
+                                                    Retrieves an app from the cache based on the provided origin.
+                                                </td>
+                                                <td>
+                                                    <strong>Usage:</strong>
+                                                    <pre>
+// Get app using the origin
+const originApp = appGetByOrigin("your_origin");
+                                                    </pre>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>appGetDefault(): IAppsCache | undefined</code></td>
+                                                <td>
+                                                    Retrieves the default app from the cache.
+                                                </td>
+                                                <td>
+                                                    <strong>Usage:</strong>
+                                                    <pre>
+// Get the default app
+const defaultApp = appGetDefault();
+                                                    </pre>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>appGetAppsAllowedOrigins(): string[]</code></td>
+                                                <td>
+                                                    Retrieves an array of allowed origins from all apps in the cache.
+                                                </td>
+                                                <td>
+                                                    <strong>Usage:</strong>
+                                                    <pre>
+// Get an array of allowed origins
+const allowedOrigins = appGetAppsAllowedOrigins();
+                                                    </pre>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>appGetDocTargetServers(): string[]</code></td>
+                                                <td>
+                                                    Retrieves an array of allowed origins for apps that are either
+                                                    default or have targetDocServer set to true.
+                                                </td>
+                                                <td>
+                                                    <strong>Usage:</strong>
+                                                    <pre>
+// Get an array of allowed origins for target doc servers
+const targetDocServers = appGetDocTargetServers();
+                                                    </pre>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                    <h5>App example. Lookup by appID:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/06921a76f1651ffcc732fe9b910f9b0e.js"></script>
+
+                                    <div id="appsNewApp" class="section-block">
+                                        <h3 class="block-title">Add New App</h3>
+                                        <p>In order to add a new app during post-installation, it must be directly
+                                            included using the MasterDatabase class.</p>
+                                        <p>To properly manage the installation metadata for a new element, there is a
+                                            pre-programmed function that streamlines this process to simply inputting
+                                            the desired data, as demonstrated below:</p>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td><code>setNewApp(app: IApps): Promise&lt;IAppsCache&gt;</code>
+                                                    </td>
+                                                    <td>
+                                                        Constructor for the <code>setNewApp</code> function,
+                                                        preprogrammed to simplify the process of adding new apps to the
+                                                        system.
+                                                        <br><br>
+                                                        <strong>Parameters:</strong>
+                                                        <ul>
+                                                            <li><code>app</code>: The metadata for the new app.</li>
+                                                        </ul>
+                                                        <strong>Returns:</strong>
+                                                        <p>A promise that resolves to the configured
+                                                            <code>IAppsCache</code>.
+                                                        </p>
+                                                        <strong>Usage:</strong>
+                                                        <p>
+                                                            This function is designed to streamline the addition of new
+                                                            apps. Simply provide the metadata for the new app, and the
+                                                            function will handle the setup process.
+                                                            Example usage:
+                                                        </p>
+                                                        <pre>
+const newAppMetadata = { /* metadata details */ };
+const newApp = await setNewApp(newAppMetadata);
+                                                                </pre>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                        <h5>Example of New App</h5>
+                                        <script
+                                            src="https://gist.github.com/timdevelopersCEO/9ac95a8b1f92c28d4572eb744e2896a8.js"></script>
+                                    </div><!--//section-block-->
+
+                                </div>
+                            </section>
+                            <section id="auth-section" class="doc-section">
+                                <h2 class="section-title">Auth & Session</h2>
+                                <div class="section-block">
+                                    <p>
+                                        <code>auth</code> and <code>session</code> are handled by the API core, and their validation process extends throughout the middleware space after evaluating various sources of metadata to verify the validity of a session.
+                                    </p>
+                                    <p>
+                                        Below are brief insights on how to understand both concepts in the APIKer environment.
+                                    </p>
+                                    <p>The Auth is located in <code>src/api/core/auth</code> .</p>
+                                    <p>The Session is located in <code>src/api/core/session</code> .</p>
+                                    <div id="sessionSect" class="section-block">
+                                        <h3 class="block-title">Session</h3>
+
+                                        <p>Once the system has been successfully installed, the authorization tokens for the
+                                            Apps should be readily available.
+                                            These tokens are stored in the Apps database under the collection
+                                            <code>_apps</code>. Under <code>authorization.secretToken</code>
+                                        </p>
+    
+                                        <p><img class="img-fluid" src="assets/images/apiKer/AppsDB.png"
+                                                alt="elegant icons" /></p>
+
+                                        <p>In order to handle sessions and JWT token validation, the ApiSession class needs to be invoked. This class provides the necessary methods to interact securely with user sessions.</p>
+                                       
+                                        <h5>New ApiSession class instance example:</h5>
+                                        <script src="https://gist.github.com/timdevelopersCEO/cb161d23ab0926a3d9a77c13cd24e8cd.js"></script>
+
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td><code>constructor(req: Request, res: Response)</code></td>
+                                                    <td>
+                                                        Constructor for the `ApiSession` class, initializing the session with the provided Express Request and Response objects.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>const session = new ApiSession(req, res);</pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>createNewSession(tokenInfo: { [k: string]: any }, timer?: ApiTimer)</code></td>
+                                                    <td>
+                                                        Creates a new user session document within the database with the given token information.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>await session.createNewSession(tokenInfo);</pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>authorizeSessionToken()</code></td>
+                                                    <td>
+                                                        Authorizes the session token by verifying its validity.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>await session.authorizeSessionToken();</pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>startSession(tokenInfo: any, timer?: ApiTimer)</code></td>
+                                                    <td>
+                                                        Initiates a new session with the provided token information.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>await session.startSession(tokenInfo);</pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>refreshSession(timer?: ApiTimer)</code></td>
+                                                    <td>
+                                                        Refreshes the existing session, updating its last updated time.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>await session.refreshSession();</pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>setSessionResponse()</code></td>
+                                                    <td>
+                                                        Sets the session response by signing and setting the session token in the response headers.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>await session.setSessionResponse();</pre>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code>getSessionMetadata()</code></td>
+                                                    <td>
+                                                        Retrieves metadata related to the current session.
+                                                        <br><br>
+                                                        <strong>Usage:</strong>
+                                                        <pre>const metadata = session.getSessionMetadata();</pre>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <p>
+                                            Session documents are managed by the gSix extension. Refer to the gSix section to learn more about how to create a new gSix document.
+                                        </p>
+                                        
+                                        
+                                        <h5>createNewSession function from ApiSession class:</h5>
+                                        <script src="https://gist.github.com/timdevelopersCEO/468d81ee6f1540aa121b7165a5c8e813.js"></script>
+
+                                        <p>In apiKer, sessions are represented as JWT tokens, often managed through secure
+                                            cookies. These tokens link the user with the request and the session. The
+                                            session manager ensures session continuity if the token is authorized, requiring
+                                            no further steps in this regard.</p>
+                                        <p><img class="img-fluid" src="assets/images/apiKer/sessionCookie.png"
+                                                alt="elegant icons" /></p>
+                                        <p>Session validation encompasses various aspects, including authenticating a valid
+                                            token, checking expiration time, and verifying the correct origin. Sessions also
+                                            feature adjustable security levels, restricting access to certain controllers
+                                            for sessions with a permission level lower than designated.</p>
+    
+                                        <p>By simplifying the authorization process and providing effective tools for
+                                            session management, apiKer empowers developers to secure and control user
+                                            sessions seamlessly.</p>
+                                    </div><!--//section-block-->
+                                    <div id="authSect" class="section-block">
+                                        <h3 class="block-title">Auth</h3>
+
+
+                                    <p>Authorization, the method used to allow the commencement of a session in apiKer,
+                                        involves validating the secret token. While it's not mandatory to validate the
+                                        token strictly from the pre-profiled origin specified in the Apps document, the
+                                        public token generated through the secret is exclusive to the indicated origin.
+                                    </p>
+
+                                    <p>Endpoints or routes that necessitate authorization are marked with
+                                        <code>requireAuth=true</code> in the controller or route. Typically, these
+                                        include actions such as login, signup, password recovery, and other similar
+                                        operations.
+                                    </p>
+                                        <h5>kerLocker authorization success response:</h5>   
+                                           <p><img class="img-fluid" src="assets/images/apiKer/sessionKerLocker.png"
+                                            alt="elegant icons" /></p>
+                                            <p>
+                                                In this response, the <code>token</code> element represents the <code>api-token</code> required to initiate a new session.
+                                            </p>
+                                            
+                                            
+                                    </div><!--//section-block-->
+                                    
+                                </div>
+                            </section>
+                            <!--//doc-section-->
+
+                            <section id="requesting-section" class="doc-section">
+                                <h2 class="section-title">Requesting</h2>
+                                <div class="section-block">
+                                    <p>Executing controllers in apiKer requires an active open session, which must be
+                                        initiated using an API token generated through the secret token. Check below how
+                                        to perform a request depending of the route requisites:</p>
+                                </div><!--//section-block-->
+
+                                <div id="requestingAuth" class="section-block">
+                                    <h3 class="block-title">Auth</h3>
+                                    <p>Any endpoint with <code>requireAuth = true</code> mandates an authorized token
+                                        generated using the secret token, as outlined in the previous step.</p>
+                                    <p>apiKer provides a pre-programmed route, <code>/auth/authorization</code>, to
+                                        streamline the generation of public tokens. An application seeking to authorize
+                                        a session initiation should send a request to this route and retrieve a public
+                                        token.</p>
+                                    <code>curl -X GET -H "Content-Type: application/json" -H "api-secret: *SECRET TOKEN*" https://your-host/auth/authorize</code>
+                                    <p>After a successful authorization request, the server will respond with a JSON
+                                        object containing the following information:</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="theme-bg-light">Field</th>
+                                                <th class="theme-bg-light">Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>success</td>
+                                                <td>Indicates whether the authorization was successful.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>result.token</td>
+                                                <td>The public token authorized for a duration specified by
+                                                    <code>timeoutMins</code>.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>result.date</td>
+                                                <td>The timestamp indicating when the token was issued.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>result.appID</td>
+                                                <td>The unique identifier for the application.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>result.timeoutMins</td>
+                                                <td>The expiration time of the token in minutes.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>result.origin</td>
+                                                <td>The authorized origin for the token.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <h5>Success Auth response type:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/97edd235c1ad45a057a21ce2597f3d29.js"></script>
+
+                                </div><!--//section-block-->
+
+                                <div id="requestingSession" class="section-block">
+                                    <h3 class="block-title">Session</h3>
+                                    <p>The public token will be inserted into a header and sent as part of the session
+                                        initiation. Therefore, routes requiring authorization typically do not require
+                                        an active session since the prerequisite steps to initiate one haven't been
+                                        executed yet.</p>
+                                    <p>It could be said that the public token acts as a key to kickstart the session,
+                                        allowing apiker to handle subsequent executions automatically in accordance with
+                                        the set rules.</p>
+                                    <h5>Init session with auth token:</h5>
+                                    <code>
+                                        curl -X POST -H "Content-Type: application/json" -H "api-token: your_public_token" -d '{"email": "test@email.com", "password": "passWord_1"}' https://your-host/api/login
+                                    </code>
+                                </div><!--//section-block-->
+
+                                <div id="requestingRequest" class="section-block">
+                                    <h3 class="block-title">Requests</h3>
+                                    <p>Once a session has been opened, the session token must be retained throughout the
+                                        usage cycle.</p>
+                                    <h5>Request with auth session token:</h5>
+                                    <code>
+                                        curl -X POST https://your-host/api/getRoutes -H "Cookie: sessionToken=you-session-token" -d "your-request-data"
+                                    </code>
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
+
+
+                            <section id="traceLog-section" class="doc-section">
+                                <h2 class="section-title">TraceLog</h2>
+                                <div class="section-block">
+                                    <p>
+                                        <strong>TraceLog</strong> is the transaction logging method in apiKer. Each request is recorded in the database, opening the door to the logic of a possible tracing or reporting scenario.
+                                      </p>
+                                      
+                                      <p>
+                                        The main goal of <strong>TraceLog</strong> is to maintain a record of events within the API, keeping track of the information that the client inserts as input. Both successful responses and generated errors are recorded, allowing trends in usage and potential bugs that may occur during its operation to be identified.
+                                      </p>
+                                      <h5>traceLog:</h5>
+                                      <p><img class="img-fluid" src="assets/images/apiKer/traceLog.png"
+                                        alt="elegant icons" /></p>
+                                      <h5>Error traceLog:</h5>
+                                      <p><img class="img-fluid" src="assets/images/apiKer/traceLogErr.png"
+                                        alt="elegant icons" /></p>
+                            </section><!--//doc-section-->
+
+
+                            <section id="controllers-section" class="doc-section">
+                                <h2 class="section-title">Controllers</h2>
+                                <div class="section-block">
+                                    <p>A Controller is a TypeScript file programmed to execute a specific action within
+                                        the API
+                                        environment, the database, or even externally. Controllers are accessed through
+                                        the
+                                        router, and their location is available in the installation file _env.</p>
+
+                                    <p>Depending on the project's needs in which apiKer is involved, controllers can be
+                                        accessed
+                                        in a localized or delocalized manner.</p>
+
+                                    <p>apiKer's controllers run in a localized manner when they are in the root folder.
+                                        In this
+                                        way, the programmed controllers can access all of apiKer's resources without
+                                        limitations.</p>
+
+                                    <p>On the other hand, if they run in a delocalized manner, controllers can be
+                                        located in
+                                        another directory. In this case, it should be noted that the DefaultArgs class
+                                        must be
+                                        modified to define which resources the controllers can access.</p>
+
+                                    <p>You can also use DefaultArgs in a localized manner if you intend to carry out a
+                                        more
+                                        organized execution of resources. This way, it is not necessary to import
+                                        external
+                                        modules at runtime.</p>
+
+                                </div><!--//section-block-->
+                                <div id="defaultArgsClass" class="section-block">
+                                    <h3 class="block-title">DefaultArgs Class</h3>
+                                    <p>The DefaultArgs class provides a space to define the resources accessible by a
+                                        controller. In
+                                        addition to implementing a security layer, it offers more control over the
+                                        execution of API
+                                        resources.</p>
+                                    <p>The path to the DefaultArgs class is <code>/api/core/controllers/args</code>.</p>
+                                    <p>
+                                        This DefaultArgs class simplifies the process of handling apiKer resources by
+                                        defining common methods that will be used in the controller's environment to
+                                        automate repetitive tasks or those requiring more complex logic.
+                                    </p>
+
+                                    method <code>args.SESSION.startSession()</code>.</p>
+                                    <h5>DefaultArgs example:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/cd2535deb2ac8df47232a9cc82b99e9c.js"></script>
+                                </div><!--//section-block-->
+                                <div id="newController" class="section-block">
+                                    <h3 class="block-title">New Controller</h3>
+                                    <p>Creating a new controller involves generating a new TypeScript file so that the
+                                        logic of the
+                                        process can be written and executed. The file name and the function name must
+                                        match, as the
+                                        controller access method is done by interpreting the route parameters.
+
+                                        The function, serving as a parameter, must necessarily accept a parameter
+                                        <code>args</code>
+                                    </p>
+
+                                    <h5>Creating new controller example:</h5>
+                                    <p>This example shows how to create a controller to interact with the API's session
+                                        system and
+                                        perform a login.</p>
+
+                                    <p>Note the interaction of the gSix module with the database in order to interact
+                                        with user and
+                                        session data files.</p>
+
+                                    <p>Additionally, in this case, the request parameters entered by the user, such as
+                                        username and
+                                        password, are accessed using the DefaultArgs class through the method
+                                        <code>args.REQUEST.getParams()</code>.
+                                    </p>
+
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/b632e8423185a52b598981a039231ee1.js"></script>
+
+                                </div><!--//section-block-->
+
+                            </section><!--//doc-section-->
+
+
+                            <section id="gSix-section" class="doc-section">
+                                <h2 class="section-title">gSix</h2>
+
+                                <p>
+                                    gSix is an external module developed to work with apiKer for schema processing
+                                    in No-SQL environments. The core interprets a TypeScript object capable of
+                                    composing a schema and executing a query with a provided set of data.
+                                </p>
+
+
+
+                                <div id="newgSixSchema" class="section-block">
+                                    <h3 class="block-title">New gSix Schema</h3>
+                                    <p>
+                                        Every NoSQL document requires a gSix schema, and it must be defined in the gSix
+                                        schema file.
+                                    </p>
+                                    <h5>Database:</h5>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">db</th>
+                                                <td>Name of the database.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">dbCollection</th>
+                                                <td>Name of the database collection.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">customDB</th>
+                                                <td>(Optional) Custom name for the database.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <h5>Metadata:</h5>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">alias</th>
+                                                <td>Identifier used to access gSix schemas.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <h5>Queries:</h5>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">name</th>
+                                                <td>Mode in which the query is accessed by the core.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">query</th>
+                                                <td>Contains the logical object of the query.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <h5>Fields:</h5>
+                                    <p>
+                                        Contains the primary schema of the fields in each NoSQL document.
+                                    </p>
+
+                                    <p><strong>Logical Query Operators:</strong></p>
+                                    <ul>
+                                        <li><strong>eq:</strong> Equal</li>
+                                        <li><strong>gt:</strong> Greater Than</li>
+                                        <!-- Add more operators as needed -->
+                                    </ul>
+                                    <h5>gSix Type:</h5>
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/054992538af9cc3da7be797251c21595.js"></script>
+                                </div><!--//section-block-->
+                                <div id="fieldSetgSix" class="section-block">
+                                    <h3 class="block-title">FieldSet</h3>
+                                    <p>
+                                        The FieldSet defines the general schema of the data contained in the NoSQL
+                                        document. This allows defining how the parameters will relate to the final
+                                        document that will be integrated into the database.
+                                    </p>
+                                    <p>
+                                        gSix accepts arrays. To indicate that a key is an array, simply add
+                                        <code>_</code> at the beginning of the field name, like
+                                        <code>_requestHistory</code>.
+                                    </p>
+
+                                    <p>
+                                        A field in gSix accepts the following types.
+                                    </p>
+                                    <ul>
+                                        <li>String</li>
+                                        <li>Number</li>
+                                        <li>Boolean</li>
+                                        <li>Date</li>
+                                    </ul>
+                                    <p>
+                                        Within the <code>options</code>, the param <code>field</code> is responsible for
+                                        opening a change window with the specified name, which will open the space to
+                                        fill in or edit the field.
+                                    </p>
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/c2a157ac73b2892cf86a52f962f89c48.js"></script>
+
+                                    <h5>Creating new controller example:</h5>
+                                    <p>This example shows how to create a controller to interact with the API's session
+                                        system and
+                                        perform a login.</p>
+
+                                    <p>Note the interaction of the gSix module with the database in order to interact
+                                        with user and
+                                        session data files.</p>
+
+                                    <p>Additionally, in this case, the request parameters entered by the user, such as
+                                        username and
+                                        password, are accessed using the DefaultArgs class through the method
+                                        <code>args.REQUEST.getParams()</code>.
+                                    </p>
+
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/b632e8423185a52b598981a039231ee1.js"></script>
+
+                                </div><!--//section-block-->
+                                <div id="queriesgSix" class="section-block">
+                                    <h3 class="block-title">Queries</h3>
+                                    <p>
+                                        The gSix querying system empowers users to interact with the database by
+                                        allowing the definition of queries using MongoDB-like syntax.
+                                    </p>
+
+
+
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="theme-bg-light">Operator</th>
+                                                <th class="theme-bg-light">Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>$and</td>
+                                                <td>Logical AND operator. Combines multiple conditions.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>$or</td>
+                                                <td>Logical OR operator. Combines multiple conditions.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>$eq</td>
+                                                <td>Equality operator. Selects documents with a specified equal value.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>$ne</td>
+                                                <td>Inequality operator. Selects documents with a specified non-equal
+                                                    value.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>$gt</td>
+                                                <td>Greater than operator. Selects documents with a value greater than
+                                                    the specified value.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>$lt</td>
+                                                <td>Less than operator. Selects documents with a value less than the
+                                                    specified value.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>$gte</td>
+                                                <td>Greater than or equal to operator. Selects documents with a value
+                                                    greater than or equal to the specified value.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>$lte</td>
+                                                <td>Less than or equal to operator. Selects documents with a value less
+                                                    than or equal to the specified value.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>$in</td>
+                                                <td>Inclusion operator. Selects documents with a value in the specified
+                                                    array.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>$nin</td>
+                                                <td>Exclusion operator. Selects documents with a value not in the
+                                                    specified array.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/085e9b6f939226e9080299a6df547bce.js"></script>
+                                    <p>
+                                        When gSix encounters the error <code>ERR_GSIX_MISSING_QUERY_PARAM</code>, it
+                                        indicates that a required query parameter is missing. In such cases, the request
+                                        cannot proceed, and no modifications to the database will be executed.
+                                    </p>
+
+
+                                </div><!--//section-block-->
+                                <div id="newDocgSix" class="section-block">
+                                    <h3 class="block-title">Create gSix Doc</h3>
+                                    <p>
+                                        Interaction with gSix documents is performed by invoking a new instance of the
+                                        gSix class and calling the associated required method as follows:
+                                    </p>
+
+                                    <h5>Create Document</h5>
+
+                                    <p> <code>public async createRecord(alias: string, values: Object = {})</code> </p>
+
+                                    <p>
+                                        To create a new document in gSix, you can use the <code>createRecord</code>
+                                        method. This method is asynchronous and returns a promise. Below is an
+                                        explanation of the parameters for this method:
+                                    </p>
+
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">alias</th>
+                                                <td>String</td>
+                                                <td>The alias used for the creation of the document.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">values</th>
+                                                <td>Object</td>
+                                                <td>Input data object.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p>
+                                        Below is the code snippet demonstrating how to use the <code>createRecord</code>
+                                        method:
+                                    </p>
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/561e198c2f7e364f866ac5542628f715.js"></script>
+
+                                </div><!--//section-block-->
+
+                                <div id="readDocgSix" class="section-block">
+                                    <h3 class="block-title">Read gSix Doc</h3>
+                                    <p>
+                                        Interaction with gSix documents is performed by invoking a new instance of the
+                                        gSix class and calling the associated required method as follows:
+                                    </p>
+
+                                    <h5>Read Document</h5>
+                                    <p> <code>    public async readRecord(alias: string, queryName: string, values: Object = {}, limit: number = 0, raw: boolean = true)        </code>
+                                    </p>
+                                    <p>
+                                        To read a new document in gSix, you can use the <code>readRecord</code> method.
+                                        This method is asynchronous and returns a promise. Below is an explanation of
+                                        the parameters for this method:
+                                    </p>
+
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">alias</th>
+                                                <td>String</td>
+                                                <td>The alias used for the creation of the document.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">queryName</th>
+                                                <td>String</td>
+                                                <td>The target query name.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">values</th>
+                                                <td>Object</td>
+                                                <td>Input data object.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">limit</th>
+                                                <td>Number</td>
+                                                <td>Length of result array. Default 0 (no limit)</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">raw</th>
+                                                <td>Boolean</td>
+                                                <td>Shows the data in a raw format with all the metadata. Default true
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p>
+                                        Below is the code snippet demonstrating how to use the <code>readRecord</code>
+                                        method:
+                                    </p>
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/317810bcc66aeb4fafa296494b3b97c7.js"></script>
+
+
+                                </div><!--//section-block-->
+
+                                <div id="updateDocgSix" class="section-block">
+                                    <h3 class="block-title">Update gSix Doc</h3>
+                                    <p>
+                                        Interaction with gSix documents is performed by invoking a new instance of the
+                                        gSix class and calling the associated required method as follows:
+                                    </p>
+
+                                    <h5>Update Document</h5>
+                                    <p>
+                                        <code>public async updateRecord(alias: string, queryName: string, criteria: Object = {}, values: Object = {})</code>
+                                    </p>
+                                    <p>
+                                        To update a document in gSix, you can use the <code>updateRecord</code> method.
+                                        This method is asynchronous and returns a promise. Below is an explanation of
+                                        the parameters for this method:
+                                    </p>
+
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="theme-bg-light">alias</th>
+                                                <td>String</td>
+                                                <td>The alias used for the update operation.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">queryName</th>
+                                                <td>String</td>
+                                                <td>The target query name for the update operation.</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">criteria</th>
+                                                <td>Object</td>
+                                                <td>Criteria object specifying the conditions for updating documents.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="theme-bg-light">values</th>
+                                                <td>Object</td>
+                                                <td>Updated data object.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p>
+                                        Below is the code snippet demonstrating how to use the <code>updateRecord</code>
+                                        method:
+                                    </p>
+
+                                    <script
+                                        src="https://gist.github.com/timdevelopersCEO/8a77ca588dd570acc12923c5bcb4d726.js"></script>
+                                </div><!--//section-block-->
+
+                            </section><!--//doc-section-->
+
+
+                        </div><!--//content-inner-->
+                    </div><!--//doc-content-->
+                    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
+                        <div id="doc-nav" class="doc-nav">
+                            <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#intro-section">Introduction</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#cfgFiles-section">Setup Files</a>
+                                </li>
+
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#filesEnv">_env File</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#filesVars">_vars Files</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#filesSetup">_setup Files</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#filesDatabases">_database Files</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#filesRoutes">_routes Files</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#filesApps">_apps Files</a>
+                                    </li>
+                                </nav><!--//nav-->
+
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#installation-section">Installation</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#installProxy">Proxy</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#installSetup">First run/Setup</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#kerLockerServerSetup">kerLocker Auth
+                                            Client</a>
+                                    </li>
+                                </nav><!--//nav-->
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#cache-section">Cache</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#databases-section">Databases</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#addNewDatabase">Add New Database</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#databaseInteraction">Database
+                                            Interaction</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#databaseDocs">Document Interaction</a>
+                                    </li>
+                                </nav><!--//nav-->
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#router-section">Router</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#routerNewRouter">Add New Router</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#routerGeneralParams">General Params</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#routerRequiredParams">Required Params</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#routerSDocsParams">SwaggerDocs metadata</a>
+                                    </li>
+                                </nav><!--//nav-->
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#apps-section">Apps</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#appsNewApp">Add New App</a>
+                                    </li>
+                                </nav><!--//nav-->
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#auth-section">Auth & Session</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#sessionSect">Session</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#authSect">Auth</a>
+                                    </li>
+                                </nav><!--//nav-->
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#requesting-section">Requesting</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#requestingAuth">Auth</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#requestingSession">Session</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#requestingRequest">Request</a>
+                                    </li>
+                                </nav><!--//nav-->
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#traceLog-section">TraceLog</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#controllers-section">Controllers</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#defaultArgsClass">DefaultArgs Class</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#newController">New Controller</a>
+                                    </li>
+                                </nav><!--//nav-->
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#gSix-section">gSix</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#newgSixSchema">New gSix Schema</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#fieldSetgSix">FieldSet</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#queriesgSix">Queries</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#newDocgSix">Create gSix Doc</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#readDocgSix">Read gSix Doc</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#updateDocgSix">Update gSix Doc</a>
+                                    </li>
+                                </nav><!--//nav-->
+                            </nav><!--//doc-menu-->
+
+                        </div>
+                    </div><!--//doc-sidebar-->
+                </div><!--//doc-body-->
+            </div><!--//container-->
+        </div><!--//doc-wrapper-->
+
+
+    </div><!--//page-wrapper-->
+
+    <footer id="footer" class="footer text-center">
+        <div class="container">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart"></i> by <a
+                    href="https://themes.3rdwavemedia.com/" target="_blank">Xiaoying Riley</a> for developers</small>
+
+        </div><!--//container-->
+    </footer><!--//footer-->
+
+
+    <!-- Main Javascript -->
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/prism/prism.js"></script>
+    <script src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>
+    <script src="assets/plugins/gumshoe/gumshoe.polyfills.min.js"></script>
+    <script src="assets/plugins/simplelightbox/simple-lightbox.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
