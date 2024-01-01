@@ -1,6 +1,6 @@
 # Ignore TypeScript configuration files
-tsconfig.json
-tsconfig.*.json
+# tsconfig.json
+# tsconfig.*.json
 
 # Ignore compiled JavaScript files
 *.js
